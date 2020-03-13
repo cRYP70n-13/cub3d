@@ -6,7 +6,7 @@
 /*   By: okimdil <okimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 10:02:44 by okimdil           #+#    #+#             */
-/*   Updated: 2020/03/12 22:13:10 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/03/13 18:26:16 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		abs(int n)
 {
-    return ((n > 0) ? n : (n * (-1)));
+	return ((n > 0) ? n : (n * (-1)));
 }
 
 int		is_wall(float x, float y)
@@ -26,8 +26,8 @@ int		is_wall(float x, float y)
 		return (1);
 	map_grid_index_x = floor(x / TAIL_SIZE);
 	map_grid_index_y = floor(y / TAIL_SIZE);
-	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, map[(int)map_grid_index_x][(int)map_grid_index_y]);
-	return (map[map_grid_index_x][map_grid_index_y]);
+	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, map[(int)map_grid_index_y][(int)map_grid_index_x]);
+	return (map[map_grid_index_y][map_grid_index_x]);
 }
 
 void	dda(int X0, int Y0, int X1, int Y1)
@@ -88,13 +88,13 @@ int		deal_key()
 {
 	if (g_player.walk_up == 1) // UP_ARROW
 	{
-		g_player.new_y = sin(g_player.rotation_angle) * g_player.move_speed;
-		g_player.new_x = cos(g_player.rotation_angle) * g_player.move_speed;
+		g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed;
+		g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed;
 	}
 	if (g_player.walk_down == -1) // DOWN_ARROW
 	{
-		g_player.new_y = -(sin(g_player.rotation_angle) * g_player.move_speed);
-		g_player.new_x = -(cos(g_player.rotation_angle) * g_player.move_speed);
+		g_player.new_y = -(g_player.y + sin(g_player.rotation_angle) * g_player.move_speed);
+		g_player.new_x = -(g_player.x + cos(g_player.rotation_angle) * g_player.move_speed);
 	}
 	if (g_player.turn_left == -1) // LEFT_ARROW
 		g_player.rotation_angle -= g_player.rotation_speed;
@@ -163,10 +163,13 @@ void	draw_map()
 		}
 		i++;
 	}
-	if (!is_wall(g_player.y + g_player.new_y, g_player.x + g_player.new_x))
+	if (!is_wall(g_player.new_x, g_player.y))
 	{
-		g_player.x += g_player.new_x;
-		g_player.y += g_player.new_y;
+		g_player.x = g_player.new_x;
+	}
+	if (!is_wall(g_player.x, g_player.new_y))
+	{
+		g_player.y = g_player.new_y;
 	}
 	ft_square(g_player.x, g_player.y, 0xff0000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
