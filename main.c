@@ -12,12 +12,12 @@
 
 #include "header.h"
 
-int		abs(int n)
+int abs(int n)
 {
 	return ((n > 0) ? n : (n * (-1)));
 }
 
-int		is_wall(float x, float y)
+int is_wall(float x, float y)
 {
 	int map_grid_index_x;
 	int map_grid_index_y;
@@ -30,34 +30,34 @@ int		is_wall(float x, float y)
 	return (map[map_grid_index_y][map_grid_index_x]);
 }
 
-void	dda(int X0, int Y0, int X1, int Y1)
+void dda(int X0, int Y0, int X1, int Y1)
 {
-    // calculate dx & dy
-    int dx = X1 - X0;
-    int dy = Y1 - Y0;
+	// calculate dx & dy
+	int dx = X1 - X0;
+	int dy = Y1 - Y0;
 
-    // calculate steps required for generating pixels
-    int		steps;
+	// calculate steps required for generating pixels
+	int steps;
 
 	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-    // calculate increment in x & y for each steps
-    float Xinc = dx / (float) steps;
-    float Yinc = dy / (float) steps;
+	// calculate increment in x & y for each steps
+	float Xinc = dx / (float)steps;
+	float Yinc = dy / (float)steps;
 
-    // Put pixel for each step
-    float X = X0;
-    float Y = Y0;
+	// Put pixel for each step
+	float X = X0;
+	float Y = Y0;
 	int i = 0;
-    while( i <= steps)
-    {
+	while (i <= steps)
+	{
 		mlx_pixel_put(g_mlx.mlx_ptr, g_mlx.win_ptr, X, Y, 0x0000FF); //  Put pixel at X and Y
-        X += Xinc;           // increment in x at each step
-        Y += Yinc;           // increment in y at each step
+		X += Xinc;													 // increment in x at each step
+		Y += Yinc;													 // increment in y at each step
 		i++;
-    }
+	}
 }
 
-void	ft_square(int x, int y, int color, int size)
+void ft_square(int x, int y, int color, int size)
 {
 	int i;
 	int j;
@@ -75,7 +75,7 @@ void	ft_square(int x, int y, int color, int size)
 	}
 }
 
-void	struct_init()
+void struct_init()
 {
 	g_player.x = WINDOW_WIDTH / 2;
 	g_player.y = WINDOW_HEIGHT / 2;
@@ -84,7 +84,7 @@ void	struct_init()
 	g_player.rotation_speed = 0.1;
 }
 
-int		deal_key()
+int deal_key()
 {
 	if (g_player.walk_up == 1) // UP_ARROW
 	{
@@ -104,7 +104,7 @@ int		deal_key()
 	return (0);
 }
 
-int		key_pressed(int keycode)
+int key_pressed(int keycode)
 {
 	if (keycode == UP_ARROW)
 		g_player.walk_up = 1;
@@ -117,7 +117,7 @@ int		key_pressed(int keycode)
 	return (0);
 }
 
-int		key_released(int keycode)
+int key_released(int keycode)
 {
 	if (keycode == UP_ARROW)
 		g_player.walk_up = 0;
@@ -132,23 +132,23 @@ int		key_released(int keycode)
 	return (0);
 }
 
-int		loop_key()
+int loop_key()
 {
-    mlx_hook(g_mlx.win_ptr, 2, 0, key_pressed, 0);
-    mlx_hook(g_mlx.win_ptr, 3, 0, key_released, 0);
-    deal_key();
-    return (0);
+	mlx_hook(g_mlx.win_ptr, 2, 0, key_pressed, 0);
+	mlx_hook(g_mlx.win_ptr, 3, 0, key_released, 0);
+	deal_key();
+	return (0);
 }
 
-void	draw_map()
+void draw_map()
 {
 	g_player.renderer_x = g_player.x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
 	g_player.renderer_y = g_player.y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
-	int		i = 0;
-	int		j;
-	int		x = 0;
-	int		y = 0;
-	int		color = 0;
+	int i = 0;
+	int j;
+	int x = 0;
+	int y = 0;
+	int color = 0;
 
 	while (i < MAP_NUM_ROWS)
 	{
@@ -175,9 +175,9 @@ void	draw_map()
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 }
 
-int		main(void)
+int main(void)
 {
-	g_mlx.mlx_ptr = mlx_init(); //Connection to the graphic server
+	g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
 	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (MAP_NUM_COLS * TAIL_SIZE), (MAP_NUM_ROWS * TAIL_SIZE), "cRYP70N"); //initialize the window
 	struct_init();
 	draw_map();
