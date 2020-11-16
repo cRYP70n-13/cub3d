@@ -1,6 +1,6 @@
 # Parser
 
-- [ ] Reading Directly from the config file and fixing all the get_next_line problems
+- [x] Reading Directly from the config file and fixing all the get_next_line problems
 - [ ] Parsing the MAP and start using the config data to do all the shit
 - [ ] Handling All the errors
 
