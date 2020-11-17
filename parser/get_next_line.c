@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int		ft_strlen(char *str, char c)
 {
@@ -76,7 +77,7 @@ int		get_next_line_reading(int fd, char **post_buffer, char **line)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*post_buffer[200000];
+	static char	*post_buffer[BUFFER_SIZE];
 
 	if (line == NULL)
 		return (-1);
