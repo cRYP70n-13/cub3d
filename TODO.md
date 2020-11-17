@@ -1,6 +1,10 @@
 # Parser
 
 - [x] Reading Directly from the config file and fixing all the get_next_line problems
+<<<<<<< HEAD
+- [x] Setting up all the necessary datastructures for the parser
+=======
+>>>>>>> f9a7dc4e605698517dfc857ec5fab555c040882e
 - [ ] Parsing the MAP and start using the config data to do all the shit
 - [ ] Handling All the errors
 
