@@ -80,7 +80,7 @@ void struct_init()
 	g_player.x = WINDOW_WIDTH / 2;
 	g_player.y = WINDOW_HEIGHT / 2;
 	g_player.rotation_angle = PI / 2.0;
-	g_player.move_speed = 2.0;
+	g_player.move_speed = 4.0;
 	g_player.rotation_speed = 0.1;
 }
 
