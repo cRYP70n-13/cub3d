@@ -47,13 +47,9 @@ typedef struct 		t_celling
  * @param { Path to the textures } The absolute paths to the structures and the sprite
  * @return	The strucute filled by the paths
 */
-typedef struct		t_textures
+typedef struct      textures
 {
-	char	*north_texture;
-	char	*south_texture;
-	char	*west_texture;
-	char	*east_textures;
-	char	*sprite_texture;
-} 					s_textures;
+    char **textures;
+}                   s_textrs;
 
 #endif

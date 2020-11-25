@@ -1,5 +1,13 @@
 #include "get_next_line.h"
+#include "./structs.h"
 #include <stdio.h>
+#include <string.h>
+
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define S  4
 
 static int			is_split(char str, char c)
 {
@@ -102,27 +110,109 @@ int		ft_isdigit(int c)
 		return (0);
 }
 
+int ft_isalpha(int c)
+{
+	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
+}
+
+void	parse_textures(char *line, int type)
+{
+	s_textrs *ptr_textures;
+	int i;
+
+	i = 0;
+	if (!(ptr_textures = malloc(sizeof(s_textrs*))))
+		return ;
+	if (!(ptr_textures->textures = malloc(sizeof(char *) * 5)))
+		return ;
+	while (line[i] != ' ' || line[i] != '\0') {
+		if (ft_isalpha(line[i]) || line[i] == '.') {
+			ptr_textures->textures[type] = strdup(line + i);
+			printf("%s\n", ptr_textures->textures[type]);
+			break;
+		}
+		i++;
+	}
+	// printf("%s\n", textures->textures[0]);
+}
 
 int		main(int argc, char **argv)
 {
 	char *line;
+	struct t_resolution s_resolution;
+	struct t_floor s_floor;
+	struct t_celling s_celling;
+	struct t_textures s_textures;
 
 	int fd = open(argv[1], O_RDONLY);
-	// int fd = open("/Users/mac/Documents/dev/cub3d/map.rt", O_RDONLY);
 	while (get_next_line(fd, &line)) {
-		printf("%s\n", line);
+
+        // To parse and fill the Resolution struct
 		if (line[0] == 'R') {
 			char **splited_line = ft_split(line + 2, ' ');
+
 			int i = 0;
 			while ((*splited_line)[i]) {
 				if (ft_isdigit((*splited_line)[i]))
-					printf("YEAAAS It's a digit\n\n\n\n\n");
+					// printf("YEAAAS It's a digit\n");
 				i++;
 			}
-			printf("%s, %s\n", splited_line[0], splited_line[1]);
-			printf("RRRRRRRRR\n");
+			s_resolution.height = atoi(splited_line[0]);
+			s_resolution.width = atoi(splited_line[1]);
+			s_resolution.resolution = line[0];
+			printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
 		}
+
+		// To parse and fill the Floor struct
+		if (line[0] == 'F') {
+			char **splited_line = ft_split(line + 2, ',');
+
+			int i = 0;
+			while ((*splited_line)[i]) {
+				if (ft_isdigit((*splited_line)[i]))
+					// printf("YEAAAS It's a digit\n");
+				i++;
+			}
+			s_floor.Floor = line[0];
+			s_floor.red = atoi(splited_line[0]);
+			s_floor.green = atoi(splited_line[1]);
+			s_floor.blue = atoi(splited_line[2]);
+			printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
+		}
+
+		// To parse and fill the ceeling struct
+		if (line[0] == 'C') {
+			char **splited_line = ft_split(line + 2, ',');
+
+			int i = 0;
+			while ((*splited_line)[i]) {
+				if (ft_isdigit((*splited_line)[i]))
+					// printf("YEAAAS It's a digit\n");
+				i++;
+			}
+			s_celling.celling = line[0];
+			s_celling.red = atoi(splited_line[0]);
+			s_celling.green = atoi(splited_line[1]);
+			s_celling.blue = atoi(splited_line[2]);
+			printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
+		}
+
+		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
+			parse_textures(line + 2, NO);
+
+		if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
+			parse_textures(line + 2, SO);
+			// printf("%s\n", line + 2);
+
+		if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
+			parse_textures(line + 2, WE);
+
+		if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
+			parse_textures(line + 2, EA);
+
+		if (line[0] == 'S' && line[1] == ' ') 
+			parse_textures(line + 2, S);
 	}
-	printf("%s", line);
+	// printf("%s", line);
 	return (0);
 }
