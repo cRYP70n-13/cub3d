@@ -4,6 +4,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define S  4
+
 /**
  * @brief {*} The Resolution structure
  * @param { Resoluition, Height, Width }

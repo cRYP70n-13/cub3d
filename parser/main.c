@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-# define NO 0
-# define SO 1
-# define WE 2
-# define EA 3
-# define S  4
 
 static int			is_split(char str, char c)
 {
@@ -136,13 +131,34 @@ void	parse_textures(char *line, int type)
 	// printf("%s\n", textures->textures[0]);
 }
 
+// void	parse_others(char **line, char c)
+// {
+// 	struct t_resolution s_resolution;
+// 	struct t_floor s_floor;
+// 	struct t_celling s_celling;
+// 	struct t_textures s_textures;
+
+// 	if (c == 'R') {
+// 		char **splited_line = ft_split(line + 2, ' ');
+// 		int i = 0;
+// 		while ((*splited_line)[i]) {
+// 			if (ft_isdigit((*splited_line)[i]))
+// 				// DO NOTHING
+// 			i++;
+// 		}
+//         s_resolution.height = atoi(splited_line[0]);
+//         s_resolution.width = atoi(splited_line[1]);
+//         s_resolution.resolution = line[0];
+//         printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
+// 	}
+// }
+
 int		main(int argc, char **argv)
 {
 	char *line;
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	struct t_textures s_textures;
 
 	int fd = open(argv[1], O_RDONLY);
 	while (get_next_line(fd, &line)) {
@@ -199,17 +215,12 @@ int		main(int argc, char **argv)
 
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
-
 		if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, SO);
-			// printf("%s\n", line + 2);
-
 		if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
 			parse_textures(line + 2, WE);
-
 		if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
 			parse_textures(line + 2, EA);
-
 		if (line[0] == 'S' && line[1] == ' ') 
 			parse_textures(line + 2, S);
 	}
