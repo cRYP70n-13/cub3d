@@ -36,6 +36,7 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int nbr, int fd);
 void		ft_putstr_fd(char *s, int fd);
 char		*ft_strchr(const char *s, int c);
+<<<<<<< HEAD
 
 // I already have this function in the get Next Line utils header file
 char		*ft_strdup(const char *s1);
@@ -44,6 +45,13 @@ size_t		ft_strlen(const char *str);
 
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+=======
+char		*ft_strdup(const char *s1);
+char		*ft_strjoin(const char *s1, const char *s2);
+size_t		ft_strlcat(char *dst, const char *src, size_t size);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t		ft_strlen(const char *str);
+>>>>>>> c8d093756282f4fd924f5db4472abde3643b461f
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strrchr(const char *s, int c);
