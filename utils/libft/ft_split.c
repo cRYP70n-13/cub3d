@@ -1,5 +1,16 @@
-#include "get_next_line.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/17 17:59:28 by okimdil           #+#    #+#             */
+/*   Updated: 2019/10/22 17:49:35 by okimdil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 static int			is_split(char str, char c)
 {
@@ -92,37 +103,4 @@ char				**ft_split(char const *str, char c)
 	}
 	array[word_count(str, c)] = 0;
 	return (array);
-}
-
-int		ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	else
-		return (0);
-}
-
-
-int		main(int argc, char **argv)
-{
-	char *line;
-
-	int fd = open(argv[1], O_RDONLY);
-	// int fd = open("/Users/mac/Documents/dev/cub3d/map.rt", O_RDONLY);
-	while (get_next_line(fd, &line)) {
-		printf("%s\n", line);
-		if (line[0] == 'R') {
-			char **splited_line = ft_split(line + 2, ' ');
-			int i = 0;
-			while ((*splited_line)[i]) {
-				if (ft_isdigit((*splited_line)[i]))
-					printf("YEAAAS It's a digit\n\n\n\n\n");
-				i++;
-			}
-			printf("%s, %s\n", splited_line[0], splited_line[1]);
-			printf("RRRRRRRRR\n");
-		}
-	}
-	printf("%s", line);
-	return (0);
 }
