@@ -131,27 +131,21 @@ void	parse_textures(char *line, int type)
 	// printf("%s\n", textures->textures[0]);
 }
 
-void	check_map(char *line)
+void	check_map(char *line, s_map *map)
 {
-	int i = 0;
-	struct map s_map;
-
-	s_map.width = strlen(line);
-	s_map.height = 0;
-	if (strlen(line) > s_map.width) {
-		// #DEBUG
-		// printf("%zu %zu\n", strlen(line), width);
-		printf("%zu\n", s_map.width);
-		// #END_OF_DEBUG
-
-		s_map.width = strlen(line);
-		// printf("%zu Width\n", s_map.width);
+    int i = 0;
+    // printf("%zu     -      %zu\n", test, map->width);
+    // printf("%s\n", line);
+	if (strlen(line) > map->width) {
+		map->width = strlen(line);
 	}
 	while (line[i]) {
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
 			printf("NOT A VALID MAP %s\n", line);
 		i++;
 	}
+
+    printf("%zu\n", map->width);
 }
 
 int		main(int argc, char **argv)
@@ -163,13 +157,15 @@ int		main(int argc, char **argv)
 	// size_t width = 0;
 	int height = 0;
 	int cnt;
+    struct map s_map;
 	// char *valid_chars = "012NSEW";
 
 	if (argc != 2)
 		return 0;
 	int fd = open(argv[1], O_RDONLY);
 	cnt = 0;
-	while (get_next_line(fd, &line)) {
+	s_map.width = 0;
+    while (get_next_line(fd, &line)) {
 		// printf("%s\n", line);
 		if (line[0] == 'R') {
 			char **splited_line = ft_split(line + 2, ' ');
@@ -246,7 +242,7 @@ int		main(int argc, char **argv)
 			// }
 			// printf("%zu Width - %d Height\n", width, height);
 
-			check_map(line);
+			check_map(line, &s_map);
 		}
 	}
 
