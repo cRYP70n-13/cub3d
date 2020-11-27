@@ -131,20 +131,9 @@ void	parse_textures(char *line, int type)
 	// printf("%s\n", textures->textures[0]);
 }
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+void	check_map(char *line)
 {
-	while (n && *s1 && (*s1 == *s2))
-	{
-		++s1;
-		++s2;
-		--n;
-	}
-	if (n == 0)
-		return (0);
-	else
-	{
-		return (*(unsigned char *)s1 - *(unsigned char *)s2);
-	}
+	// TODO: Implement the function to check the MAP
 }
 
 int		main(int argc, char **argv)
@@ -153,7 +142,7 @@ int		main(int argc, char **argv)
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	int width;
+	size_t width = 0;
 	int height = 0;
 	int cnt;
 	// char *valid_chars = "012NSEW";
@@ -228,7 +217,8 @@ int		main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ') 
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			width = strlen(line);
+			if (strlen(line) > width)
+				width = strlen(line);
 			height++;
 			int i = 0;
 
@@ -238,9 +228,10 @@ int		main(int argc, char **argv)
 				i++;
 			}
 			// printf("I Found the MAP !!\n");
-			printf("%d Width - %d Height\n", width, height);
+			printf("%zu Width - %d Height\n", width, height);
 		}
 	}
+
 	// printf("%s\n%d", line, ++cnt);
 	return (0);
 }
