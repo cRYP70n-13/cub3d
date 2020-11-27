@@ -133,7 +133,25 @@ void	parse_textures(char *line, int type)
 
 void	check_map(char *line)
 {
-	// TODO: Implement the function to check the MAP
+	int i = 0;
+	struct map s_map;
+
+	s_map.width = strlen(line);
+	s_map.height = 0;
+	if (strlen(line) > s_map.width) {
+		// #DEBUG
+		// printf("%zu %zu\n", strlen(line), width);
+		printf("%zu\n", s_map.width);
+		// #END_OF_DEBUG
+
+		s_map.width = strlen(line);
+		// printf("%zu Width\n", s_map.width);
+	}
+	while (line[i]) {
+		if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
+			printf("NOT A VALID MAP %s\n", line);
+		i++;
+	}
 }
 
 int		main(int argc, char **argv)
@@ -142,7 +160,7 @@ int		main(int argc, char **argv)
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	size_t width = 0;
+	// size_t width = 0;
 	int height = 0;
 	int cnt;
 	// char *valid_chars = "012NSEW";
@@ -217,21 +235,20 @@ int		main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ') 
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			if (strlen(line) > width)
-				width = strlen(line);
+			// int i = 0;
 			height++;
-			int i = 0;
+			// if (strlen(line) > width)
+			// 	width = strlen(line);
+			// while (line[i]) {
+			// 	if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
+			// 		printf("NOT A VALID MAP %s\n", line);
+			// 	i++;
+			// }
+			// printf("%zu Width - %d Height\n", width, height);
 
-			while (line[i]) {
-				if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
-					printf("NOT A VALID MAP %s\n", line);
-				i++;
-			}
-			// printf("I Found the MAP !!\n");
-			printf("%zu Width - %d Height\n", width, height);
+			check_map(line);
 		}
 	}
 
-	// printf("%s\n%d", line, ++cnt);
 	return (0);
 }

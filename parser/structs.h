@@ -55,7 +55,7 @@ typedef struct 		t_celling
 */
 typedef struct      textures
 {
-    char **textures;
+	char **textures;
 }                   s_textrs;
 
 /**
@@ -65,7 +65,9 @@ typedef struct      textures
 */
 typedef struct      map
 {
-    char **map;
+	char **map;
+	size_t width;
+	size_t height;
 }                   s_map;
 
 #endif
