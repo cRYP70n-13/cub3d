@@ -123,7 +123,7 @@ void	parse_textures(char *line, int type)
 	while (line[i] != ' ' || line[i] != '\0') {
 		if (ft_isalpha(line[i]) || line[i] == '.') {
 			ptr_textures->textures[type] = strdup(line + i);
-			printf("%s\n", ptr_textures->textures[type]);
+			// printf("%s\n", ptr_textures->textures[type]);
 			break;
 		}
 		i++;
@@ -131,27 +131,21 @@ void	parse_textures(char *line, int type)
 	// printf("%s\n", textures->textures[0]);
 }
 
-// void	parse_others(char **line, char c)
-// {
-// 	struct t_resolution s_resolution;
-// 	struct t_floor s_floor;
-// 	struct t_celling s_celling;
-// 	struct t_textures s_textures;
-
-// 	if (c == 'R') {
-// 		char **splited_line = ft_split(line + 2, ' ');
-// 		int i = 0;
-// 		while ((*splited_line)[i]) {
-// 			if (ft_isdigit((*splited_line)[i]))
-// 				// DO NOTHING
-// 			i++;
-// 		}
-//         s_resolution.height = atoi(splited_line[0]);
-//         s_resolution.width = atoi(splited_line[1]);
-//         s_resolution.resolution = line[0];
-//         printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
-// 	}
-// }
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while (n && *s1 && (*s1 == *s2))
+	{
+		++s1;
+		++s2;
+		--n;
+	}
+	if (n == 0)
+		return (0);
+	else
+	{
+		return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	}
+}
 
 int		main(int argc, char **argv)
 {
@@ -159,60 +153,70 @@ int		main(int argc, char **argv)
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
+	int width;
+	int height = 0;
+	int cnt;
+	// char *valid_chars = "012NSEW";
 
+	if (argc != 2)
+		return 0;
 	int fd = open(argv[1], O_RDONLY);
+	cnt = 0;
 	while (get_next_line(fd, &line)) {
-
-        // To parse and fill the Resolution struct
+		// printf("%s\n", line);
 		if (line[0] == 'R') {
 			char **splited_line = ft_split(line + 2, ' ');
 
 			int i = 0;
 			while ((*splited_line)[i]) {
 				if (ft_isdigit((*splited_line)[i]))
-					// printf("YEAAAS It's a digit\n");
-				i++;
+					i++;
+				else {
+					printf("Invalid Map !!!");
+					return -1;
+				}
 			}
 			s_resolution.height = atoi(splited_line[0]);
 			s_resolution.width = atoi(splited_line[1]);
 			s_resolution.resolution = line[0];
-			printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
+			// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
 		}
-
-		// To parse and fill the Floor struct
 		if (line[0] == 'F') {
 			char **splited_line = ft_split(line + 2, ',');
 
 			int i = 0;
 			while ((*splited_line)[i]) {
 				if (ft_isdigit((*splited_line)[i]))
-					// printf("YEAAAS It's a digit\n");
-				i++;
+					i++;
+				else {
+					printf("Invalid Map !!!");
+					return -1;
+				}
 			}
 			s_floor.Floor = line[0];
 			s_floor.red = atoi(splited_line[0]);
 			s_floor.green = atoi(splited_line[1]);
 			s_floor.blue = atoi(splited_line[2]);
-			printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
+			// printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
 		}
-
-		// To parse and fill the ceeling struct
 		if (line[0] == 'C') {
 			char **splited_line = ft_split(line + 2, ',');
 
 			int i = 0;
 			while ((*splited_line)[i]) {
 				if (ft_isdigit((*splited_line)[i]))
-					// printf("YEAAAS It's a digit\n");
-				i++;
+					i++;
+				else {
+					printf("Invalid Map !!!");
+					return -1;
+				}
 			}
 			s_celling.celling = line[0];
 			s_celling.red = atoi(splited_line[0]);
 			s_celling.green = atoi(splited_line[1]);
 			s_celling.blue = atoi(splited_line[2]);
-			printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
+			// printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
 		}
-
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
 		if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
@@ -223,7 +227,20 @@ int		main(int argc, char **argv)
 			parse_textures(line + 2, EA);
 		if (line[0] == 'S' && line[1] == ' ') 
 			parse_textures(line + 2, S);
+		if (line[0] == ' ' || line[0] == '1') {
+			width = strlen(line);
+			height++;
+			int i = 0;
+
+			while (line[i]) {
+				if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
+					printf("NOT A VALID MAP %s\n", line);
+				i++;
+			}
+			// printf("I Found the MAP !!\n");
+			printf("%d Width - %d Height\n", width, height);
+		}
 	}
-	// printf("%s", line);
+	// printf("%s\n%d", line, ++cnt);
 	return (0);
 }

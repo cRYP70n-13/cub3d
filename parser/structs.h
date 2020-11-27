@@ -58,4 +58,14 @@ typedef struct      textures
     char **textures;
 }                   s_textrs;
 
+/**
+ * @brief The MAP datastructure
+ * @param {*} IDK
+ * @return A 2D map filling by 0s or 1s
+*/
+typedef struct      map
+{
+    char **map;
+}                   s_map;
+
 #endif
