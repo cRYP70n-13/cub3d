@@ -123,7 +123,7 @@ void	parse_textures(char *line, int type)
 	while (line[i] != ' ' || line[i] != '\0') {
 		if (ft_isalpha(line[i]) || line[i] == '.') {
 			ptr_textures->textures[type] = strdup(line + i);
-			// printf("%s\n", ptr_textures->textures[type]);
+			printf("%s\n", ptr_textures->textures[type]);
 			break;
 		}
 		i++;
@@ -133,9 +133,7 @@ void	parse_textures(char *line, int type)
 
 void	check_map(char *line, s_map *map)
 {
-    int i = 0;
-    // printf("%zu     -      %zu\n", test, map->width);
-    // printf("%s\n", line);
+	int i = 0;
 	if (strlen(line) > map->width) {
 		map->width = strlen(line);
 	}
@@ -145,7 +143,7 @@ void	check_map(char *line, s_map *map)
 		i++;
 	}
 
-    printf("%zu\n", map->width);
+	printf("%zu\n", map->width);
 }
 
 int		main(int argc, char **argv)
@@ -154,18 +152,16 @@ int		main(int argc, char **argv)
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	// size_t width = 0;
 	int height = 0;
 	int cnt;
-    struct map s_map;
-	// char *valid_chars = "012NSEW";
+	struct map s_map;
 
 	if (argc != 2)
 		return 0;
 	int fd = open(argv[1], O_RDONLY);
 	cnt = 0;
 	s_map.width = 0;
-    while (get_next_line(fd, &line)) {
+	while (get_next_line(fd, &line)) {
 		// printf("%s\n", line);
 		if (line[0] == 'R') {
 			char **splited_line = ft_split(line + 2, ' ');
@@ -200,7 +196,7 @@ int		main(int argc, char **argv)
 			s_floor.red = atoi(splited_line[0]);
 			s_floor.green = atoi(splited_line[1]);
 			s_floor.blue = atoi(splited_line[2]);
-			// printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
+			printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
 		}
 		if (line[0] == 'C') {
 			char **splited_line = ft_split(line + 2, ',');
@@ -218,7 +214,7 @@ int		main(int argc, char **argv)
 			s_celling.red = atoi(splited_line[0]);
 			s_celling.green = atoi(splited_line[1]);
 			s_celling.blue = atoi(splited_line[2]);
-			// printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
+			printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
 		}
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
@@ -231,17 +227,7 @@ int		main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ') 
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			// int i = 0;
 			height++;
-			// if (strlen(line) > width)
-			// 	width = strlen(line);
-			// while (line[i]) {
-			// 	if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
-			// 		printf("NOT A VALID MAP %s\n", line);
-			// 	i++;
-			// }
-			// printf("%zu Width - %d Height\n", width, height);
-
 			check_map(line, &s_map);
 		}
 	}
