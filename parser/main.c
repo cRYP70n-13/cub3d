@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
-static int			is_split(char str, char c)
+static int is_split(char str, char c)
 {
 	if (str == c || str == '\t' || str == '\n')
 		return (1);
@@ -12,7 +11,7 @@ static int			is_split(char str, char c)
 		return (0);
 }
 
-static int			word_count(const char *str, char c)
+static int word_count(const char *str, char c)
 {
 	int i;
 	int output;
@@ -32,7 +31,7 @@ static int			word_count(const char *str, char c)
 	return (output);
 }
 
-static int			letter_count(const char *str, char c)
+static int letter_count(const char *str, char c)
 {
 	int i;
 	int count;
@@ -47,10 +46,10 @@ static int			letter_count(const char *str, char c)
 	return (count);
 }
 
-static char			*get_word(const char *str, char a, char **arr, int k)
+static char *get_word(const char *str, char a, char **arr, int k)
 {
-	int			i;
-	char		*c;
+	int i;
+	char *c;
 
 	i = 0;
 	if (!(c = malloc(letter_count(str, a) + 1)))
@@ -71,17 +70,17 @@ static char			*get_word(const char *str, char a, char **arr, int k)
 	return (c);
 }
 
-char				**ft_split(char const *str, char c)
+char **ft_split(char const *str, char c)
 {
-	char		**array;
-	int			i;
-	int			k;
+	char **array;
+	int i;
+	int k;
 
 	i = 0;
 	k = 0;
 	if (!str)
 		return (0);
-	if (!(array = malloc(sizeof(char*) * (word_count(str, c) + 1))))
+	if (!(array = malloc(sizeof(char *) * (word_count(str, c) + 1))))
 		return (0);
 	while (str[i])
 	{
@@ -97,7 +96,7 @@ char				**ft_split(char const *str, char c)
 	return (array);
 }
 
-int		ft_isdigit(int c)
+int ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);
@@ -110,20 +109,22 @@ int ft_isalpha(int c)
 	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
 }
 
-void	parse_textures(char *line, int type)
+void parse_textures(char *line, int type)
 {
 	s_textrs *ptr_textures;
 	int i;
 
 	i = 0;
-	if (!(ptr_textures = malloc(sizeof(s_textrs*))))
-		return ;
+	if (!(ptr_textures = malloc(sizeof(s_textrs *))))
+		return;
 	if (!(ptr_textures->textures = malloc(sizeof(char *) * 5)))
-		return ;
-	while (line[i] != ' ' || line[i] != '\0') {
-		if (ft_isalpha(line[i]) || line[i] == '.') {
+		return;
+	while (line[i] != ' ' || line[i] != '\0')
+	{
+		if (ft_isalpha(line[i]) || line[i] == '.')
+		{
 			ptr_textures->textures[type] = strdup(line + i);
-			printf("%s\n", ptr_textures->textures[type]);
+			// printf("%s\n", ptr_textures->textures[type]);
 			break;
 		}
 		i++;
@@ -131,28 +132,28 @@ void	parse_textures(char *line, int type)
 	// printf("%s\n", textures->textures[0]);
 }
 
-void	check_map(char *line, s_map *map)
+void check_map(char *line, s_map *map)
 {
 	int i = 0;
-	if (strlen(line) > map->width) {
+	map->height++;
+	if (strlen(line) > map->width)
 		map->width = strlen(line);
-	}
-	while (line[i]) {
+	while (line[i])
+	{
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
 			printf("NOT A VALID MAP %s\n", line);
 		i++;
 	}
 
-	printf("%zu\n", map->width);
+	printf("Width: %zu - Height: %zu\n", map->width, map->height);
 }
 
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	char *line;
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	int height = 0;
 	int cnt;
 	struct map s_map;
 
@@ -161,16 +162,21 @@ int		main(int argc, char **argv)
 	int fd = open(argv[1], O_RDONLY);
 	cnt = 0;
 	s_map.width = 0;
-	while (get_next_line(fd, &line)) {
+	s_map.height = 0;
+	while (get_next_line(fd, &line))
+	{
 		// printf("%s\n", line);
-		if (line[0] == 'R') {
+		if (line[0] == 'R')
+		{
 			char **splited_line = ft_split(line + 2, ' ');
 
 			int i = 0;
-			while ((*splited_line)[i]) {
+			while ((*splited_line)[i])
+			{
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
-				else {
+				else
+				{
 					printf("Invalid Map !!!");
 					return -1;
 				}
@@ -178,16 +184,19 @@ int		main(int argc, char **argv)
 			s_resolution.height = atoi(splited_line[0]);
 			s_resolution.width = atoi(splited_line[1]);
 			s_resolution.resolution = line[0];
-			// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width); 
+			// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
 		}
-		if (line[0] == 'F') {
+		if (line[0] == 'F')
+		{
 			char **splited_line = ft_split(line + 2, ',');
 
 			int i = 0;
-			while ((*splited_line)[i]) {
+			while ((*splited_line)[i])
+			{
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
-				else {
+				else
+				{
 					printf("Invalid Map !!!");
 					return -1;
 				}
@@ -196,16 +205,19 @@ int		main(int argc, char **argv)
 			s_floor.red = atoi(splited_line[0]);
 			s_floor.green = atoi(splited_line[1]);
 			s_floor.blue = atoi(splited_line[2]);
-			printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue); 
+			// printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
 		}
-		if (line[0] == 'C') {
+		if (line[0] == 'C')
+		{
 			char **splited_line = ft_split(line + 2, ',');
 
 			int i = 0;
-			while ((*splited_line)[i]) {
+			while ((*splited_line)[i])
+			{
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
-				else {
+				else
+				{
 					printf("Invalid Map !!!");
 					return -1;
 				}
@@ -214,7 +226,7 @@ int		main(int argc, char **argv)
 			s_celling.red = atoi(splited_line[0]);
 			s_celling.green = atoi(splited_line[1]);
 			s_celling.blue = atoi(splited_line[2]);
-			printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue); 
+			// printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
 		}
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
@@ -224,13 +236,10 @@ int		main(int argc, char **argv)
 			parse_textures(line + 2, WE);
 		if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
 			parse_textures(line + 2, EA);
-		if (line[0] == 'S' && line[1] == ' ') 
+		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
-		if (line[0] == ' ' || line[0] == '1') {
-			height++;
+		if (line[0] == ' ' || line[0] == '1')
 			check_map(line, &s_map);
-		}
 	}
-
 	return (0);
 }
