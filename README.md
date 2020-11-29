@@ -4,8 +4,8 @@
 
 ## **This is Tomorrow's and after Tomorrow's TODOs**
 
-- [ ] Parsing the MAP and start using the config data to do all the shit
-- [ ] Handling All the errors
+- [x] Parsing the MAP and start using the config data to do all the shit
+- [ ] Handling All the errors (Not quit yet !!)
 
  ---
 
