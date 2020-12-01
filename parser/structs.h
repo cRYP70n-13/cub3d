@@ -66,8 +66,8 @@ typedef struct      textures
 typedef struct      t_map
 {
 	char **virtual_map_before;
-	size_t width;
-	size_t height;
+	int width;
+	int height;
     char *map_in_one_line;
     char **map_2d;
 }                   s_map;

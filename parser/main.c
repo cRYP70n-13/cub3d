@@ -37,9 +37,9 @@ void parse_textures(char *line, int type)
  */
 // int		wall_conditions(s_map *map, int *i, int *j)
 // {
-// 	if (MAP2D[*i][*j] == '0' || MAP2D[*i][*j] == '2' || MAP2D[*i][*j] == 'N' || MAP2D[*i][*j] == 'S' || MAP2D[*i][*j] == 'W' || MAP2D[*i][*j] == 'E')
+// 	if (map->map_2d[*i][*j] == '0' || map->map_2d[*i][*j] == '2' || map->map_2d[*i][*j] == 'N' || map->map_2d[*i][*j] == 'S' || map->map_2d[*i][*j] == 'W' || map->map_2d[*i][*j] == 'E')
 // 	{
-// 		if (MAP2D[*i][*j - 1] == ' ' || MAP2D[*i][*j + 1] == ' ' || MAP2D[*i - 1][*j] == ' ' || MAP2D[*i + 1][*j] == ' ')
+// 		if (map->map_2d[*i][*j - 1] == ' ' || map->map_2d[*i][*j + 1] == ' ' || map->map_2d[*i - 1][*j] == ' ' || map->map_2d[*i + 1][*j] == ' ')
 // 			return (1);
 // 	}
 // 	return (0);
@@ -59,7 +59,7 @@ void	check_map(char *line, s_map *map)
 {
 	int i = 0;
 	map->height++;
-	if (strlen(line) > map->width)
+	if ((int)strlen(line) > map->width)
 		map->width = strlen(line);
 	while (line[i])
 	{
@@ -69,7 +69,7 @@ void	check_map(char *line, s_map *map)
 		i++;
 	}
 
-	printf("Width: %zu - Height: %zu\n", map->width, map->height);
+	// printf("Width: %zu - Height: %zu\n", map->width, map->height);
 }
 
 void    fill_line(char *line, s_map *map)
@@ -77,24 +77,88 @@ void    fill_line(char *line, s_map *map)
 	if (!(map->map_in_one_line))
 		map->map_in_one_line = strdup("");
 	map->map_in_one_line = ft_strjoin(map->map_in_one_line, line);
-	map->map_in_one_line = ft_strjoin(map->map_in_one_line, strdup("\n"));
+	map->map_in_one_line = ft_strjoin(map->map_in_one_line, "\n");
+}
+
+void	map_manager(s_map *map)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	map->map_2d = (char**)malloc((map->height + 3) * sizeof(char*));
+	while (++i < map->height )
+		map->map_2d[i] = (char*)malloc((map->width + 1) * sizeof(char));
+	map->map_2d[i] = NULL;
+	// i = -1;
+	i = 0;
+	while (i <= map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (j < (int)strlen(map->virtual_map_before[i]))
+				map->map_2d[i][j] = map->virtual_map_before[i][j];
+			else
+				map->map_2d[i][j] = ' ';
+			j++;
+		}
+		map->map_2d[i][j] = '\0';
+ 		printf("%s\n", map->map_2d[i]);
+		i++;
+	}
+	i = 0;
 }
 
 // void	build_map(s_map *map)
 // {
-// 	int i;
+// 	size_t i;
+// 	size_t j;
 
 // 	i = 0;
-// 	if (!(map->map_2d = malloc(sizeof(char) * map->width * map->height)))
+// 	j = 0;
+// 	if (!(map->map_2d = malloc(sizeof(char *) * (map->height + 3))))
 // 		ft_error_and_quit(2);
+
+// 	map->map_2d[j] = malloc(sizeof(char *) * map->width + 2);
 // 	while (i <= map->width + 2)
-// 		map->map_2d[i] = ' ';
-// 	i = 0;
-// 	while(i <= map->width) {
-// 		map->map_2d[0] = ' ';
-// 		while (`)
+// 	{
+// 		map->map_2d[0][i] = ' ';
+// 		i++;
 // 	}
-// 	map->map_2d[(int)ft_strlen()]
+
+// 	map->map_2d[map->height + 2] = NULL; 
+
+// 	while (j < map->height) {
+// 		i = 1;
+// 		map->map_2d[j+1] = malloc(sizeof(char *) * map->width + 2);
+// 		map->map_2d[j+1][0] = ' ';
+
+// 		while(i < map->width + 1) {
+// 			if (i < strlen(map->virtual_map_before[j])) {
+// 				#ifdef DEBUG
+// 					printf("%s      - %s      \n",map->virtual_map_before[j], map->map_2d[j+1]);
+// 				#endif
+// 				map->map_2d[j+1][i] = map->virtual_map_before[j][i];
+// 			} else {
+// 				map->map_2d[j+1][i] = ' ';
+// 			}
+// 			i++;
+// 		}
+// 		map->map_2d[j+1][i] = '\0';
+// 		printf("%s\n", map->map_2d[j+1]);
+// 		j++;
+// 	}
+
+// 	i = 0;
+	
+
+// 	map->map_2d[j] = malloc(sizeof(char *) * map->width + 2);
+// 	while (i <= map->width + 2)
+// 	{
+// 		map->map_2d[j][i] = ' ';
+// 		i++;
+// 	}
 // }
 
 // TODO: Integrate this function into my main function to get the map shit DONE
@@ -119,7 +183,7 @@ int main(int argc, char **argv)
 
 	while (get_next_line(fd, &line))
 	{
-		// printf("%s\n", line);
+		printf("%s\n", line);
 		if (line[0] == 'R' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ' ');
@@ -200,6 +264,8 @@ int main(int argc, char **argv)
 
 	map->virtual_map_before = ft_split(map->map_in_one_line, '\n');
 
-	printf("%s", map->map_in_one_line);
+	printf("%s", line);
+	// printf("%s", map->map_in_one_line);
+	map_manager(map);
 	return (0);
 }
