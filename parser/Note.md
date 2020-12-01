@@ -12,3 +12,35 @@
 - [ ] draw our map directly from the File
 - [ ] Checking all the incomming errors !!
 - [ ] Then we can start raycasting
+
+## Some of the best practices in memory allocation in C (Allocate a 2D Array)
+
+## <span style="color: red"> **_"Problem"_** </span>
+
+- The normal way to allocate 10lignes and 3 columnes in C
+
+```c
+    int **arr = malloc(sizeof(int) * 10);
+    for (int i = 0; i < 3; i++) {
+        arr[i] = malloc(sizeof(int) * 3);
+    }
+```
+
+## <span style="color: green"> **_"THE_SOLUTION"_** </span>
+
+```c
+    int **arr = malloc(sizeof(int) * 10 * 3);
+```
+
+___and make an array with the size of number of lines (height)___ </br>
+
+```c
+    int *array = malloc (sizeof(int) * 10);
+```
+
+___and points to every start of line of the first array___
+
+```c
+    for (int i = 0; i < 10; i++)
+       array[i] = arr + 10 * i;
+```

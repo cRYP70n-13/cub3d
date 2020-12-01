@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include "./errors.h"
 
-int		ft_error_and_quit(int n)
+void	ft_error_and_quit(int n)
 {
 	// This one is to handle the MAP ERRORS
 	if (n == 1) {

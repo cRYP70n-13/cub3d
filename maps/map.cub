@@ -1,4 +1,4 @@
-R 1920 1080
+R 1990 1080
 S ./path_to_the_sprite_texture
 NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
