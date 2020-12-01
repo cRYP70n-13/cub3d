@@ -29,7 +29,7 @@ static char	*ft_strcat(char *destination, const char *source)
 	return (destination);
 }
 
-char		*ft_strjoin(const char *s1, const char *s2)
+char		*ft_strjoin(char *s1, char *s2)
 {
 	char *result;
 
@@ -43,5 +43,7 @@ char		*ft_strjoin(const char *s1, const char *s2)
 		ft_strcpy(result, (char *)s1);
 		ft_strcat(result, (char *)s2);
 	}
+    free(s1);
+    free(s2);
 	return (result);
 }
