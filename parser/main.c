@@ -148,6 +148,25 @@ void check_map(char *line, s_map *map)
 	printf("Width: %zu - Height: %zu\n", map->width, map->height);
 }
 
+/**
+ * @param {*} The Map DataStructure
+ *         *i => which is the I cordinate in our map
+ *         *j => which is the J cordinate in the map
+ * @return {int} Check if our given line in the map is valid or not
+ */
+int		wall_conditions(s_map *map, int *i, int *j)
+{
+	if (MAP2D[*i][*j] == '0' || MAP2D[*i][*j] == '2' || MAP2D[*i][*j] == 'N' || MAP2D[*i][*j] == 'S' || MAP2D[*i][*j] == 'W' || MAP2D[*i][*j] == 'E')
+	{
+		if (MAP2D[*i][*j - 1] == ' ' || MAP2D[*i][*j + 1] == ' ' || MAP2D[*i - 1][*j] == ' ' || MAP2D[*i + 1][*j] == ' ')
+			return (1);
+	}
+	return (0);
+}
+
+
+// TODO: Integrate this function into my main function to get the map shit DONE
+// Also I have to surrounde my map with '0' So I can handle all the errors at once
 int main(int argc, char **argv)
 {
 	char *line;
@@ -166,7 +185,7 @@ int main(int argc, char **argv)
 	while (get_next_line(fd, &line))
 	{
 		// printf("%s\n", line);
-		if (line[0] == 'R')
+		if (line[0] == 'R' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ' ');
 
@@ -184,9 +203,9 @@ int main(int argc, char **argv)
 			s_resolution.height = atoi(splited_line[0]);
 			s_resolution.width = atoi(splited_line[1]);
 			s_resolution.resolution = line[0];
-			// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
+			printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
 		}
-		if (line[0] == 'F')
+		if (line[0] == 'F' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ',');
 
@@ -205,9 +224,9 @@ int main(int argc, char **argv)
 			s_floor.red = atoi(splited_line[0]);
 			s_floor.green = atoi(splited_line[1]);
 			s_floor.blue = atoi(splited_line[2]);
-			// printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
+			printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
 		}
-		if (line[0] == 'C')
+		if (line[0] == 'C' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ',');
 
@@ -226,7 +245,7 @@ int main(int argc, char **argv)
 			s_celling.red = atoi(splited_line[0]);
 			s_celling.green = atoi(splited_line[1]);
 			s_celling.blue = atoi(splited_line[2]);
-			// printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
+			printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
 		}
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
