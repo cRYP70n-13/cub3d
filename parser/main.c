@@ -20,9 +20,9 @@ void parse_textures(char *line, int type)
 		if (ft_isalpha(line[i]) || line[i] == '.')
 		{
 			ptr_textures->textures[type] = strdup(line + i);
-            #ifdef DEBUG
-                printf("%s\n", ptr_textures->textures[type]);
-            #endif
+			#ifdef DEBUG
+				printf("%s\n", ptr_textures->textures[type]);
+			#endif
 			break;
 		}
 		i++;
@@ -45,8 +45,17 @@ void parse_textures(char *line, int type)
 // 	return (0);
 // }
 
+void    initial_structs(s_map *map)
+{
+	map->height = 0;
+	map->width = 0;
+	map->map_in_one_line = NULL;
+	map->map_2d = NULL;
+	map->virtual_map_before = NULL;
+}
+
 // Bring the Width and Heigth of the map
-void check_map(char *line, s_map *map)
+void	check_map(char *line, s_map *map)
 {
 	int i = 0;
 	map->height++;
@@ -55,32 +64,59 @@ void check_map(char *line, s_map *map)
 	while (line[i])
 	{
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
-            ft_error_and_quit(1);
-        // Here I should call the function wall_conditions(params);
+			ft_error_and_quit(1);
+		// Here I should call the function wall_conditions(params);
 		i++;
 	}
 
 	printf("Width: %zu - Height: %zu\n", map->width, map->height);
 }
 
+void    fill_line(char *line, s_map *map)
+{
+	if (!(map->map_in_one_line))
+		map->map_in_one_line = strdup("");
+	map->map_in_one_line = ft_strjoin(map->map_in_one_line, line);
+	map->map_in_one_line = ft_strjoin(map->map_in_one_line, strdup("\n"));
+}
+
+// void	build_map(s_map *map)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if (!(map->map_2d = malloc(sizeof(char) * map->width * map->height)))
+// 		ft_error_and_quit(2);
+// 	while (i <= map->width + 2)
+// 		map->map_2d[i] = ' ';
+// 	i = 0;
+// 	while(i <= map->width) {
+// 		map->map_2d[0] = ' ';
+// 		while (`)
+// 	}
+// 	map->map_2d[(int)ft_strlen()]
+// }
 
 // TODO: Integrate this function into my main function to get the map shit DONE
 // Also I have to surrounde my map with '0' So I can handle all the errors at once
 int main(int argc, char **argv)
 {
 	char *line;
+
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-	int cnt;
-	struct map s_map;
+
+	s_map *map;
+	if (!(map = malloc(sizeof(s_map))))
+		ft_error_and_quit(2);
 
 	if (argc != 2)
 		return 0;
 	int fd = open(argv[1], O_RDONLY);
-	cnt = 0;
-	s_map.width = 0;
-	s_map.height = 0;
+
+	initial_structs(map);
+
 	while (get_next_line(fd, &line))
 	{
 		// printf("%s\n", line);
@@ -94,15 +130,15 @@ int main(int argc, char **argv)
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
 				else
-                    ft_error_and_quit(1);
+					ft_error_and_quit(1);
 			}
 			s_resolution.height = atoi(splited_line[0]);
 			s_resolution.width = atoi(splited_line[1]);
 			s_resolution.resolution = line[0];
 
-            #ifdef DEBUG
-                printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
-            #endif
+			#ifdef DEBUG
+				printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
+			#endif
 		} 
 		if (line[0] == 'F' && line[1] == ' ')
 		{
@@ -114,16 +150,16 @@ int main(int argc, char **argv)
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
 				else
-                    ft_error_and_quit(1);
+					ft_error_and_quit(1);
 			}
 			s_floor.Floor = line[0];
 			s_floor.red = ft_atoi(splited_line[0]);
 			s_floor.green = ft_atoi(splited_line[1]);
 			s_floor.blue = ft_atoi(splited_line[2]);
 
-            #ifdef DEBUG
-                printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
-            #endif
+			#ifdef DEBUG
+				printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
+			#endif
 		}
 		if (line[0] == 'C' && line[1] == ' ')
 		{
@@ -135,16 +171,16 @@ int main(int argc, char **argv)
 				if (ft_isdigit((*splited_line)[i]))
 					i++;
 				else
-                    ft_error_and_quit(1);
+					ft_error_and_quit(1);
 			}
 			s_celling.celling = line[0];
 			s_celling.red = ft_atoi(splited_line[0]);
 			s_celling.green = ft_atoi(splited_line[1]);
 			s_celling.blue = ft_atoi(splited_line[2]);
 
-            #ifdef DEBUG
-                printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
-            #endif
+			#ifdef DEBUG
+				printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
+			#endif
 		}
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			parse_textures(line + 2, NO);
@@ -156,8 +192,14 @@ int main(int argc, char **argv)
 			parse_textures(line + 2, EA);
 		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
-		if (line[0] == ' ' || line[0] == '1')
-			check_map(line, &s_map);
+		if (line[0] == ' ' || line[0] == '1') {
+			check_map(line, map);
+			fill_line(line, map);
+		}
 	}
+
+	map->virtual_map_before = ft_split(map->map_in_one_line, '\n');
+
+	printf("%s", map->map_in_one_line);
 	return (0);
 }

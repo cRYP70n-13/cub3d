@@ -63,11 +63,13 @@ typedef struct      textures
  * @param {*} IDK
  * @return A 2D map filling by 0s or 1s
 */
-typedef struct      map
+typedef struct      t_map
 {
-	char **map;
+	char **virtual_map_before;
 	size_t width;
 	size_t height;
+    char *map_in_one_line;
+    char **map_2d;
 }                   s_map;
 
 #endif
