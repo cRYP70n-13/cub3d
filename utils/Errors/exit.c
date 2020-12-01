@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "./errors.h"
 
+// The Errors Module
 void	ft_error_and_quit(int n)
 {
 	// This one is to handle the MAP ERRORS

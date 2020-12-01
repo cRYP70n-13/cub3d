@@ -1,114 +1,9 @@
 #include "get_next_line.h"
 #include "./structs.h"
 #include "../utils/Errors/errors.h"
+#include "../utils/libft/libft.h"
 #include <stdio.h>
 #include <string.h>
-
-static int is_split(char str, char c)
-{
-	if (str == c || str == '\t' || str == '\n')
-		return (1);
-	else
-		return (0);
-}
-
-static int word_count(const char *str, char c)
-{
-	int i;
-	int output;
-
-	i = 0;
-	output = 0;
-	while (str[i])
-	{
-		if (!is_split(str[i], c) && (i == 0 || is_split(str[i - 1], c)))
-		{
-			output++;
-			i++;
-		}
-		else
-			i++;
-	}
-	return (output);
-}
-
-static int letter_count(const char *str, char c)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (!is_split(str[i], c) && str[i])
-	{
-		count++;
-		i++;
-	}
-	return (count);
-}
-
-static char *get_word(const char *str, char a, char **arr, int k)
-{
-	int i;
-	char *c;
-
-	i = 0;
-	if (!(c = malloc(letter_count(str, a) + 1)))
-	{
-		while (i < k)
-		{
-			free(*(arr + i));
-			i++;
-		}
-		free(arr);
-	}
-	while (!is_split(str[i], a) && *(str + i) != '\0')
-	{
-		c[i] = str[i];
-		i++;
-	}
-	c[i] = '\0';
-	return (c);
-}
-
-char **ft_split(char const *str, char c)
-{
-	char **array;
-	int i;
-	int k;
-
-	i = 0;
-	k = 0;
-	if (!str)
-		return (0);
-	if (!(array = malloc(sizeof(char *) * (word_count(str, c) + 1))))
-		return (0);
-	while (str[i])
-	{
-		if (!is_split(str[i], c) && (i == 0 || is_split(str[i - 1], c)))
-		{
-			if (!(array[k] = get_word(&str[i], c, array, k)))
-				return (0);
-			k++;
-		}
-		i++;
-	}
-	array[word_count(str, c)] = 0;
-	return (array);
-}
-
-int ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	else
-		return (0);
-}
-
-int ft_isalpha(int c)
-{
-	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
-}
 
 void parse_textures(char *line, int type)
 {
@@ -125,12 +20,13 @@ void parse_textures(char *line, int type)
 		if (ft_isalpha(line[i]) || line[i] == '.')
 		{
 			ptr_textures->textures[type] = strdup(line + i);
-			// printf("%s\n", ptr_textures->textures[type]);
+            #ifdef DEBUG
+                printf("%s\n", ptr_textures->textures[type]);
+            #endif
 			break;
 		}
 		i++;
 	}
-	// printf("%s\n", textures->textures[0]);
 }
 
 /**
@@ -221,9 +117,9 @@ int main(int argc, char **argv)
                     ft_error_and_quit(1);
 			}
 			s_floor.Floor = line[0];
-			s_floor.red = atoi(splited_line[0]);
-			s_floor.green = atoi(splited_line[1]);
-			s_floor.blue = atoi(splited_line[2]);
+			s_floor.red = ft_atoi(splited_line[0]);
+			s_floor.green = ft_atoi(splited_line[1]);
+			s_floor.blue = ft_atoi(splited_line[2]);
 
             #ifdef DEBUG
                 printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
@@ -242,9 +138,9 @@ int main(int argc, char **argv)
                     ft_error_and_quit(1);
 			}
 			s_celling.celling = line[0];
-			s_celling.red = atoi(splited_line[0]);
-			s_celling.green = atoi(splited_line[1]);
-			s_celling.blue = atoi(splited_line[2]);
+			s_celling.red = ft_atoi(splited_line[0]);
+			s_celling.green = ft_atoi(splited_line[1]);
+			s_celling.blue = ft_atoi(splited_line[2]);
 
             #ifdef DEBUG
                 printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
