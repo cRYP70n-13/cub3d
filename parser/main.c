@@ -128,7 +128,6 @@ void	map_manager(s_map *map)
 }
 
 // TODO: Integrate this function into my main function to get the map shit DONE
-// Also I have to surrounde my map with '0' So I can handle all the errors at once
 int main(int argc, char **argv)
 {
 	char *line;
