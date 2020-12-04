@@ -21,7 +21,7 @@ void parse_textures(char *line, int type)
 		{
 			ptr_textures->textures[type] = strdup(line + i);
 			#ifdef DEBUG
-				printf("%s\n", ptr_textures->textures[type]);
+				// printf("%s\n", ptr_textures->textures[type]);
 			#endif
 			break;
 		}
@@ -35,15 +35,15 @@ void parse_textures(char *line, int type)
  *         *j => which is the J cordinate in the map
  * @return {int} Check if our given line in the map is valid or not
  */
-// int		wall_conditions(s_map *map, int *i, int *j)
-// {
-// 	if (map->map_2d[*i][*j] == '0' || map->map_2d[*i][*j] == '2' || map->map_2d[*i][*j] == 'N' || map->map_2d[*i][*j] == 'S' || map->map_2d[*i][*j] == 'W' || map->map_2d[*i][*j] == 'E')
-// 	{
-// 		if (map->map_2d[*i][*j - 1] == ' ' || map->map_2d[*i][*j + 1] == ' ' || map->map_2d[*i - 1][*j] == ' ' || map->map_2d[*i + 1][*j] == ' ')
-// 			return (1);
-// 	}
-// 	return (0);
-// }
+int		wall_conditions(s_map *map, int *i, int *j)
+{
+	if (map->map_2d[*i][*j] == '0' || map->map_2d[*i][*j] == '2' || map->map_2d[*i][*j] == 'N' || map->map_2d[*i][*j] == 'S' || map->map_2d[*i][*j] == 'W' || map->map_2d[*i][*j] == 'E')
+	{
+		if (map->map_2d[*i][*j - 1] == ' ' || map->map_2d[*i][*j + 1] == ' ' || map->map_2d[*i - 1][*j] == ' ' || map->map_2d[*i + 1][*j] == ' ')
+			return (1);
+	}
+	return (0);
+}
 
 void    initial_structs(s_map *map)
 {
@@ -87,79 +87,45 @@ void	map_manager(s_map *map)
 
 	i = -1;
 	map->map_2d = (char**)malloc((map->height + 3) * sizeof(char*));
-	while (++i < map->height )
-		map->map_2d[i] = (char*)malloc((map->width + 1) * sizeof(char));
-	map->map_2d[i] = NULL;
-	// i = -1;
+	while (++i < map->height + 3)
+		map->map_2d[i] = (char*)malloc((map->width + 3) * sizeof(char));
+	
 	i = 0;
-	while (i <= map->height)
+	while (i <= map->width + 1)
+	{
+		map->map_2d[0][i] = ' ';
+		printf("%c", map->map_2d[0][i]);
+		i++;
+	}
+	printf("\n");
+
+	i = 0;
+	while (i < map->height)
 	{
 		j = 0;
-		while (j < map->width)
+
+		map->map_2d[i][0] = ' ';
+		while (j < map->width + 2)
 		{
 			if (j < (int)strlen(map->virtual_map_before[i]))
-				map->map_2d[i][j] = map->virtual_map_before[i][j];
+				map->map_2d[i][j + 1] = map->virtual_map_before[i][j];
 			else
-				map->map_2d[i][j] = ' ';
+				map->map_2d[i][j + 1] = ' ';
 			j++;
 		}
 		map->map_2d[i][j] = '\0';
- 		printf("%s\n", map->map_2d[i]);
+		printf("%s\n", map->map_2d[i]);
 		i++;
 	}
+
 	i = 0;
+	while (i <= map->width + 2)
+	{
+		map->map_2d[0][i] = ' ';
+		printf("%c", map->map_2d[0][i]);
+		i++;
+	}
 }
-
-// void	build_map(s_map *map)
-// {
-// 	size_t i;
-// 	size_t j;
-
-// 	i = 0;
-// 	j = 0;
-// 	if (!(map->map_2d = malloc(sizeof(char *) * (map->height + 3))))
-// 		ft_error_and_quit(2);
-
-// 	map->map_2d[j] = malloc(sizeof(char *) * map->width + 2);
-// 	while (i <= map->width + 2)
-// 	{
-// 		map->map_2d[0][i] = ' ';
-// 		i++;
-// 	}
-
-// 	map->map_2d[map->height + 2] = NULL; 
-
-// 	while (j < map->height) {
-// 		i = 1;
-// 		map->map_2d[j+1] = malloc(sizeof(char *) * map->width + 2);
-// 		map->map_2d[j+1][0] = ' ';
-
-// 		while(i < map->width + 1) {
-// 			if (i < strlen(map->virtual_map_before[j])) {
-// 				#ifdef DEBUG
-// 					printf("%s      - %s      \n",map->virtual_map_before[j], map->map_2d[j+1]);
-// 				#endif
-// 				map->map_2d[j+1][i] = map->virtual_map_before[j][i];
-// 			} else {
-// 				map->map_2d[j+1][i] = ' ';
-// 			}
-// 			i++;
-// 		}
-// 		map->map_2d[j+1][i] = '\0';
-// 		printf("%s\n", map->map_2d[j+1]);
-// 		j++;
-// 	}
-
-// 	i = 0;
-	
-
-// 	map->map_2d[j] = malloc(sizeof(char *) * map->width + 2);
-// 	while (i <= map->width + 2)
-// 	{
-// 		map->map_2d[j][i] = ' ';
-// 		i++;
-// 	}
-// }
 
 // TODO: Integrate this function into my main function to get the map shit DONE
 // Also I have to surrounde my map with '0' So I can handle all the errors at once
@@ -181,9 +147,10 @@ int main(int argc, char **argv)
 
 	initial_structs(map);
 
-	while (get_next_line(fd, &line))
+	while (1)
 	{
-		printf("%s\n", line);
+		// printf("%s\n", line);
+		int ret = get_next_line(fd, &line);
 		if (line[0] == 'R' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ' ');
@@ -201,7 +168,7 @@ int main(int argc, char **argv)
 			s_resolution.resolution = line[0];
 
 			#ifdef DEBUG
-				printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
+				// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
 			#endif
 		} 
 		if (line[0] == 'F' && line[1] == ' ')
@@ -222,7 +189,7 @@ int main(int argc, char **argv)
 			s_floor.blue = ft_atoi(splited_line[2]);
 
 			#ifdef DEBUG
-				printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
+				// printf("%c %d %d %d\n", s_floor.Floor, s_floor.red, s_floor.green, s_floor.blue);
 			#endif
 		}
 		if (line[0] == 'C' && line[1] == ' ')
@@ -243,7 +210,7 @@ int main(int argc, char **argv)
 			s_celling.blue = ft_atoi(splited_line[2]);
 
 			#ifdef DEBUG
-				printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
+				// printf("%c %d %d %d\n", s_celling.celling, s_celling.red, s_celling.green, s_floor.blue);
 			#endif
 		}
 		if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
@@ -260,11 +227,12 @@ int main(int argc, char **argv)
 			check_map(line, map);
 			fill_line(line, map);
 		}
+		if (ret == 0)
+			break ;
 	}
 
 	map->virtual_map_before = ft_split(map->map_in_one_line, '\n');
 
-	printf("%s", line);
 	// printf("%s", map->map_in_one_line);
 	map_manager(map);
 	return (0);
