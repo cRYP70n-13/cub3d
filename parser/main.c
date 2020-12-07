@@ -92,6 +92,7 @@ void    fill_line(char *line, s_map *map)
 	map->map_in_one_line = ft_strjoin(map->map_in_one_line, "\n");
 }
 
+// TODO: Double player No player N S W E 
 void	map_manager(s_map *map)
 {
 	int		i;
@@ -102,21 +103,16 @@ void	map_manager(s_map *map)
 	while (++i < map->height + 2)
 		map->map_2d[i] = (char*)malloc((map->width + 3) * sizeof(char));
 	map->map_2d[i] = NULL;
-	i = 0;
-	while (i <= map->width + 1)
-	{
+
+	i = -1;
+	while (++i <= map->width + 1)
 		map->map_2d[0][i] = ' ';
-		// printf("%c", map->map_2d[0][i]);
-		i++;
-	}
 	map->map_2d[0][i] = '\0';
-	// printf("\n");
 
 	i = 0;
 	while (i < map->height)
 	{
 		j = 0;
-
 		map->map_2d[i + 1][0] = ' ';
 		while (j < map->width + 2)
 		{
@@ -127,21 +123,15 @@ void	map_manager(s_map *map)
 			j++;
 		}
 		map->map_2d[i + 1][j] = '\0';
-		// printf("%s\n", map->map_2d[i]);
 		i++;
 	}
 
-	i = 0;
-	while (i <= map->width + 1)
-	{
+	i = -1;
+	while (++i <= map->width + 1)
 		map->map_2d[map->height + 1][i] = ' ';
-		// printf("%c", map->map_2d[0][i]);
-		i++;
-	}
 	map->map_2d[map->height + 1][i] = '\0';
 }
 
-// TODO: Integrate this function into my main function to get the map shit DONE
 int main(int argc, char **argv)
 {
 	char *line;
@@ -234,7 +224,6 @@ int main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			// Check if we have valid characters in our map
 			check_map(line, map);
 			fill_line(line, map);
 		}
