@@ -5,7 +5,7 @@
 ## **This is Tomorrow's and after Tomorrow's TODOs**
 
 - [x] Parsing the MAP and start using the config data to do all the shit
-- [ ] Handling All the errors (Not quit yet !!)
+- [x] Handling All the errors (Not quit yet !!)
 
  ---
 
