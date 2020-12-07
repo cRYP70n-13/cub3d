@@ -32,21 +32,12 @@ void	parse_textures(char *line, int type)
 		if (ft_isalpha(line[i]) || line[i] == '.')
 		{
 			ptr_textures->textures[type] = strdup(line + i);
-			#ifdef DEBUG
-				// printf("%s\n", ptr_textures->textures[type]);
-			#endif
 			break;
 		}
 		i++;
 	}
 }
 
-/**
- * @param {*} The Map DataStructure
- *         *i => which is the I cordinate in our map
- *         *j => which is the J cordinate in the map
- * @return {int} Check if our given line in the map is valid or not
- */
 int		wall_conditions(s_map *map, int *i, int *j)
 {
 	if (map->map_2d[*i][*j] == '0' || map->map_2d[*i][*j] == '2' || map->map_2d[*i][*j] == 'N' || map->map_2d[*i][*j] == 'S' || map->map_2d[*i][*j] == 'W' || map->map_2d[*i][*j] == 'E')
@@ -66,7 +57,6 @@ void    initial_structs(s_map *map)
 	map->virtual_map_before = NULL;
 }
 
-// Bring the Width and Heigth of the map
 void	check_map(char *line, s_map *map)
 {
 	int i = 0;
@@ -77,11 +67,8 @@ void	check_map(char *line, s_map *map)
 	{
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != 'N')
 			ft_error_and_quit(1);
-		// Here I should call the function wall_conditions(params);
 		i++;
 	}
-
-	// printf("Width: %zu - Height: %zu\n", map->width, map->height);
 }
 
 void    fill_line(char *line, s_map *map)
