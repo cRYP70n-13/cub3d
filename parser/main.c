@@ -131,21 +131,18 @@ void	map_manager(s_map *map)
 int main(int argc, char **argv)
 {
 	char *line;
-
 	struct t_resolution s_resolution;
 	struct t_floor s_floor;
 	struct t_celling s_celling;
-
 	s_map *map;
+
 	if (!(map = malloc(sizeof(s_map))))
 		ft_error_and_quit(2);
-
 	if (argc != 2)
 		return 0;
 	int fd = open(argv[1], O_RDONLY);
 
 	initial_structs(map);
-
 	while (1)
 	{
 		// printf("%s\n", line);
