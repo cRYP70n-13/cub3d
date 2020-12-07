@@ -10,8 +10,7 @@
 ## Drawing the map
 
 - [x] draw our map directly from the File
-- [ ] Checking all the incomming errors !!
-- [ ] Then we can start raycasting
+- [x] Checking all the incomming errors !!
 
 ## Some of the best practices in memory allocation in C (Allocate a 2D Array)
 
