@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 			#ifdef DEBUG
 				// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
 			#endif
-		} 
+		}
 		if (line[0] == 'F' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ',');
