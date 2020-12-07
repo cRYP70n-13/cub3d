@@ -17,10 +17,10 @@
 #include <stdio.h>
 #include <string.h>
 
-void parse_textures(char *line, int type)
+void	parse_textures(char *line, int type)
 {
-	s_textrs *ptr_textures;
-	int i;
+	s_textrs	*ptr_textures;
+	int			i;
 
 	i = 0;
 	if (!(ptr_textures = malloc(sizeof(s_textrs *))))
@@ -99,44 +99,46 @@ void	map_manager(s_map *map)
 
 	i = -1;
 	map->map_2d = (char**)malloc((map->height + 3) * sizeof(char*));
-	while (++i < map->height + 3)
+	while (++i < map->height + 2)
 		map->map_2d[i] = (char*)malloc((map->width + 3) * sizeof(char));
-	
+	map->map_2d[i] = NULL;
 	i = 0;
 	while (i <= map->width + 1)
 	{
 		map->map_2d[0][i] = ' ';
-		printf("%c", map->map_2d[0][i]);
+		// printf("%c", map->map_2d[0][i]);
 		i++;
 	}
-	printf("\n");
+	map->map_2d[0][i] = '\0';
+	// printf("\n");
 
 	i = 0;
 	while (i < map->height)
 	{
 		j = 0;
 
-		map->map_2d[i][0] = ' ';
+		map->map_2d[i + 1][0] = ' ';
 		while (j < map->width + 2)
 		{
 			if (j < (int)strlen(map->virtual_map_before[i]))
-				map->map_2d[i][j + 1] = map->virtual_map_before[i][j];
+				map->map_2d[i + 1][j + 1] = map->virtual_map_before[i][j];
 			else
-				map->map_2d[i][j + 1] = ' ';
+				map->map_2d[i + 1][j + 1] = ' ';
 			j++;
 		}
-		map->map_2d[i][j] = '\0';
-		printf("%s\n", map->map_2d[i]);
+		map->map_2d[i + 1][j] = '\0';
+		// printf("%s\n", map->map_2d[i]);
 		i++;
 	}
 
 	i = 0;
-	while (i <= map->width + 2)
+	while (i <= map->width + 1)
 	{
-		map->map_2d[0][i] = ' ';
-		printf("%c", map->map_2d[0][i]);
+		map->map_2d[map->height + 1][i] = ' ';
+		// printf("%c", map->map_2d[0][i]);
 		i++;
 	}
+	map->map_2d[map->height + 1][i] = '\0';
 }
 
 // TODO: Integrate this function into my main function to get the map shit DONE
@@ -232,6 +234,7 @@ int main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
+			// Check if we have valid characters in our map
 			check_map(line, map);
 			fill_line(line, map);
 		}
@@ -240,8 +243,19 @@ int main(int argc, char **argv)
 	}
 
 	map->virtual_map_before = ft_split(map->map_in_one_line, '\n');
-
-	// printf("%s", map->map_in_one_line);
 	map_manager(map);
+
+	int i = 0;
+	int j;
+	while (i <= map->height + 1) {
+		j = 0;
+		printf("%s\n", map->map_2d[i]);
+		while (j <= map->width) {
+			(wall_conditions(map, &i, &j)) ? printf("stop at: %d\n", i) : 0;
+			j++;
+		}
+		i++;
+	}
+
 	return (0);
 }
