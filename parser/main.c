@@ -89,7 +89,7 @@ void	map_manager(s_map *map)
 	map->map_2d = (char**)malloc((map->height + 3) * sizeof(char*));
 	while (++i < map->height + 3)
 		map->map_2d[i] = (char*)malloc((map->width + 3) * sizeof(char));
-	
+
 	i = 0;
 	while (i <= map->width + 1)
 	{
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 			#ifdef DEBUG
 				// printf("%c %d %d\n",s_resolution.resolution, s_resolution.height, s_resolution.width);
 			#endif
-		} 
+		}
 		if (line[0] == 'F' && line[1] == ' ')
 		{
 			char **splited_line = ft_split(line + 2, ',');
