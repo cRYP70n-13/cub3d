@@ -11,7 +11,7 @@
 
 - [x] draw our map directly from the File
 - [x] Checking all the incomming errors !!
-- [ ] Check if the player exists and we don't have more than one player
+- [x] Check if the player exists and we don't have more than one player
 
 ## Some of the best practices in memory allocation in C (Allocate a 2D Array)
 
