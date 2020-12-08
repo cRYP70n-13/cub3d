@@ -93,8 +93,8 @@ int deal_key()
 	}
 	if (g_player.walk_down == -1) // DOWN_ARROW
 	{
-		g_player.new_y = -(g_player.y + sin(g_player.rotation_angle) * g_player.move_speed);
-		g_player.new_x = -(g_player.x + cos(g_player.rotation_angle) * g_player.move_speed);
+		g_player.new_y = -1 * (g_player.y + sin(g_player.rotation_angle) * g_player.move_speed);
+		g_player.new_x = -1 * (g_player.x + cos(g_player.rotation_angle) * g_player.move_speed);
 	}
 	if (g_player.turn_left == -1) // LEFT_ARROW
 		g_player.rotation_angle -= g_player.rotation_speed;
@@ -127,6 +127,8 @@ int key_released(int keycode)
 		g_player.turn_right = 0;
 	if (keycode == LEFT_ARROW)
 		g_player.turn_left = 0;
+	if (keycode == ESCAPE)
+		exit(EXIT_SUCCESS);
 	g_player.new_y = 0;
 	g_player.new_x = 0;
 	return (0);

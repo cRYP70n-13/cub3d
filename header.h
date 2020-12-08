@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
-// # include "mlx.h"
+# include "mlx.h"
 
 # define TAIL_SIZE 42
 # define MAP_NUM_ROWS 11
