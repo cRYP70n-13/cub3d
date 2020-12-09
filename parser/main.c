@@ -81,20 +81,12 @@ void struct_init()
 
 int deal_key()
 {
-	if (g_player.walk_up == 1) // UP_ARROW
-	{
-		g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed;
-		g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed;
-	}
-	if (g_player.walk_down == -1) // DOWN_ARROW
-	{
-		g_player.new_y = -1 * (g_player.y + sin(g_player.rotation_angle) * g_player.move_speed);
-		g_player.new_x = -1 * (g_player.x + cos(g_player.rotation_angle) * g_player.move_speed);
-	}
-	if (g_player.turn_left == -1) // LEFT_ARROW
-		g_player.rotation_angle -= g_player.rotation_speed;
-	if (g_player.turn_right == 1) // RIGHT_ARROW
-		g_player.rotation_angle += g_player.rotation_speed;
+	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
+	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
+
+		g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
+	// if (g_player.turn_right == 1) // RIGHT_ARROW
+	// 	g_player.rotation_angle += g_player.rotation_speed;
 	draw_map();
 	return (0);
 }
@@ -104,24 +96,22 @@ int key_pressed(int keycode)
 	if (keycode == UP_ARROW)
 		g_player.walk_up = 1;
 	if (keycode == DOWN_ARROW)
-		g_player.walk_down = -1;
+		g_player.walk_up= -1;
 	if (keycode == RIGHT_ARROW)
 		g_player.turn_right = 1;
 	if (keycode == LEFT_ARROW)
-		g_player.turn_left = -1;
+		g_player.turn_right = -1;
 	return (0);
 }
 
 int key_released(int keycode)
 {
-	if (keycode == UP_ARROW)
+	if (keycode == UP_ARROW || keycode == DOWN_ARROW)
 		g_player.walk_up = 0;
-	if (keycode == DOWN_ARROW)
-		g_player.walk_down = 0;
-	if (keycode == RIGHT_ARROW)
+	if (keycode == RIGHT_ARROW || keycode == LEFT_ARROW)
 		g_player.turn_right = 0;
-	if (keycode == LEFT_ARROW)
-		g_player.turn_left = 0;
+	// if (keycode == LEFT_ARROW)
+	// 	g_player.turn_left = 0;
 	if (keycode == ESCAPE)
 		exit(EXIT_SUCCESS);
 	g_player.new_y = 0;
