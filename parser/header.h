@@ -6,7 +6,7 @@
 /*   By: okimdil <okimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 10:03:19 by okimdil           #+#    #+#             */
-/*   Updated: 2020/03/13 18:05:17 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/09 13:22:37 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
-# include "./parser/structs.h"
+# include "structs.h"
 # include "mlx.h"
 
 # define TAIL_SIZE 42
