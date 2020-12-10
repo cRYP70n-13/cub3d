@@ -24,21 +24,16 @@
 # include "structs.h"
 # include "mlx.h"
 
-# define TAIL_SIZE 30
-# define MAP_NUM_ROWS 11
-# define MAP_NUM_COLS 15
+# define TAIL_SIZE 42
 # define PI 3.14159265358979323846
-# define WINDOW_WIDTH (MAP_NUM_COLS * TAIL_SIZE)
-# define WINDOW_HEIGHT (MAP_NUM_ROWS * TAIL_SIZE)
 
 # define UP_ARROW 13
 # define DOWN_ARROW 1
 # define LEFT_ARROW 0
 # define RIGHT_ARROW 2
 # define ESCAPE 53
-# define ABS(N) ((N<0)?(-N):(N))
 
-s_map *my_map;
+# define ABS(N) ((N<0)?(-N):(N))
 
 void	draw_map();
 void	dda(int X0, int Y0, int X1, int Y1);
@@ -48,22 +43,6 @@ int		deal_key();
 int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key();
-
-
-// TODO: and this structures is noow useless I have to bring it from my parser return
-int		map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-            {1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-            {1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-            {1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1},
-            {1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		};
 
 
 // The MLX structure to make it up and running
@@ -93,5 +72,6 @@ typedef struct s_player
 // TODO: Those are global structures I need to make them pointers of structures for sake of performance
 t_mlx	g_mlx;
 t_player g_player;
+s_map *_map;
 
 #endif

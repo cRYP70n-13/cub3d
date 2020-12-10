@@ -18,6 +18,8 @@
 #include <string.h>
 #include "header.h"
 
+// s_map *_map;
+
 // The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
 {
@@ -40,36 +42,36 @@ void	parse_textures(char *line, int type)
 	}
 }
 
-int		wall_conditions(s_map *map, int *i, int *j)
+int		wall_conditions(s_map *_map, int *i, int *j)
 {
-	if (map->map_2d[*i][*j] == '0' || map->map_2d[*i][*j] == '2' || \
-		map->map_2d[*i][*j] == 'N' || map->map_2d[*i][*j] == 'S' || \
-		map->map_2d[*i][*j] == 'W' || map->map_2d[*i][*j] == 'E')
+	if (_map->map_2d[*i][*j] == '0' || _map->map_2d[*i][*j] == '2' || \
+		_map->map_2d[*i][*j] == 'N' || _map->map_2d[*i][*j] == 'S' || \
+		_map->map_2d[*i][*j] == 'W' || _map->map_2d[*i][*j] == 'E')
 	{
-		if (map->map_2d[*i][*j - 1] == ' ' || map->map_2d[*i][*j + 1] == ' ' \
-		|| map->map_2d[*i - 1][*j] == ' ' || map->map_2d[*i + 1][*j] == ' ')
+		if (_map->map_2d[*i][*j - 1] == ' ' || _map->map_2d[*i][*j + 1] == ' ' \
+		|| _map->map_2d[*i - 1][*j] == ' ' || _map->map_2d[*i + 1][*j] == ' ')
 			return (1);
 	}
 	return (0);
 }
 
-void	initial_structs(s_map *map)
+void	initial_structs(s_map *_map)
 {
-	map->height = 0;
-	map->width = 0;
-	map->map_in_one_line = NULL;
-	map->map_2d = NULL;
-	map->virtual_map_before = NULL;
+	_map->height = 0;
+	_map->width = 0;
+	_map->map_in_one_line = NULL;
+	_map->map_2d = NULL;
+	_map->virtual_map_before = NULL;
 }
 
-void	check_map(char *line, s_map *map)
+void	check_map(char *line, s_map *_map)
 {
 	int i;
 
 	i = 0;
-	map->height++;
-	if ((int)strlen(line) > map->width)
-		map->width = strlen(line);
+	_map->height++;
+	if ((int)strlen(line) > _map->width)
+		_map->width = strlen(line);
 	while (line[i])
 	{
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1'\
@@ -82,48 +84,48 @@ void	check_map(char *line, s_map *map)
 	}
 }
 
-void	fill_line(char *line, s_map *map)
+void	fill_line(char *line, s_map *_map)
 {
-	if (!(map->map_in_one_line))
-		map->map_in_one_line = strdup("");
-	map->map_in_one_line = ft_strjoin(map->map_in_one_line, line);
-	map->map_in_one_line = ft_strjoin(map->map_in_one_line, "\n");
+	if (!(_map->map_in_one_line))
+		_map->map_in_one_line = strdup("");
+	_map->map_in_one_line = ft_strjoin(_map->map_in_one_line, line);
+	_map->map_in_one_line = ft_strjoin(_map->map_in_one_line, "\n");
 }
 
-void	map_manager(s_map *map)
+void	map_manager(s_map *_map)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	map->map_2d = (char**)malloc((map->height + 3) * sizeof(char*));
-	while (++i < map->height + 2)
-		map->map_2d[i] = (char*)malloc((map->width + 3) * sizeof(char));
-	map->map_2d[i] = NULL;
+	_map->map_2d = (char**)malloc((_map->height + 3) * sizeof(char*));
+	while (++i < _map->height + 2)
+		_map->map_2d[i] = (char*)malloc((_map->width + 3) * sizeof(char));
+	_map->map_2d[i] = NULL;
 	i = -1;
-	while (++i <= map->width + 1)
-		map->map_2d[0][i] = ' ';
-	map->map_2d[0][i] = '\0';
+	while (++i <= _map->width + 1)
+		_map->map_2d[0][i] = ' ';
+	_map->map_2d[0][i] = '\0';
 	i = 0;
-	while (i < map->height)
+	while (i < _map->height)
 	{
 		j = 0;
-		map->map_2d[i + 1][0] = ' ';
-		while (j < map->width + 2)
+		_map->map_2d[i + 1][0] = ' ';
+		while (j < _map->width + 2)
 		{
-			if (j < (int)strlen(map->virtual_map_before[i]))
-				map->map_2d[i + 1][j + 1] = map->virtual_map_before[i][j];
+			if (j < (int)strlen(_map->virtual_map_before[i]))
+				_map->map_2d[i + 1][j + 1] = _map->virtual_map_before[i][j];
 			else
-				map->map_2d[i + 1][j + 1] = ' ';
+				_map->map_2d[i + 1][j + 1] = ' ';
 			j++;
 		}
-		map->map_2d[i + 1][j] = '\0';
+		_map->map_2d[i + 1][j] = '\0';
 		i++;
 	}
 	i = -1;
-	while (++i <= map->width + 1)
-		map->map_2d[map->height + 1][i] = ' ';
-	map->map_2d[map->height + 1][i] = '\0';
+	while (++i <= _map->width + 1)
+		_map->map_2d[_map->height + 1][i] = ' ';
+	_map->map_2d[_map->height + 1][i] = '\0';
 }
 
 // The graphics Part
@@ -132,12 +134,12 @@ int is_wall(float x, float y)
 	int map_grid_index_x;
 	int map_grid_index_y;
 
-	if (x < 0 || x > WINDOW_WIDTH || y < 0 || y > WINDOW_HEIGHT)
+	if (x < 0 || x > (_map->width * TAIL_SIZE) || y < 0 || y > (_map->height * TAIL_SIZE))
 		return (1);
 	map_grid_index_x = floor(x / TAIL_SIZE);
 	map_grid_index_y = floor(y / TAIL_SIZE);
-	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, map[(int)map_grid_index_y][(int)map_grid_index_x]);
-	return (map[map_grid_index_y][map_grid_index_x]);
+	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
+	return (_map->map_2d[map_grid_index_y][map_grid_index_x]);
 }
 
 void ft_square(int x, int y, int color, int size)
@@ -187,24 +189,11 @@ void dda(int X0, int Y0, int X1, int Y1)
 
 void struct_init()
 {
-	g_player.x = WINDOW_WIDTH / 2;
-	g_player.y = WINDOW_HEIGHT / 2;
+	g_player.x = (_map->width * TAIL_SIZE) / 2;
+	g_player.y = (_map->height * TAIL_SIZE) / 2;
 	g_player.rotation_angle = PI / 2.0;
-	g_player.move_speed = 4.0;
-	g_player.rotation_speed = 0.1;
-}
-
-int deal_key()
-{
-	// The up and down keys
-	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
-	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
-
-	// The left and right keys
-	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
-
-	draw_map();
-	return (0);
+	g_player.move_speed = 8.0;
+	g_player.rotation_speed = 1.1;
 }
 
 int key_pressed(int keycode)
@@ -233,6 +222,21 @@ int key_released(int keycode)
 	return (0);
 }
 
+int deal_key()
+{
+	// The up and down keys
+	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
+	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
+
+	printf("\n\n\n\n\n\n\n%f", g_player.move_speed);
+
+	// The left and right keys
+	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
+
+	draw_map();
+	return (0);
+}
+
 int loop_key()
 {
 	mlx_hook(g_mlx.win_ptr, 2, 0, key_pressed, 0);
@@ -241,6 +245,7 @@ int loop_key()
 	return (0);
 }
 
+// TODO: I need to change this draw map function to be able to draw directlu from the map structure
 void draw_map()
 {
 	g_player.renderer_x = g_player.x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
@@ -251,23 +256,32 @@ void draw_map()
 	int y = 0;
 	int color = 0;
 
-	while (i < MAP_NUM_ROWS)
+	printf("\n This is the map WIDHT: %d\n", _map->width);
+	printf("\n This is the map HEIGHT: %d\n", _map->height);
+	while (i < /*MAP_NUM_ROWS*/ _map->height)
 	{
 		j = 0;
-		while (j < MAP_NUM_COLS)
+		while (j < /*MAP_NUM_COLS*/ _map->width)
 		{
 			x = j * TAIL_SIZE;
 			y = i * TAIL_SIZE;
-			color = map[i][j] == 1 ? 0x000000 : 0xffffff;
+
+			if (atoi(&_map->map_2d[i][j]) == 1) {
+				color = 0x000000;
+			} else if (_map->map_2d[i][j] == ' ') {
+				color = 0xffffff;
+			} else {
+				color = 0xff0000;
+			}
 			ft_square(x, y, color, TAIL_SIZE);
 			j++;
 		}
 		i++;
 	}
-	if (!is_wall(g_player.new_x, g_player.y))
-		g_player.x = g_player.new_x;
-	if (!is_wall(g_player.x, g_player.new_y))
-		g_player.y = g_player.new_y;
+	// if (!is_wall(g_player.new_x, g_player.y))
+	// 	g_player.x = g_player.new_x;
+	// if (!is_wall(g_player.x, g_player.new_y))
+	// 	g_player.y = g_player.new_y;
 	ft_square(g_player.x, g_player.y, 0xff0000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 }
@@ -278,18 +292,17 @@ int		main(int argc, char **argv)
 	struct t_resolution		s_resolution;
 	struct t_floor			s_floor;
 	struct t_celling		s_celling;
-	s_map					*map;
 	int						i = 0;
 	int						j;
 	int						player = 0;
 
-	if (!(map = malloc(sizeof(s_map))))
+	if (!(_map = malloc(sizeof(s_map))))
 		ft_error_and_quit(2);
 	if (argc != 2)
 		return (0);
 	int fd = open(argv[1], O_RDONLY);
 
-	initial_structs(map);
+	initial_structs(_map);
 	while (1)
 	{
 		// printf("%s\n", line);
@@ -356,25 +369,25 @@ int		main(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			check_map(line, map);
-			fill_line(line, map);
+			check_map(line, _map);
+			fill_line(line, _map);
 		}
 		if (ret == 0)
 			break ;
 	}
 
-	map->virtual_map_before = ft_split(map->map_in_one_line, '\n');
-	map_manager(map);
+	_map->virtual_map_before = ft_split(_map->map_in_one_line, '\n');
+	map_manager(_map);
 
-	while (i <= map->height + 1) {
+	while (i <= _map->height + 1) {
 		j = 0;
-		printf("%s\n", map->map_2d[i]);
-		while (j <= map->width) {
-			if (map->map_2d[i][j] == 'W' || map->map_2d[i][j] == 'E' || \
-					map->map_2d[i][j] == 'S' || map->map_2d[i][j] == 'N') {
+		printf("%s\n", _map->map_2d[i]);
+		while (j <= _map->width) {
+			if (_map->map_2d[i][j] == 'W' || _map->map_2d[i][j] == 'E' || \
+					_map->map_2d[i][j] == 'S' || _map->map_2d[i][j] == 'N') {
 				player++;
 			}
-			(wall_conditions(map, &i, &j)) ? printf("stop at: %d\n", i) : 0;
+			(wall_conditions(_map, &i, &j)) ? printf("stop at: %d\n", i) : 0;
 			j++;
 		}
 		i++;
@@ -385,8 +398,10 @@ int		main(int argc, char **argv)
 
 	// Graphic part
 	g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
-	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (MAP_NUM_COLS * TAIL_SIZE), (MAP_NUM_ROWS * TAIL_SIZE), "cRYP70N"); //initialize the window
+	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
 	struct_init();
+
+	// TODO: I need to pass the map structure here But I risk fucking all the shit up
 	draw_map();
 	mlx_loop_hook(g_mlx.mlx_ptr, loop_key, (void *)0);
 	mlx_loop(g_mlx.mlx_ptr); //evnets loop
