@@ -18,6 +18,7 @@
 #include <string.h>
 #include "header.h"
 
+// The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
 {
 	s_textrs		*ptr_textures;
@@ -125,9 +126,6 @@ void	map_manager(s_map *map)
 	map->map_2d[map->height + 1][i] = '\0';
 }
 
-
-
-
 // The graphics Part
 int is_wall(float x, float y)
 {
@@ -198,12 +196,13 @@ void struct_init()
 
 int deal_key()
 {
+	// The up and down keys
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
 
-		g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
-	// if (g_player.turn_right == 1) // RIGHT_ARROW
-	// 	g_player.rotation_angle += g_player.rotation_speed;
+	// The left and right keys
+	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
+
 	draw_map();
 	return (0);
 }
@@ -227,8 +226,6 @@ int key_released(int keycode)
 		g_player.walk_up = 0;
 	if (keycode == RIGHT_ARROW || keycode == LEFT_ARROW)
 		g_player.turn_right = 0;
-	// if (keycode == LEFT_ARROW)
-	// 	g_player.turn_left = 0;
 	if (keycode == ESCAPE)
 		exit(EXIT_SUCCESS);
 	g_player.new_y = 0;
@@ -277,7 +274,6 @@ void draw_map()
 
 int		main(int argc, char **argv)
 {
-
 	char					*line;
 	struct t_resolution		s_resolution;
 	struct t_floor			s_floor;
@@ -387,7 +383,6 @@ int		main(int argc, char **argv)
 	if (player != 1)
 		ft_error_and_quit(3);
 
-
 	// Graphic part
 	g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
 	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (MAP_NUM_COLS * TAIL_SIZE), (MAP_NUM_ROWS * TAIL_SIZE), "cRYP70N"); //initialize the window
@@ -395,7 +390,6 @@ int		main(int argc, char **argv)
 	draw_map();
 	mlx_loop_hook(g_mlx.mlx_ptr, loop_key, (void *)0);
 	mlx_loop(g_mlx.mlx_ptr); //evnets loop
-
 
 	return (0);
 }

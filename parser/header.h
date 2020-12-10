@@ -24,12 +24,13 @@
 # include "structs.h"
 # include "mlx.h"
 
-# define TAIL_SIZE 42
+# define TAIL_SIZE 30
 # define MAP_NUM_ROWS 11
 # define MAP_NUM_COLS 15
 # define PI 3.14159265358979323846
 # define WINDOW_WIDTH (MAP_NUM_COLS * TAIL_SIZE)
 # define WINDOW_HEIGHT (MAP_NUM_ROWS * TAIL_SIZE)
+
 # define UP_ARROW 13
 # define DOWN_ARROW 1
 # define LEFT_ARROW 0
