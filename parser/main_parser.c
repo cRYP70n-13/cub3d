@@ -6,7 +6,7 @@
 /*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:03:47 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/07 11:03:56 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/16 16:43:11 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "header.h"
-
-// s_map *_map;
 
 // The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
@@ -126,6 +124,34 @@ void	map_manager(s_map *_map)
 	while (++i <= _map->width + 1)
 		_map->map_2d[_map->height + 1][i] = ' ';
 	_map->map_2d[_map->height + 1][i] = '\0';
+}
+
+// The Atoi function I hope I don't miss it up
+int		ft_atoi(const char *str)
+{
+	int i;
+	int number;
+	int signe;
+
+	signe = 1;
+	i = 0;
+	number = 0;
+	while (*str > 0 && *str <= 32)
+	{
+		if (*str == 27)
+			return (0);
+		str++;
+	}
+	if (*str == '-')
+	{
+		signe = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (*(str + i) >= 48 && *(str + i) <= 57)
+		number = number * 10 + *(str + i++) - '0';
+	return (number * signe);
 }
 
 // The graphics Part
@@ -258,15 +284,16 @@ void draw_map()
 
 	printf("\n This is the map WIDHT: %d\n", _map->width);
 	printf("\n This is the map HEIGHT: %d\n", _map->height);
-	while (i < /*MAP_NUM_ROWS*/ _map->height)
+	while (i < _map->height)
 	{
+		// FIXME
 		j = 0;
-		while (j < /*MAP_NUM_COLS*/ _map->width)
+		while (j < _map->width)
 		{
 			x = j * TAIL_SIZE;
 			y = i * TAIL_SIZE;
 
-			if (atoi(&_map->map_2d[i][j]) == 1) {
+			if (ft_atoi(&_map->map_2d[i][j]) == 1) {
 				color = 0x000000;
 			} else if (_map->map_2d[i][j] == ' ') {
 				color = 0xffffff;
