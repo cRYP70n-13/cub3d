@@ -305,10 +305,10 @@ void draw_map()
 		}
 		i++;
 	}
-	// if (!is_wall(g_player.new_x, g_player.y))
-	// 	g_player.x = g_player.new_x;
-	// if (!is_wall(g_player.x, g_player.new_y))
-	// 	g_player.y = g_player.new_y;
+	if (!is_wall(g_player.new_x, g_player.y))
+		g_player.x = g_player.new_x;
+	if (!is_wall(g_player.x, g_player.new_y))
+		g_player.y = g_player.new_y;
 	ft_square(g_player.x, g_player.y, 0xff0000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 }
