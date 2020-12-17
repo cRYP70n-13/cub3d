@@ -44,29 +44,51 @@ int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key();
 
+/*
+ ** Here I built a struct of the MLX image :
+ ** It contains everything I need.
+ ** - img_ptr to store the return value of mlx_new_image
+ ** - data to store the return value of mlx_get_data_addr
+ ** - the 3 other variables are pretty much useless, but I'll need
+ ** them in the prototype of mlx_get_data_addr (man page says so)
+*/
+typedef struct s_img
+{
+	void	*img_ptr;
+	int 	*data;
+	int		size_l;
+	int		bpp;
+	int		endian;
+}				t_img;
 
-// The MLX structure to make it up and running
+/*
+ ** Here is my main struct containing every variables needed by the MLX.
+ ** - mlx_ptr stores the return value of mlx_init
+ ** - win stores the return value of mlx_new_window
+ ** - img will store everything we need for the image part, the struct is described above.
+*/
 typedef struct	s_mlx
 {
 	void	*win_ptr;
 	void	*mlx_ptr;
+	t_img	img;
 }				t_mlx;
 
 typedef struct s_player
 {
-	float x;
-	float y;
-	float new_x;
-	float new_y;
-	float renderer_x;
-	float renderer_y;
+	float	x;
+	float	y;
+	float	new_x;
+	float	new_y;
+	float	renderer_x;
+	float 	renderer_y;
 	int		walk_up;
 	int		walk_down;
 	int		turn_left;
 	int		turn_right;
-	float rotation_angle; // the rotation angle is PI / 2;
-	float move_speed; // by def to 3.0
-	float rotation_speed; // the rot speed is 3 * (PI / 180);
+	float	rotation_angle; // the rotation angle is PI / 2;
+	float	move_speed; // by def to 3.0
+	float	rotation_speed; // the rot speed is 3 * (PI / 180);
 }			t_player;
 
 // TODO: Those are global structures I need to make them pointers of structures for sake of performance

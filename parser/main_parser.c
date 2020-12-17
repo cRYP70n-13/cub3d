@@ -168,6 +168,11 @@ int is_wall(float x, float y)
 	return (_map->map_2d[map_grid_index_y][map_grid_index_x]);
 }
 
+// void	ft_put_image(int x, int y, int color)
+// {
+// 	g_mlx.img.data[x * TAIL_SIZE * _map->width + y] = color;
+// }
+
 void ft_square(int x, int y, int color, int size)
 {
 	int i;
@@ -271,7 +276,6 @@ int loop_key()
 	return (0);
 }
 
-// TODO: I need to change this draw map function to be able to draw directlu from the map structure
 void draw_map()
 {
 	g_player.renderer_x = g_player.x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
@@ -426,9 +430,11 @@ int		main(int argc, char **argv)
 	// Graphic part
 	g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
 	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
+	// Here I initialized a new image
+	g_mlx.img.img_ptr = mlx_new_image(g_mlx.mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
 	struct_init();
 
-	// TODO: I need to pass the map structure here But I risk fucking all the shit up
+	// TODO: I need to make this shit working with images I have set up all the structure I will need its time
 	draw_map();
 	mlx_loop_hook(g_mlx.mlx_ptr, loop_key, (void *)0);
 	mlx_loop(g_mlx.mlx_ptr); //evnets loop
