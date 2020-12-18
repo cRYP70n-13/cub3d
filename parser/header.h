@@ -91,8 +91,7 @@ typedef struct s_player
 	float	rotation_speed; // the rot speed is 3 * (PI / 180);
 }			t_player;
 
-// TODO: Those are global structures I need to make them pointers of structures for sake of performance
-t_mlx	g_mlx;
+t_mlx	*g_mlx;
 t_player g_player;
 s_map *_map;
 

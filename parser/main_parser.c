@@ -161,17 +161,20 @@ int is_wall(float x, float y)
 	int map_grid_index_y;
 
 	if (x < 0 || x > (_map->width * TAIL_SIZE) || y < 0 || y > (_map->height * TAIL_SIZE))
-		return (1);
-	map_grid_index_x = floor(x / TAIL_SIZE);
-	map_grid_index_y = floor(y / TAIL_SIZE);
+		return (0);
+	map_grid_index_x = (int)(x / TAIL_SIZE);
+	map_grid_index_y = (int)(y / TAIL_SIZE);
+	if (_map->map_2d[map_grid_index_y][map_grid_index_x] != '1')
+		return (0);
 	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
-	return (_map->map_2d[map_grid_index_y][map_grid_index_x]);
+	return (1);
+	// return (atoi(&_map->map_2d[map_grid_index_y][map_grid_index_x]));
 }
 
-// void	ft_put_image(int x, int y, int color)
-// {
-// 	g_mlx.img.data[x * TAIL_SIZE * _map->width + y] = color;
-// }
+void	ft_put_image(int x, int y, int color)
+{
+	g_mlx->img.data[x * TAIL_SIZE * _map->width + y] = color;
+}
 
 void ft_square(int x, int y, int color, int size)
 {
@@ -184,7 +187,7 @@ void ft_square(int x, int y, int color, int size)
 		j = x;
 		while (j < x + size)
 		{
-			mlx_pixel_put(g_mlx.mlx_ptr, g_mlx.win_ptr, j, i, color);
+			ft_put_image(i, j, color);
 			j++;
 		}
 		i++;
@@ -211,7 +214,7 @@ void dda(int X0, int Y0, int X1, int Y1)
 	int i = 0;
 	while (i <= steps)
 	{
-		mlx_pixel_put(g_mlx.mlx_ptr, g_mlx.win_ptr, X, Y, 0x0000FF); //  Put pixel at X and Y
+		ft_put_image(Y, X, 0x00FF00);
 		X += Xinc;													 // increment in x at each step
 		Y += Yinc;													 // increment in y at each step
 		i++;
@@ -223,8 +226,8 @@ void struct_init()
 	g_player.x = (_map->width * TAIL_SIZE) / 2;
 	g_player.y = (_map->height * TAIL_SIZE) / 2;
 	g_player.rotation_angle = PI / 2.0;
-	g_player.move_speed = 8.0;
-	g_player.rotation_speed = 1.1;
+	g_player.move_speed = 5.0;
+	g_player.rotation_speed = 0.1;
 }
 
 int key_pressed(int keycode)
@@ -259,7 +262,11 @@ int deal_key()
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
 
-	printf("\n\n\n\n\n\n\n%f", g_player.move_speed);
+	if (!is_wall(g_player.new_x, g_player.y))
+		g_player.x = g_player.new_x;
+	if (!is_wall(g_player.x, g_player.new_y))
+		g_player.y = g_player.new_y;
+	// printf("\n\n\n\n\n\n\n%f", g_player.move_speed);
 
 	// The left and right keys
 	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
@@ -270,50 +277,49 @@ int deal_key()
 
 int loop_key()
 {
-	mlx_hook(g_mlx.win_ptr, 2, 0, key_pressed, 0);
-	mlx_hook(g_mlx.win_ptr, 3, 0, key_released, 0);
+	mlx_hook(g_mlx->win_ptr, 2, 0, key_pressed, 0);
+	mlx_hook(g_mlx->win_ptr, 3, 0, key_released, 0);
 	deal_key();
+	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win_ptr, g_mlx->img.img_ptr, 0, 0);
 	return (0);
 }
 
 void draw_map()
 {
-	g_player.renderer_x = g_player.x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
-	g_player.renderer_y = g_player.y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
-	int i = 0;
+	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
+	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
+	int i = 1;
 	int j;
 	int x = 0;
 	int y = 0;
 	int color = 0;
 
-	printf("\n This is the map WIDHT: %d\n", _map->width);
-	printf("\n This is the map HEIGHT: %d\n", _map->height);
-	while (i < _map->height)
+	while (i < _map->height - 1)
 	{
 		// FIXME
-		j = 0;
-		while (j < _map->width)
+		j = 1;
+		while (j < _map->width - 1)
 		{
 			x = j * TAIL_SIZE;
 			y = i * TAIL_SIZE;
 
-			if (ft_atoi(&_map->map_2d[i][j]) == 1) {
-				color = 0x000000;
+			if (_map->map_2d[i][j] == '1') {
+				// printf(" 1 = TOSAWI %d\n", _map->map_2d[i][j]);
+				color = 0xFF0000; // RED color
 			} else if (_map->map_2d[i][j] == ' ') {
-				color = 0xffffff;
+				color = 0x0000ff; // BLUE color
+			} else if (_map->map_2d[i][j] == '0'){
+				color = 0x00FF00; // GREEN color
 			} else {
-				color = 0xff0000;
+				// DO nothing just continue
 			}
 			ft_square(x, y, color, TAIL_SIZE);
 			j++;
 		}
 		i++;
 	}
-	if (!is_wall(g_player.new_x, g_player.y))
-		g_player.x = g_player.new_x;
-	if (!is_wall(g_player.x, g_player.new_y))
-		g_player.y = g_player.new_y;
-	ft_square(g_player.x, g_player.y, 0xff0000, 6);
+
+	ft_square(g_player.x, g_player.y, 0x000000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 }
 
@@ -328,6 +334,8 @@ int		main(int argc, char **argv)
 	int						player = 0;
 
 	if (!(_map = malloc(sizeof(s_map))))
+		ft_error_and_quit(2);
+	if (!(g_mlx = malloc(sizeof(t_mlx))))
 		ft_error_and_quit(2);
 	if (argc != 2)
 		return (0);
@@ -428,16 +436,17 @@ int		main(int argc, char **argv)
 		ft_error_and_quit(3);
 
 	// Graphic part
-	g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
-	g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
+	g_mlx->mlx_ptr = mlx_init();																						  //Connection to the graphic server
+	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
 	// Here I initialized a new image
-	g_mlx.img.img_ptr = mlx_new_image(g_mlx.mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
+	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
 	struct_init();
+	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 
 	// TODO: I need to make this shit working with images I have set up all the structure I will need its time
 	draw_map();
-	mlx_loop_hook(g_mlx.mlx_ptr, loop_key, (void *)0);
-	mlx_loop(g_mlx.mlx_ptr); //evnets loop
+	mlx_loop_hook(g_mlx->mlx_ptr, loop_key, (void *)0);
+	mlx_loop(g_mlx->mlx_ptr); //evnets loop
 
 	return (0);
 }
