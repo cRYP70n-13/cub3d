@@ -164,10 +164,12 @@ int is_wall(float x, float y)
 		return (0);
 	map_grid_index_x = (int)(x / TAIL_SIZE);
 	map_grid_index_y = (int)(y / TAIL_SIZE);
-	if (_map->map_2d[map_grid_index_y][map_grid_index_x] != '1')
-		return (0);
+
+	// DEGBUGGING
+	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
+		return (1);
 	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
-	return (1);
+	return (0);
 	// return (atoi(&_map->map_2d[map_grid_index_y][map_grid_index_x]));
 }
 
@@ -226,7 +228,7 @@ void struct_init()
 	g_player.x = (_map->width * TAIL_SIZE) / 2;
 	g_player.y = (_map->height * TAIL_SIZE) / 2;
 	g_player.rotation_angle = PI / 2.0;
-	g_player.move_speed = 5.0;
+	g_player.move_speed = 3.0;
 	g_player.rotation_speed = 0.1;
 }
 
@@ -288,17 +290,17 @@ void draw_map()
 {
 	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
 	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
-	int i = 1;
+	int i = 0;
 	int j;
 	int x = 0;
 	int y = 0;
 	int color = 0;
 
-	while (i < _map->height - 1)
+	while (i < _map->height)
 	{
 		// FIXME
-		j = 1;
-		while (j < _map->width - 1)
+		j = 0;
+		while (j < _map->width)
 		{
 			x = j * TAIL_SIZE;
 			y = i * TAIL_SIZE;
