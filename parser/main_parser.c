@@ -168,9 +168,10 @@ int is_wall(float x, float y)
 	// DEGBUGGING
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
-	printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
+	#ifdef DEBUG
+		// printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
+	#endif
 	return (0);
-	// return (atoi(&_map->map_2d[map_grid_index_y][map_grid_index_x]));
 }
 
 void	ft_put_image(int x, int y, int color)
@@ -223,10 +224,10 @@ void dda(int X0, int Y0, int X1, int Y1)
 	}
 }
 
-void struct_init()
+void struct_init() //TODO: Player init renamte it
 {
-	g_player.x = (_map->width * TAIL_SIZE) / 4;
-	g_player.y = (_map->height * TAIL_SIZE) / 2.5;
+	g_player.x = (_map->width * TAIL_SIZE) / 1.40;
+	g_player.y = (_map->height * TAIL_SIZE) / 2;
 	g_player.rotation_angle = PI / 2.0;
 	g_player.move_speed = 3.0;
 	g_player.rotation_speed = 0.1;
@@ -287,13 +288,14 @@ int loop_key()
 
 void draw_map()
 {
-	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
-	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
 	int i = 0;
 	int j;
 	int x = 0;
 	int y = 0;
 	int color = 0;
+
+	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
+	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
 
 	while (i < _map->height)
 	{
@@ -320,8 +322,10 @@ void draw_map()
 		i++;
 	}
 
-	printf("Okay so I = %d and J = %d\n", i, j);
-	printf("Okay and _map->width = %d and _map->heigth = %d\n\n\n", _map->width, _map->height);
+	// #ifdef DEBUG
+	// 	printf("Okay so I = %d and J = %d\n", i, j);
+		printf("Okay and _map->width = %d and _map->heigth = %d\n\n\n", _map->width, _map->height);
+	// #endif
 
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
@@ -440,11 +444,17 @@ int		main(int argc, char **argv)
 		ft_error_and_quit(3);
 
 	// Graphic part
+	_map->height += 2;
+	_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();																						  //Connection to the graphic server
 	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
 	// Here I initialized a new image
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
+	_map->height -= 2;
+	_map->width -= 2;
 	struct_init();
+	_map->height += 2;
+	_map->width += 2;
 	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 
 	// TODO: I need to make this shit working with images I have set up all the structure I will need its time

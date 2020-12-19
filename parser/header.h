@@ -24,7 +24,7 @@
 # include "structs.h"
 # include "mlx.h"
 
-# define TAIL_SIZE 42
+# define TAIL_SIZE 21
 # define PI 3.14159265358979323846
 
 # define UP_ARROW 13
