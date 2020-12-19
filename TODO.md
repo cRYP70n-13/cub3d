@@ -37,3 +37,4 @@
 ## Sprites
 
 - [ ] Setting up the data structures
+- [ ] And starting this shitty sprites
