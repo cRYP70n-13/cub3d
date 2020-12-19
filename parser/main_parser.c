@@ -224,7 +224,7 @@ void dda(int X0, int Y0, int X1, int Y1)
 	}
 }
 
-void struct_init() //TODO: Player init renamte it
+void player_init() //TODO: Player init renamte it
 {
 	g_player.x = (_map->width * TAIL_SIZE) / 1.40;
 	g_player.y = (_map->height * TAIL_SIZE) / 2;
@@ -299,7 +299,6 @@ void draw_map()
 
 	while (i < _map->height)
 	{
-		// FIXME
 		j = 0;
 		while (j < _map->width)
 		{
@@ -307,7 +306,6 @@ void draw_map()
 			y = i * TAIL_SIZE;
 
 			if (_map->map_2d[i][j] == '1') {
-				// printf(" 1 = TOSAWI %d\n", _map->map_2d[i][j]);
 				color = 0xFF0000; // RED color
 			} else if (_map->map_2d[i][j] == ' ') {
 				color = 0x0000ff; // BLUE color
@@ -321,12 +319,6 @@ void draw_map()
 		}
 		i++;
 	}
-
-	// #ifdef DEBUG
-	// 	printf("Okay so I = %d and J = %d\n", i, j);
-		printf("Okay and _map->width = %d and _map->heigth = %d\n\n\n", _map->width, _map->height);
-	// #endif
-
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 }
@@ -452,12 +444,11 @@ int		main(int argc, char **argv)
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
 	_map->height -= 2;
 	_map->width -= 2;
-	struct_init();
+	player_init();
 	_map->height += 2;
 	_map->width += 2;
 	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 
-	// TODO: I need to make this shit working with images I have set up all the structure I will need its time
 	draw_map();
 	mlx_loop_hook(g_mlx->mlx_ptr, loop_key, (void *)0);
 	mlx_loop(g_mlx->mlx_ptr); //evnets loop
