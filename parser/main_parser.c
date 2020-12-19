@@ -225,8 +225,8 @@ void dda(int X0, int Y0, int X1, int Y1)
 
 void struct_init()
 {
-	g_player.x = (_map->width * TAIL_SIZE) / 2;
-	g_player.y = (_map->height * TAIL_SIZE) / 2;
+	g_player.x = (_map->width * TAIL_SIZE) / 4;
+	g_player.y = (_map->height * TAIL_SIZE) / 2.5;
 	g_player.rotation_angle = PI / 2.0;
 	g_player.move_speed = 3.0;
 	g_player.rotation_speed = 0.1;
@@ -268,7 +268,6 @@ int deal_key()
 		g_player.x = g_player.new_x;
 	if (!is_wall(g_player.x, g_player.new_y))
 		g_player.y = g_player.new_y;
-	// printf("\n\n\n\n\n\n\n%f", g_player.move_speed);
 
 	// The left and right keys
 	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
@@ -320,6 +319,9 @@ void draw_map()
 		}
 		i++;
 	}
+
+	printf("Okay so I = %d and J = %d\n", i, j);
+	printf("Okay and _map->width = %d and _map->heigth = %d\n\n\n", _map->width, _map->height);
 
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
 	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
