@@ -27,12 +27,18 @@
 # define TAIL_SIZE 21
 # define PI 3.14159265358979323846
 
+// The keys datastructures
 # define UP_ARROW 13
 # define DOWN_ARROW 1
 # define LEFT_ARROW 0
 # define RIGHT_ARROW 2
 # define ESCAPE 53
 
+// The raycasting data structures
+# define FOV 60 * (PI / 180)
+
+
+// Just the absolute value to run as fast as possible
 # define ABS(N) ((N<0)?(-N):(N))
 
 void	draw_map();

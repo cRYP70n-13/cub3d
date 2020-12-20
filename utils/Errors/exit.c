@@ -21,4 +21,9 @@ void	ft_error_and_quit(int n)
 		write(2, "There is more than one player in the map INVALID!", 50);
 		exit(EXIT_FAILURE);
 	}
+
+	if (n == 4) {
+		write(2, "INVALID MAP !! GIVE ME A VALID ONE PLEASE", 42);
+		exit(EXIT_FAILURE);
+	}
 }

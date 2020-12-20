@@ -165,12 +165,8 @@ int is_wall(float x, float y)
 	map_grid_index_x = (int)(x / TAIL_SIZE);
 	map_grid_index_y = (int)(y / TAIL_SIZE);
 
-	// DEGBUGGING
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
-	#ifdef DEBUG
-		// printf("%d | %d | %d\n", map_grid_index_x, map_grid_index_y, _map->map_2d[(int)map_grid_index_y][(int)map_grid_index_x]);
-	#endif
 	return (0);
 }
 
@@ -224,7 +220,7 @@ void dda(int X0, int Y0, int X1, int Y1)
 	}
 }
 
-void player_init() //TODO: Player init renamte it
+void player_init()
 {
 	g_player.x = (_map->width * TAIL_SIZE) / 1.40;
 	g_player.y = (_map->height * TAIL_SIZE) / 2;
@@ -426,7 +422,7 @@ int		main(int argc, char **argv)
 					_map->map_2d[i][j] == 'S' || _map->map_2d[i][j] == 'N') {
 				player++;
 			}
-			(wall_conditions(_map, &i, &j)) ? printf("stop at: %d\n", i) : 0;
+			(wall_conditions(_map, &i, &j)) ? ft_error_and_quit(4) : 0;
 			j++;
 		}
 		i++;
