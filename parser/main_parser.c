@@ -18,6 +18,8 @@
 #include <string.h>
 #include "header.h"
 
+s_resolution resolution;
+
 // The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
 {
@@ -213,7 +215,9 @@ void dda(int X0, int Y0, int X1, int Y1)
 	int i = 0;
 	while (i <= steps)
 	{
-		ft_put_image(Y, X, 0x00FF00);
+		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y)))
+			return ;
+		ft_put_image(Y, X, 0x004800);
 		X += Xinc;													 // increment in x at each step
 		Y += Yinc;													 // increment in y at each step
 		i++;
@@ -273,6 +277,8 @@ int deal_key()
 	return (0);
 }
 
+// TODO: Implement the arrow keys to move the direction of the player
+
 int loop_key()
 {
 	mlx_hook(g_mlx->win_ptr, 2, 0, key_pressed, 0);
@@ -290,8 +296,8 @@ void draw_map()
 	int y = 0;
 	int color = 0;
 
-	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
-	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
+	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * INT16_MAX; // Renderer of x depending on the position of the plaer and where the player moves
+	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * INT16_MAX; // Renderer of y depending on the position of the plaer and where the player moves
 
 	while (i < _map->height)
 	{
@@ -316,13 +322,27 @@ void draw_map()
 		i++;
 	}
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
-	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
+	// dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
+	field_of_view();
+}
+
+void	field_of_view(void)
+{
+	float player_angle = g_player.rotation_angle - (FOV / 2.0);
+
+	while (player_angle <= g_player.rotation_angle + (FOV / 2.0))
+	{
+		g_player.renderer_x = g_player.new_x + cos(player_angle) * INT16_MAX; // Renderer of x depending on the position of the plaer and where the player moves
+		g_player.renderer_y = g_player.new_y + sin(player_angle) * INT16_MAX; // Renderer of y depending on the position of the plaer and where the player moves
+		player_angle += FOV / resolution.width;
+		dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
+	}
 }
 
 int		main(int argc, char **argv)
 {
 	char					*line;
-	struct t_resolution		s_resolution;
+	// struct t_resolution		resolution;
 	struct t_floor			s_floor;
 	struct t_celling		s_celling;
 	int						i = 0;
@@ -354,9 +374,9 @@ int		main(int argc, char **argv)
 				else
 					ft_error_and_quit(1);
 			}
-			s_resolution.height = atoi(splited_line[0]);
-			s_resolution.width = atoi(splited_line[1]);
-			s_resolution.resolution = line[0];
+			resolution.height = atoi(splited_line[0]);
+			resolution.width = atoi(splited_line[1]);
+			resolution.resolution = line[0];
 
 		}
 		if (line[0] == 'F' && line[1] == ' ')
@@ -435,7 +455,7 @@ int		main(int argc, char **argv)
 	_map->height += 2;
 	_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();																						  //Connection to the graphic server
-	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE), "cRYP70N"); //initialize the window
+	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.height, resolution.width, "cRYP70N"); //initialize the window
 	// Here I initialized a new image
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
 	_map->height -= 2;

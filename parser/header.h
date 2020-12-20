@@ -49,6 +49,7 @@ int		deal_key();
 int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key();
+void	field_of_view(void);
 
 /*
  ** Here I built a struct of the MLX image :
