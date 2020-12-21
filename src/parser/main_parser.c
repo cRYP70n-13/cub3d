@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include "./structs.h"
+#include "../../includes/get_next_line.h"
+#include "../../includes/structs.h"
 #include "../utils/Errors/errors.h"
 #include "../utils/libft/libft.h"
 #include <stdio.h>
 #include <string.h>
-#include "header.h"
+#include "../../includes/header.h"
 
 
 int		main(int argc, char **argv)

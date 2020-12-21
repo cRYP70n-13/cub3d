@@ -1,7 +1,7 @@
-#include "header.h"
+#include "../../includes/header.h"
 #include "../utils/libft/libft.h"
-#include "get_next_line.h"
-#include "structs.h"
+#include "../../includes/get_next_line.h"
+#include "../../includes/structs.h"
 
 void	fill_line(char *line, s_map *_map)
 {

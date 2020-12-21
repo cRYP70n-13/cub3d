@@ -1,7 +1,7 @@
-#include "header.h"
+#include "../../includes/header.h"
 #include "../utils/libft/libft.h"
 #include "../utils/Errors/errors.h"
-#include "structs.h"
+#include "../../includes/structs.h"
 
 
 // The parser part So now it's easy to split the functions to multiple files

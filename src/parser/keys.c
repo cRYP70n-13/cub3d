@@ -1,5 +1,5 @@
-#include "header.h"
-#include "./structs.h"
+#include "../../includes/header.h"
+#include "../../includes/structs.h"
 #include "../utils/libft/libft.h"
 
 void player_init()
