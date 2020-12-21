@@ -11,9 +11,9 @@
 
 ## Raycasting
 
-- [ ] Setting up the raycasting structres
-- [ ] Translating the horizontal intersection to C code
-- [ ] Rendring the rays
+- [x] Setting up the raycasting structres
+- [x] Translating the horizontal intersection to C code
+- [x] Rendring the rays
 
  ---
 

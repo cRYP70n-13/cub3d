@@ -6,7 +6,7 @@
 /*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:03:47 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/16 16:43:11 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/21 10:49:24 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,6 @@ void draw_map()
 		i++;
 	}
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
-	// dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 	field_of_view();
 }
 
