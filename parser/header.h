@@ -101,5 +101,6 @@ typedef struct s_player
 t_mlx	*g_mlx;
 t_player g_player;
 s_map *_map;
+s_resolution resolution;
 
 #endif

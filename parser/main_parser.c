@@ -18,8 +18,6 @@
 #include <string.h>
 #include "header.h"
 
-s_resolution resolution;
-
 // The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
 {
@@ -128,33 +126,6 @@ void	map_manager(s_map *_map)
 	_map->map_2d[_map->height + 1][i] = '\0';
 }
 
-int		ft_atoi(const char *str)
-{
-	int i;
-	int number;
-	int signe;
-
-	signe = 1;
-	i = 0;
-	number = 0;
-	while (*str > 0 && *str <= 32)
-	{
-		if (*str == 27)
-			return (0);
-		str++;
-	}
-	if (*str == '-')
-	{
-		signe = -1;
-		str++;
-	}
-	else if (*str == '+')
-		str++;
-	while (*(str + i) >= 48 && *(str + i) <= 57)
-		number = number * 10 + *(str + i++) - '0';
-	return (number * signe);
-}
-
 // The graphics Part
 int		is_wall(float x, float y, float Xinc, float Yinc)
 {
@@ -165,7 +136,7 @@ int		is_wall(float x, float y, float Xinc, float Yinc)
 		return (1);
 	map_grid_index_x = (int)(x / TAIL_SIZE);
 	map_grid_index_y = (int)(y / TAIL_SIZE);
-	// printf("x: %d | y %d || char %c\n", map_grid_index_x, map_grid_index_y, _map->map_2d[map_grid_index_y][map_grid_index_x]);
+
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
 
@@ -280,9 +251,9 @@ int deal_key()
 {
 	// The up and down keys
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
-	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up; 
+	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 
-	if (!is_wall(g_player.new_x + 0.0, g_player.new_y, 2.5, 2.50))
+	if (!is_wall(g_player.new_x, g_player.new_y, 2.5, 2.5))
 	{
 		g_player.x = g_player.new_x;
 		g_player.y = g_player.new_y;
@@ -295,7 +266,6 @@ int deal_key()
 }
 
 // TODO: Implement the arrow keys to move the direction of the player
-
 int loop_key()
 {
 	mlx_hook(g_mlx->win_ptr, 2, 0, key_pressed, 0);
@@ -457,6 +427,8 @@ int		main(int argc, char **argv)
 			if (_map->map_2d[i][j] == 'W' || _map->map_2d[i][j] == 'E' || \
 					_map->map_2d[i][j] == 'S' || _map->map_2d[i][j] == 'N') {
 				player++;
+				// TODO: Here I should call the draw player function to draw my player in the exact location that he gived me
+				// ft_draw_player(int x, int y);
 			}
 			(wall_conditions(_map, &i, &j)) ? ft_error_and_quit(4) : 0;
 			j++;
@@ -471,7 +443,7 @@ int		main(int argc, char **argv)
 	_map->height += 2;
 	_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();
-	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.height, resolution.width, "cRYP70N"); //initialize the window
+	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.height, resolution.width, "cRYP70N");
 	// Here I initialized a new image
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
 	_map->height -= 2;
