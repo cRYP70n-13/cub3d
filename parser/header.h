@@ -51,6 +51,10 @@ int		key_released(int keycode);
 int		loop_key();
 void	field_of_view(void);
 int		is_wall(float x, float y, float Xinc, float Yinc);
+void	parse_textures(char *line, int type);
+int		wall_conditions(s_map *_map, int *i, int *j);
+void	initial_structs(s_map *_map);
+void	check_map(char *line, s_map *_map);
 
 /*
  ** Here I built a struct of the MLX image :
