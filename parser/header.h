@@ -44,12 +44,13 @@
 void	draw_map();
 void	dda(int X0, int Y0, int X1, int Y1);
 void	ft_square(int x, int y, int color, int size);
-void	struct_init();
+void	player_init();
 int		deal_key();
 int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key();
 void	field_of_view(void);
+int		is_wall(float x, float y, float Xinc, float Yinc);
 
 /*
  ** Here I built a struct of the MLX image :
