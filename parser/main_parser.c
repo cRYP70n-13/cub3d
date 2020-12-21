@@ -128,7 +128,6 @@ void	map_manager(s_map *_map)
 	_map->map_2d[_map->height + 1][i] = '\0';
 }
 
-// The Atoi function I hope I don't miss it up
 int		ft_atoi(const char *str)
 {
 	int i;
@@ -157,16 +156,16 @@ int		ft_atoi(const char *str)
 }
 
 // The graphics Part
-int is_wall(float x, float y, float Xinc, float Yinc)
+int		is_wall(float x, float y, float Xinc, float Yinc)
 {
 	int map_grid_index_x;
 	int map_grid_index_y;
 
 	if (x < 0 || x > (_map->width * TAIL_SIZE) || y < 0 || y > (_map->height * TAIL_SIZE))
-		return (0);
+		return (1);
 	map_grid_index_x = (int)(x / TAIL_SIZE);
 	map_grid_index_y = (int)(y / TAIL_SIZE);
-
+	// printf("x: %d | y %d || char %c\n", map_grid_index_x, map_grid_index_y, _map->map_2d[map_grid_index_y][map_grid_index_x]);
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
 
@@ -207,6 +206,12 @@ void ft_square(int x, int y, int color, int size)
 	}
 }
 
+/*
+ ** NOTE: Here in this function I render the rays we have 60 deg in FOV
+ ** so i start with 0deg till we achieve 60 which is the FOV
+ ** Then we check if we have a wall or not, if yes we return else
+ ** we keep going
+*/
 void dda(int X0, int Y0, int X1, int Y1)
 {
 	// calculate dx & dy
@@ -225,7 +230,7 @@ void dda(int X0, int Y0, int X1, int Y1)
 	float X = X0;
 	float Y = Y0;
 	int i = 0;
-	while (i <= steps)
+	while (i < steps)
 	{
 		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y, Xinc, Yinc)))
 			return ;
@@ -275,13 +280,13 @@ int deal_key()
 {
 	// The up and down keys
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
-	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
+	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up; 
 
-	if (!is_wall(g_player.new_x, g_player.y, 0, 0))
+	if (!is_wall(g_player.new_x + 0.0, g_player.new_y, 2.5, 2.50))
+	{
 		g_player.x = g_player.new_x;
-	if (!is_wall(g_player.x, g_player.new_y, 0, 0))
 		g_player.y = g_player.new_y;
-
+	}
 	// The left and right keys
 	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
 
@@ -465,7 +470,7 @@ int		main(int argc, char **argv)
 	// Graphic part
 	_map->height += 2;
 	_map->width += 2;
-	g_mlx->mlx_ptr = mlx_init();																						  //Connection to the graphic server
+	g_mlx->mlx_ptr = mlx_init();
 	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.height, resolution.width, "cRYP70N"); //initialize the window
 	// Here I initialized a new image
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
@@ -478,7 +483,7 @@ int		main(int argc, char **argv)
 
 	draw_map();
 	mlx_loop_hook(g_mlx->mlx_ptr, loop_key, (void *)0);
-	mlx_loop(g_mlx->mlx_ptr); //evnets loop
+	mlx_loop(g_mlx->mlx_ptr);
 
 	return (0);
 }
