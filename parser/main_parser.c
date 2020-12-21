@@ -157,7 +157,7 @@ int		ft_atoi(const char *str)
 }
 
 // The graphics Part
-int is_wall(float x, float y)
+int is_wall(float x, float y, float Xinc, float Yinc)
 {
 	int map_grid_index_x;
 	int map_grid_index_y;
@@ -166,6 +166,18 @@ int is_wall(float x, float y)
 		return (0);
 	map_grid_index_x = (int)(x / TAIL_SIZE);
 	map_grid_index_y = (int)(y / TAIL_SIZE);
+
+	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
+		return (1);
+
+	map_grid_index_x = (int)((x + Xinc) / TAIL_SIZE);
+	map_grid_index_y = (int)(y / TAIL_SIZE);
+
+	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
+		return (1);
+
+	map_grid_index_x = (int)(x / TAIL_SIZE);
+	map_grid_index_y = (int)((y + Yinc) / TAIL_SIZE);
 
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
@@ -215,7 +227,7 @@ void dda(int X0, int Y0, int X1, int Y1)
 	int i = 0;
 	while (i <= steps)
 	{
-		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y)))
+		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y, Xinc, Yinc)))
 			return ;
 		ft_put_image(Y, X, 0x004800);
 		X += Xinc;													 // increment in x at each step
@@ -265,9 +277,9 @@ int deal_key()
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up ;
 
-	if (!is_wall(g_player.new_x, g_player.y))
+	if (!is_wall(g_player.new_x, g_player.y, 0, 0))
 		g_player.x = g_player.new_x;
-	if (!is_wall(g_player.x, g_player.new_y))
+	if (!is_wall(g_player.x, g_player.new_y, 0, 0))
 		g_player.y = g_player.new_y;
 
 	// The left and right keys
