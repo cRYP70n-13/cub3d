@@ -55,6 +55,9 @@ void	parse_textures(char *line, int type);
 int		wall_conditions(s_map *_map, int *i, int *j);
 void	initial_structs(s_map *_map);
 void	check_map(char *line, s_map *_map);
+void	fill_line(char *line, s_map *_map);
+void	map_manager(s_map *_map);
+void	ft_put_image(int x, int y, int color);
 
 /*
  ** Here I built a struct of the MLX image :
