@@ -41,8 +41,11 @@ void dda(int X0, int Y0, int X1, int Y1)
 	while (i < steps)
 	{
 		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y, Xinc, Yinc)))
+		{
+			// 
 			return ;
-		ft_put_image(Y, X, 0x004800);
+		}
+		ft_put_image(Y * RATIO, X * RATIO, 0x004800);
 		X += Xinc;													 // increment in x at each step
 		Y += Yinc;													 // increment in y at each step
 		i++;

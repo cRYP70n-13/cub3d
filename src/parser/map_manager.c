@@ -104,7 +104,7 @@ void ft_square(int x, int y, int color, int size)
 		j = x;
 		while (j < x + size)
 		{
-			ft_put_image(i, j, color);
+			ft_put_image(i * RATIO, j * RATIO, color);
 			j++;
 		}
 		i++;
