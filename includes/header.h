@@ -59,8 +59,8 @@ void	check_map(char *line, s_map *_map);
 void	fill_line(char *line, s_map *_map);
 void	map_manager(s_map *_map);
 void	ft_put_image(int x, int y, int color);
-void  ft_dda(float X, float Y, float X1, float Y1);
-void  ft_3d_walls(float x, float y);
+void  	ft_dda(int X, int Y, int X1, int Y1);
+void  	ft_3d_walls(float x, float y);
 
 /*
  ** Here I built a struct of the MLX image :
