@@ -114,5 +114,6 @@ t_player g_player;
 s_map *_map;
 s_resolution resolution;
 int g_count;
+float player_angle;
 
 #endif

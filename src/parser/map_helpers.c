@@ -47,8 +47,8 @@ void dda(int X0, int Y0, int X1, int Y1)
 			return ;
 		}
 		ft_put_image(Y * RATIO, X * RATIO, 0x004800);
-		X += Xinc;													 // increment in x at each step
-		Y += Yinc;													 // increment in y at each step
+		X += (Xinc / 10);													 // increment in x at each step
+		Y += (Yinc / 10);													 // increment in y at each step
 		i++;
 	}
 }
@@ -92,7 +92,7 @@ void draw_map()
 
 void	field_of_view(void)
 {
-	float player_angle = g_player.rotation_angle - (FOV / 2.0);
+	player_angle = g_player.rotation_angle - (FOV / 2.0);
   g_count = 0;
 
 	while (player_angle <= g_player.rotation_angle + (FOV / 2.0))
