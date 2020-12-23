@@ -6,7 +6,7 @@
 /*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:39:30 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/21 18:39:31 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/23 17:47:14 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,14 @@ int		is_wall(float x, float y, float Xinc, float Yinc)
 
 void	ft_put_image(int x, int y, int color)
 {
-	g_mlx->img.data[x * TAIL_SIZE * _map->width + y] = color;
+  // if (color != 0x0FF0AB0)
+  // {
+  //   g_mlx->img.data[x * TAIL_SIZE * _map->width + y] = color;
+  // }
+  // else 
+	if (x < resolution.width && x >= 0 && y < resolution.height && y >= 0) {
+    g_mlx->img.data[x * resolution.width + y] = color;
+  }
 }
 
 void ft_square(int x, int y, int color, int size)

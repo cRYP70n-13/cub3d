@@ -137,9 +137,9 @@ int		main(int argc, char **argv)
 	_map->height += 2;
 	_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();
-	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.height, resolution.width, "cRYP70N");
+	g_mlx->win_ptr = mlx_new_window(g_mlx->mlx_ptr, resolution.width, resolution.height, "cRYP70N");
 	// Here I initialized a new image
-	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, (_map->width * TAIL_SIZE), (_map->height * TAIL_SIZE));
+	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, resolution.width, resolution.height);
 	_map->height -= 2;
 	_map->width -= 2;
 	player_init();
@@ -147,7 +147,7 @@ int		main(int argc, char **argv)
 	_map->width += 2;
 	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 
-	draw_map();
+	// draw_map();
 	mlx_loop_hook(g_mlx->mlx_ptr, loop_key, (void *)0);
 	mlx_loop(g_mlx->mlx_ptr);
 

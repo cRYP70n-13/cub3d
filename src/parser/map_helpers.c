@@ -6,7 +6,7 @@
 /*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:39:23 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/21 18:39:24 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/23 17:34:56 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void dda(int X0, int Y0, int X1, int Y1)
 	int i = 0;
 	while (i < steps)
 	{
+    // So this check here means that we found a wall then we call the ft_3d_walls function
 		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y, Xinc, Yinc)))
 		{
-			// 
+		  ft_3d_walls(X, Y);
 			return ;
 		}
 		ft_put_image(Y * RATIO, X * RATIO, 0x004800);
@@ -92,12 +93,14 @@ void draw_map()
 void	field_of_view(void)
 {
 	float player_angle = g_player.rotation_angle - (FOV / 2.0);
+  g_count = 0;
 
 	while (player_angle <= g_player.rotation_angle + (FOV / 2.0))
 	{
 		g_player.renderer_x = g_player.new_x + cos(player_angle) * INT16_MAX; // Renderer of x depending on the position of the plaer and where the player moves
 		g_player.renderer_y = g_player.new_y + sin(player_angle) * INT16_MAX; // Renderer of y depending on the position of the plaer and where the player moves
 		player_angle += FOV / resolution.width;
+    g_count++;
 		dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 	}
 }
