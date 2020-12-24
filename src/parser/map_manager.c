@@ -90,17 +90,12 @@ int		is_wall(float x, float y, float Xinc, float Yinc)
 
 void	ft_put_image(int x, int y, int color)
 {
-  // if (color != 0x0FF0AB0)
-  // {
-  //   g_mlx->img.data[x * TAIL_SIZE * _map->width + y] = color;
-  // }
-  // else 
 	if (x < resolution.width && x >= 0 && y < resolution.height && y >= 0) {
-    g_mlx->img.data[x * resolution.width + y] = color;
-  }
+    	g_mlx->img.data[x * resolution.width + y] = color;
+	}
 }
 
-void ft_square(int x, int y, int color, int size)
+void	ft_square(float x, float y, int color, int size)
 {
 	int i;
 	int j;

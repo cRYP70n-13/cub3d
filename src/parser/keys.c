@@ -94,6 +94,6 @@ int loop_key()
 	mlx_hook(g_mlx->win_ptr, 3, 0, key_released, 0);
 	deal_key();
 	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win_ptr, g_mlx->img.img_ptr, 0, 0);
-		ft_clear_win();
+	ft_clear_win();
 	return (0);
 }

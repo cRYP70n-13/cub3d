@@ -13,7 +13,7 @@ void    ft_3d_walls(float x, float y)
   ft_dda(g_count, resolution.height / 2 - (stripeHeight / 2) -1,g_count, resolution.height / 2 + (stripeHeight / 2));
 }
 
-void ft_dda(int X0, int Y0, int X1, int Y1)
+void ft_dda(float X0, float Y0, float X1, float Y1)
 {
 	// calculate dx & dy
 	int dx = X1 - X0;

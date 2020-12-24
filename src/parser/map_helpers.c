@@ -20,7 +20,7 @@
  ** Then we check if we have a wall or not, if yes we return else
  ** we keep going
 */
-void dda(int X0, int Y0, int X1, int Y1)
+void dda(float X0, float Y0, float X1, float Y1)
 {
 	// calculate dx & dy
 	int dx = X1 - X0;
@@ -43,7 +43,7 @@ void dda(int X0, int Y0, int X1, int Y1)
     // So this check here means that we found a wall then we call the ft_3d_walls function
 		if (((int)X % TAIL_SIZE == 0 || (int)X % TAIL_SIZE == TAIL_SIZE - 1 || (int)Y % TAIL_SIZE == 0 || (int)Y % TAIL_SIZE == TAIL_SIZE - 1) && (is_wall(X, Y, Xinc, Yinc)))
 		{
-		  ft_3d_walls(X, Y);
+			ft_3d_walls(X, Y);
 			return ;
 		}
 		ft_put_image(Y * RATIO, X * RATIO, 0x004800);
@@ -93,7 +93,7 @@ void draw_map()
 void	field_of_view(void)
 {
 	player_angle = g_player.rotation_angle - (FOV / 2.0);
-  g_count = 0;
+	g_count = 0;
 
 	while (player_angle <= g_player.rotation_angle + (FOV / 2.0))
 	{
