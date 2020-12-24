@@ -74,7 +74,7 @@ int deal_key()
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 
-	if (!is_wall(g_player.new_x, g_player.new_y, 0.9, 0.9))
+	if (!is_wall(g_player.new_x, g_player.new_y, 1.4, 1.9))
 	{
 		g_player.x = g_player.new_x;
 		g_player.y = g_player.new_y;

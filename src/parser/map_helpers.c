@@ -78,8 +78,8 @@ void draw_map()
 				color = 0x0000ff; // BLUE color
 			} else if (_map->map_2d[i][j] == '0'){
 				color = 0x00FF00; // GREEN color
-			} else {
-				// DO nothing just continue
+			} else if (_map->map_2d[i][j] == 'N'){
+				// Here I should call the draw player function to set it in teh right place
 			}
 			ft_square(x, y, color, TAIL_SIZE);
 			j++;
@@ -88,6 +88,13 @@ void draw_map()
 	}
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
 	field_of_view();
+}
+
+void	draw_player(int *i, int *j)
+{
+	// TODO: Implement it ...
+	*i = 0;
+	*j = 0;
 }
 
 void	field_of_view(void)
@@ -100,7 +107,7 @@ void	field_of_view(void)
 		g_player.renderer_x = g_player.new_x + cos(player_angle) * INT16_MAX; // Renderer of x depending on the position of the plaer and where the player moves
 		g_player.renderer_y = g_player.new_y + sin(player_angle) * INT16_MAX; // Renderer of y depending on the position of the plaer and where the player moves
 		player_angle += FOV / resolution.width;
-    g_count++;
+		g_count++;
 		dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
 	}
 }
