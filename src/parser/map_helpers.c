@@ -57,8 +57,8 @@ void draw_map()
 	int y = 0;
 	int color = 0;
 
-	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * INT16_MAX; // Renderer of x depending on the position of the plaer and where the player moves
-	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * INT16_MAX; // Renderer of y depending on the position of the plaer and where the player moves
+	g_player.renderer_x = g_player.new_x + cos(g_player.rotation_angle) * 40; // Renderer of x depending on the position of the plaer and where the player moves
+	g_player.renderer_y = g_player.new_y + sin(g_player.rotation_angle) * 40; // Renderer of y depending on the position of the plaer and where the player moves
 
 	while (i < _map->height)
 	{
@@ -83,7 +83,8 @@ void draw_map()
 		i++;
 	}
 	ft_square(g_player.x, g_player.y, 0x000000, 6);
-	field_of_view();
+	dda(g_player.x + 3, g_player.y + 3, g_player.renderer_x, g_player.renderer_y);
+	// field_of_view();
 }
 
 void	field_of_view(void)

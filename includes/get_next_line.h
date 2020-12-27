@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef _GET_NEXT_LINE_H_
+# define _GET_NEXT_LINE_H_
 
 # include <fcntl.h>
 # include <unistd.h>

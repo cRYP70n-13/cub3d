@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#ifndef _HEADER_H
+# define _HEADER_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -22,7 +22,7 @@
 # include <errno.h>
 # include <math.h>
 # include "structs.h"
-# include "mlx.h"
+#include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
 
 # define TAIL_SIZE 21
 # define PI 3.14159265358979323846
