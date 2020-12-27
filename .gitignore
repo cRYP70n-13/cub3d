@@ -4,3 +4,5 @@ a.out
 */**/a.out.dSYM
 .vscode
 playground
+mlxopengl
+raycasting
