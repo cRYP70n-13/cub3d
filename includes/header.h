@@ -6,7 +6,7 @@
 /*   By: okimdil <okimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 10:03:19 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/09 13:22:37 by okimdil          ###   ########.fr       */
+/*   Updated: 2020/12/23 17:35:42 by okimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@
 // The raycasting data structures
 # define FOV 60 * (PI / 180)
 
+# define RATIO 0.4
 
 // Just the absolute value to run as fast as possible
 # define ABS(N) ((N<0)?(-N):(N))
 
 void	draw_map();
-void	dda(int X0, int Y0, int X1, int Y1);
-void	ft_square(int x, int y, int color, int size);
+void	dda(float X0, float Y0, float X1, float Y1);
+void	ft_square(float x, float y, int color, int size);
 void	player_init();
 int		deal_key();
 int		key_pressed(int keycode);
@@ -58,6 +59,8 @@ void	check_map(char *line, s_map *_map);
 void	fill_line(char *line, s_map *_map);
 void	map_manager(s_map *_map);
 void	ft_put_image(int x, int y, int color);
+void  	ft_dda(float X, float Y, float X1, float Y1);
+void  	ft_3d_walls(float x, float y);
 
 /*
  ** Here I built a struct of the MLX image :
@@ -110,5 +113,7 @@ t_mlx	*g_mlx;
 t_player g_player;
 s_map *_map;
 s_resolution resolution;
+int g_count;
+float player_angle;
 
 #endif

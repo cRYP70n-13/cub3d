@@ -49,13 +49,32 @@ int key_released(int keycode)
 	return (0);
 }
 
+
+void ft_clear_win()
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < resolution.width)
+	{
+		j = 0;
+		while (j < resolution.height)
+		{
+			ft_put_image(i , j, 0);
+			j++;
+		}
+		i++;
+	}
+}
+
 int deal_key()
 {
 	// The up and down keys
 	g_player.new_y = g_player.y + sin(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 	g_player.new_x = g_player.x + cos(g_player.rotation_angle) * g_player.move_speed * g_player.walk_up;
 
-	if (!is_wall(g_player.new_x, g_player.new_y, 2.5, 2.5))
+	if (!is_wall(g_player.new_x, g_player.new_y, 1.4, 1.9))
 	{
 		g_player.x = g_player.new_x;
 		g_player.y = g_player.new_y;
@@ -64,6 +83,7 @@ int deal_key()
 	g_player.rotation_angle -= g_player.rotation_speed * g_player.turn_right;
 
 	draw_map();
+	// ft_square(resolution.width, resolution.height, 0, );
 	return (0);
 }
 
@@ -74,5 +94,6 @@ int loop_key()
 	mlx_hook(g_mlx->win_ptr, 3, 0, key_released, 0);
 	deal_key();
 	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win_ptr, g_mlx->img.img_ptr, 0, 0);
+	ft_clear_win();
 	return (0);
 }

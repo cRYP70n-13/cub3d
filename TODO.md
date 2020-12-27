@@ -17,10 +17,11 @@
 
  ---
 
-## Color Buffer
+## Rendring the 3d walls
 
-- [ ] implementing the color buffer
-- [ ] Freeing all the allocated resources
+- [x] implementing the function to render 3d walls
+- [x] Fixing the player movement to be smoooth and as it should be
+- [ ] Fixing the walls (They are buggy as fuck)
 
  ---
 

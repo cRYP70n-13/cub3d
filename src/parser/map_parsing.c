@@ -15,8 +15,6 @@
 #include "../utils/Errors/errors.h"
 #include "../../includes/structs.h"
 
-
-// The parser part So now it's easy to split the functions to multiple files
 void	parse_textures(char *line, int type)
 {
 	s_textrs		*ptr_textures;
@@ -37,7 +35,6 @@ void	parse_textures(char *line, int type)
 		i++;
 	}
 }
-
 
 int		wall_conditions(s_map *_map, int *i, int *j)
 {
