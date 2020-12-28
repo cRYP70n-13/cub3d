@@ -5,11 +5,11 @@
 
 void	parse_textures(char *line, int type)
 {
-	s_textrs		*ptr_textures;
+	t_textrs		*ptr_textures;
 	int				i;
 
 	i = 0;
-	if (!(ptr_textures = malloc(sizeof(s_textrs *))))
+	if (!(ptr_textures = malloc(sizeof(t_textrs *))))
 		return ;
 	if (!(ptr_textures->textures = malloc(sizeof(char *) * 5)))
 		return ;
@@ -24,36 +24,36 @@ void	parse_textures(char *line, int type)
 	}
 }
 
-int		wall_conditions(s_map *_map, int *i, int *j)
+int		wall_conditions(t_map *g_map, int *i, int *j)
 {
-	if (_map->map_2d[*i][*j] == '0' || _map->map_2d[*i][*j] == '2' || \
-		_map->map_2d[*i][*j] == 'N' || _map->map_2d[*i][*j] == 'S' || \
-		_map->map_2d[*i][*j] == 'W' || _map->map_2d[*i][*j] == 'E')
+	if (g_map->map_2d[*i][*j] == '0' || g_map->map_2d[*i][*j] == '2' || \
+		g_map->map_2d[*i][*j] == 'N' || g_map->map_2d[*i][*j] == 'S' || \
+		g_map->map_2d[*i][*j] == 'W' || g_map->map_2d[*i][*j] == 'E')
 	{
-		if (_map->map_2d[*i][*j - 1] == ' ' || _map->map_2d[*i][*j + 1] == ' ' \
-		|| _map->map_2d[*i - 1][*j] == ' ' || _map->map_2d[*i + 1][*j] == ' ')
+		if (g_map->map_2d[*i][*j - 1] == ' ' || g_map->map_2d[*i][*j + 1] == ' ' \
+		|| g_map->map_2d[*i - 1][*j] == ' ' || g_map->map_2d[*i + 1][*j] == ' ')
 			return (1);
 	}
 	return (0);
 }
 
-void	initial_structs(s_map *_map)
+void	initial_structs(t_map *g_map)
 {
-	_map->height = 0;
-	_map->width = 0;
-	_map->map_in_one_line = NULL;
-	_map->map_2d = NULL;
-	_map->virtual_map_before = NULL;
+	g_map->height = 0;
+	g_map->width = 0;
+	g_map->map_in_one_line = NULL;
+	g_map->map_2d = NULL;
+	g_map->virtual_map_before = NULL;
 }
 
-void	check_map(char *line, s_map *_map)
+void	check_map(char *line, t_map *g_map)
 {
 	int i;
 
 	i = 0;
-	_map->height++;
-	if ((int)strlen(line) > _map->width)
-		_map->width = strlen(line);
+	g_map->height++;
+	if ((int)ft_strlen(line) > g_map->width)
+		g_map->width = ft_strlen(line);
 	while (line[i])
 	{
 		if (line[i] != '0' && line[i] != ' ' && line[i] != '1'\
