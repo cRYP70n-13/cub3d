@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: okimdil <okimdil@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/08 10:03:19 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/23 17:35:42 by okimdil          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef _HEADER_H
 # define _HEADER_H
 
@@ -22,6 +10,7 @@
 # include <errno.h>
 # include <math.h>
 # include "structs.h"
+# include "get_next_line.h"
 // #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
 # include <mlx.h>
 
@@ -62,6 +51,7 @@ void	map_manager(s_map *_map);
 void	ft_put_image(int x, int y, int color);
 void  	ft_dda(float X, float Y, float X1, float Y1);
 void  	ft_3d_walls(float x, float y);
+int		parsing(int argc, char **argv);
 
 /*
  ** Here I built a struct of the MLX image :

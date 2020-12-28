@@ -1,19 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: okimdil <okimdil@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/31 15:40:45 by okimdil           #+#    #+#             */
-/*   Updated: 2019/11/01 15:14:57 by okimdil          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/get_next_line.h"
-#include <stdio.h>
 
-int		ft_strlen(char *str, char c)
+int		ft_strle(char *str, char c)
 {
 	int i;
 
@@ -42,7 +29,7 @@ int		push_to_line(char **post_buffer, char **line, char sep)
 	void *temp;
 
 	temp = *post_buffer;
-	*line = ft_strdup(*post_buffer, sep);
+	*line = ft_strdu(*post_buffer, sep);
 	*post_buffer = ft_strcut_c(*post_buffer, sep);
 	free(temp);
 	if (sep == '\n')
@@ -63,7 +50,7 @@ int		get_next_line_reading(int fd, char **post_buffer, char **line)
 		if (ret_read == -1)
 			break ;
 		buf[ret_read] = '\0';
-		if ((*post_buffer = ft_strjoin(*post_buffer, buf)) &&
+		if ((*post_buffer = ft_strjoi(*post_buffer, buf)) &&
 		is_a_c(buf, '\n') == 1)
 			break ;
 	}

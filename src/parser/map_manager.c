@@ -1,18 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_manager.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 18:39:30 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/25 12:45:03 by okimdil          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/header.h"
 #include "../utils/libft/libft.h"
-#include "../../includes/get_next_line.h"
 #include "../../includes/structs.h"
 
 void	fill_line(char *line, s_map *_map)
@@ -86,29 +73,4 @@ int		is_wall(float x, float y, float Xinc, float Yinc)
 	if (_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || _map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
 	return (0);
-}
-
-void	ft_put_image(int x, int y, int color)
-{
-	if (x < resolution.width && x >= 0 && y < resolution.height && y >= 0) {
-    	g_mlx->img.data[x * resolution.width + y] = color;
-	}
-}
-
-void	ft_square(float x, float y, int color, int size)
-{
-	int i;
-	int j;
-
-	i = y;
-	while (i < y + size)
-	{
-		j = x;
-		while (j < x + size)
-		{
-			ft_put_image(i * RATIO, j * RATIO, color);
-			j++;
-		}
-		i++;
-	}
 }

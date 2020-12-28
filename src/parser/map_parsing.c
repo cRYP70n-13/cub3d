@@ -1,19 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_parsing.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: okimdil <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 18:39:36 by okimdil           #+#    #+#             */
-/*   Updated: 2020/12/21 18:39:37 by okimdil          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/header.h"
-#include "../utils/libft/libft.h"
 #include "../utils/Errors/errors.h"
 #include "../../includes/structs.h"
+#include "../utils/libft/libft.h"
 
 void	parse_textures(char *line, int type)
 {
