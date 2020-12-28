@@ -53,22 +53,22 @@ int		is_wall(float x, float y, float Xinc, float Yinc)
 	int map_grid_index_x;
 	int map_grid_index_y;
 
-	if (x < 0 || x > (g_map->width * TAIL_SIZE) || y < 0 || y > (g_map->height * TAIL_SIZE))
+	if (x < 0 || x > (g_map->width * TILE_SIZE) || y < 0 || y > (g_map->height * TILE_SIZE))
 		return (1);
-	map_grid_index_x = (int)(x / TAIL_SIZE);
-	map_grid_index_y = (int)(y / TAIL_SIZE);
+	map_grid_index_x = (int)(x / TILE_SIZE);
+	map_grid_index_y = (int)(y / TILE_SIZE);
 
 	if (g_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || g_map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
 
-	map_grid_index_x = (int)((x + Xinc) / TAIL_SIZE);
-	map_grid_index_y = (int)(y / TAIL_SIZE);
+	map_grid_index_x = (int)((x + Xinc) / TILE_SIZE);
+	map_grid_index_y = (int)(y / TILE_SIZE);
 
 	if (g_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || g_map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
 
-	map_grid_index_x = (int)(x / TAIL_SIZE);
-	map_grid_index_y = (int)((y + Yinc) / TAIL_SIZE);
+	map_grid_index_x = (int)(x / TILE_SIZE);
+	map_grid_index_y = (int)((y + Yinc) / TILE_SIZE);
 
 	if (g_map->map_2d[map_grid_index_y][map_grid_index_x] == '1' || g_map->map_2d[map_grid_index_y][map_grid_index_x] == ' ')
 		return (1);
