@@ -22,7 +22,8 @@
 # include <errno.h>
 # include <math.h>
 # include "structs.h"
-#include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
+// #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
+# include <mlx.h>
 
 # define TAIL_SIZE 21
 # define PI 3.14159265358979323846
