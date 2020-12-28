@@ -15,61 +15,61 @@
  * @param { Resoluition, Height, Width }
  * @return {*} The structure filled by the data
 */
-typedef struct t_resolution
+typedef struct s_resolution
 {
 	char	resolution;
 	int 	height;
 	int 	width;
-} 				s_resolution;
+} 				t_resolution;
 
 /**
  * @brief The floor Colors
  * @param { RGB } The RGB structure for my code
  * @return	The strucute filled by the colors
 */
-typedef struct 		t_floor
+typedef struct 		s_floor
 {
 	char	Floor;
 	int		red;
 	int		green;
 	int		blue;
-} 					s_floor;
+} 					t_floor;
 
 /**
  * @brief The floor Colors
  * @param { RGB } The RGB structure for my code
  * @return	The strucute filled by the colors
 */
-typedef struct 		t_celling
+typedef struct 		s_celling
 {
 	char 	celling;
 	int		red;
 	int		green;
 	int		blue;
-} 					s_celling;
+} 					t_celling;
 
 /**
  * @brief The Textures and the sprites
  * @param { Path to the textures } The absolute paths to the structures and the sprite
  * @return	The strucute filled by the paths
 */
-typedef struct      textures
+typedef struct      s_textures
 {
 	char **textures;
-}                   s_textrs;
+}                   t_textrs;
 
 /**
  * @brief The MAP datastructure
  * @param {*} IDK
  * @return A 2D map filling by 0s or 1s
 */
-typedef struct      t_map
+typedef struct      s_map
 {
 	char **virtual_map_before;
 	int width;
 	int height;
     char *map_in_one_line;
     char **map_2d;
-}                   s_map;
+}                   t_map;
 
 #endif

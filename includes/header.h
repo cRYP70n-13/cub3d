@@ -36,18 +36,18 @@ void	draw_map();
 void	dda(float X0, float Y0, float X1, float Y1);
 void	ft_square(float x, float y, int color, int size);
 void	player_init();
-int		deal_key();
+void	deal_key(int keycode, void *);
 int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key();
 void	field_of_view(void);
 int		is_wall(float x, float y, float Xinc, float Yinc);
 void	parse_textures(char *line, int type);
-int		wall_conditions(s_map *_map, int *i, int *j);
-void	initial_structs(s_map *_map);
-void	check_map(char *line, s_map *_map);
-void	fill_line(char *line, s_map *_map);
-void	map_manager(s_map *_map);
+int		wall_conditions(t_map *g_map, int *i, int *j);
+void	initial_structs(t_map *g_map);
+void	check_map(char *line, t_map *g_map);
+void	fill_line(char *line, t_map *g_map);
+void	map_manager(t_map *g_map);
 void	ft_put_image(int x, int y, int color);
 void  	ft_dda(float X, float Y, float X1, float Y1);
 void  	ft_3d_walls(float x, float y);
@@ -68,6 +68,7 @@ typedef struct s_img
 	int		size_l;
 	int		bpp;
 	int		endian;
+	int		count;
 }				t_img;
 
 /*
@@ -78,7 +79,7 @@ typedef struct s_img
 */
 typedef struct	s_mlx
 {
-	void	*win_ptr;
+	void	*win;
 	void	*mlx_ptr;
 	t_img	img;
 }				t_mlx;
@@ -92,19 +93,17 @@ typedef struct s_player
 	float	renderer_x;
 	float 	renderer_y;
 	int		walk_up;
-	int		walk_down;
-	int		turn_left;
 	int		turn_right;
 	float	rotation_angle; // the rotation angle is PI / 2;
 	float	move_speed; // by def to 3.0
 	float	rotation_speed; // the rot speed is 3 * (PI / 180);
+	float	player_angle;
 }			t_player;
 
 t_mlx	*g_mlx;
 t_player g_player;
-s_map *_map;
-s_resolution resolution;
-int g_count;
-float player_angle;
+t_map *g_map;
+t_resolution g_resolution;
+t_img	g_img;
 
 #endif
