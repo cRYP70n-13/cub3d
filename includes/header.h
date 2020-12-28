@@ -37,7 +37,7 @@
 // The raycasting data structures
 # define FOV 60 * (PI / 180)
 
-# define RATIO 0.4
+# define RATIO 1
 
 // Just the absolute value to run as fast as possible
 # define ABS(N) ((N<0)?(-N):(N))
