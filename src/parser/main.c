@@ -6,28 +6,28 @@
 
 int		main(int argc, char **argv)
 {
+	if (argc != 2)
+		return (0); // TODO: Call an error
     parsing(argc, argv);
+	graphic();
     return 0;
 }
 
 int		parsing(int argc, char **argv)
 {
 	char					*line;
-	struct t_floor			s_floor;
-	struct t_celling		s_celling;
+	t_floor			s_floor;
+	t_celling		s_celling;
 	int						i = 0;
 	int						j;
 	int						player = 0;
 
-	if (!(_map = malloc(sizeof(s_map))))
+	if (!(g_map = malloc(sizeof(t_map))))
 		ft_error_and_quit(2);
-	if (!(g_mlx = malloc(sizeof(t_mlx))))
-		ft_error_and_quit(2);
-	if (argc != 2)
-		return (0);
+
 	int fd = open(argv[1], O_RDONLY);
 
-	initial_structs(_map);
+	initial_structs(g_map);
 	while (1)
 	{
 		// printf("%s\n", line);
@@ -44,9 +44,9 @@ int		parsing(int argc, char **argv)
 				else
 					ft_error_and_quit(1);
 			}
-			resolution.height = atoi(splited_line[0]);
-			resolution.width = atoi(splited_line[1]);
-			resolution.resolution = line[0];
+			g_resolution.height = atoi(splited_line[0]);
+			g_resolution.width = atoi(splited_line[1]);
+			g_resolution.resolution = line[0];
 
 		}
 		if (line[0] == 'F' && line[1] == ' ')
@@ -94,27 +94,27 @@ int		parsing(int argc, char **argv)
 		if (line[0] == 'S' && line[1] == ' ')
 			parse_textures(line + 2, S);
 		if (line[0] == ' ' || line[0] == '1') {
-			check_map(line, _map);
-			fill_line(line, _map);
+			check_map(line, g_map);
+			fill_line(line, g_map);
 		}
 		if (ret == 0)
 			break ;
 	}
 
-	_map->virtual_map_before = ft_split(_map->map_in_one_line, '\n');
-	map_manager(_map);
+	g_map->virtual_map_before = ft_split(g_map->map_in_one_line, '\n');
+	map_manager(g_map);
 
-	while (i <= _map->height + 1) {
+	while (i <= g_map->height + 1) {
 		j = 0;
-		printf("%s\n", _map->map_2d[i]);
-		while (j <= _map->width) {
-			if (_map->map_2d[i][j] == 'W' || _map->map_2d[i][j] == 'E' || \
-					_map->map_2d[i][j] == 'S' || _map->map_2d[i][j] == 'N') {
+		printf("%s\n", g_map->map_2d[i]);
+		while (j <= g_map->width) {
+			if (g_map->map_2d[i][j] == 'W' || g_map->map_2d[i][j] == 'E' || \
+					g_map->map_2d[i][j] == 'S' || g_map->map_2d[i][j] == 'N') {
 				player++;
 				// TODO: Here I should call the draw player function to draw my player in the exact location that he gived me
 				// ft_draw_player(int x, int y);
 			}
-			(wall_conditions(_map, &i, &j)) ? ft_error_and_quit(4) : 0;
+			(wall_conditions(g_map, &i, &j)) ? ft_error_and_quit(4) : 0;
 			j++;
 		}
 		i++;
