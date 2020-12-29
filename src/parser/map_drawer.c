@@ -35,7 +35,11 @@ void	ft_square(float x, float y, int color, int size)
 
 void	ft_put_image(int x, int y, int color)
 {
+	color = 0;
+	printf("%d ||| %d\n", x, y);
 	if (x < g_resolution.width && x >= 0 && y < g_resolution.height && y >= 0) {
     	g_mlx->img.data[x * g_resolution.width + y] = color;
+	} else {
+		printf("FUCK U MAN SEGFAULT\n");
 	}
 }

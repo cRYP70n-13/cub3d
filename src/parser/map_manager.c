@@ -1,11 +1,9 @@
 #include "../../includes/header.h"
-#include "../utils/libft/libft.h"
-#include "../../includes/structs.h"
 
 void	fill_line(char *line, t_map *g_map)
 {
 	if (!(g_map->map_in_one_line))
-		g_map->map_in_one_line = strdup("");
+		g_map->map_in_one_line = ft_strdup("");
 	g_map->map_in_one_line = ft_strjoin(g_map->map_in_one_line, line);
 	g_map->map_in_one_line = ft_strjoin(g_map->map_in_one_line, "\n");
 }
@@ -31,7 +29,7 @@ void	map_manager(t_map *g_map)
 		g_map->map_2d[i + 1][0] = ' ';
 		while (j < g_map->width + 2)
 		{
-			if (j < (int)strlen(g_map->virtual_map_before[i]))
+			if (j < (int)ft_strlen(g_map->virtual_map_before[i]))
 				g_map->map_2d[i + 1][j + 1] = g_map->virtual_map_before[i][j];
 			else
 				g_map->map_2d[i + 1][j + 1] = ' ';

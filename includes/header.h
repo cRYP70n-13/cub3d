@@ -11,10 +11,12 @@
 # include <math.h>
 # include "structs.h"
 # include "get_next_line.h"
+# include "../src/utils/Errors/errors.h"
+# include "../src/utils/libft/libft.h"
 // #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
 # include <mlx.h>
 
-# define TILE_SIZE 21
+# define TILE_SIZE 64
 # define PI 3.14159265358979323846
 
 # define UP_ARROW 13
@@ -24,7 +26,7 @@
 # define ESCAPE 53
 
 # define FOV 60 * (PI / 180)
-# define RATIO 0.4
+# define RATIO 1
 
 # define ABS(N) ((N<0)?(-N):(N))
 
@@ -33,7 +35,7 @@ void	draw_player(void);
 void	dda(float X0, float Y0, float X1, float Y1);
 void	ft_square(float x, float y, int color, int size);
 void	player_init(void);
-void	deal_key(int keycode, void *);
+int		deal_key(int keycode, void *);
 int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key(void);
@@ -49,6 +51,9 @@ void	ft_put_image(int x, int y, int color);
 void  	ft_dda(float X, float Y, float X1, float Y1);
 void  	ft_3d_walls(float x, float y);
 int		parsing(char **argv);
+void	graphic(void);
+void	render(void);
+void	init(void);
 
 /*
  ** Here I built a struct of the MLX image :

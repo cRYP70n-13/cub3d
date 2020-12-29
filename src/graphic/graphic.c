@@ -5,12 +5,17 @@ void	graphic(void)
 	// TODO: Create new image 
 	if (!(g_mlx = malloc(sizeof(t_mlx))))
 		ft_error_and_quit(2);
+	g_map->height += 2;
+	g_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();
 	g_mlx->win = mlx_new_window(g_mlx->mlx_ptr, (g_resolution.width), (g_resolution.height), "cRYP70N");
 	init();
 	render();
+	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, g_resolution.width, g_resolution.height);
+	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 	mlx_hook(g_mlx->win, 2, 1L << 0, deal_key, (void*)0);
 	mlx_loop(g_mlx->mlx_ptr);
+	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win, g_mlx->img.img_ptr, 0, 0);
 }
 
 void	render(void)
@@ -18,13 +23,6 @@ void	render(void)
 	draw_map();
 	draw_player();
 }
-
-// g_mlx.mlx_ptr = mlx_init();																						  //Connection to the graphic server
-// g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, (MAP_NUM_COLS * TAIL_SIZE), (MAP_NUM_ROWS * TAIL_SIZE), "cRYP70N"); //initialize the window
-// struct_init();
-// draw_map();
-// mlx_loop_hook(g_mlx.mlx_ptr, loop_key, (void *)0);
-// mlx_loop(g_mlx.mlx_ptr); //evnets loop
 
 void	init(void)
 {
@@ -56,8 +54,6 @@ void	draw_map(void)
 				color = 0x00FF00;
 			} else if (g_map->map_2d[i][j] == '0') {
 				color = 0x0000FF;
-			} else if (g_map->map_2d[i][j] == 'N') {
-				// TODO: call the draw player function
 			}
 			ft_square(x, y, color, TILE_SIZE);
 			j++;

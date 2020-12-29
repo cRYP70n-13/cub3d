@@ -1,15 +1,11 @@
-#include "../../includes/get_next_line.h"
-#include "../../includes/structs.h"
-#include "../utils/Errors/errors.h"
 #include "../../includes/header.h"
-#include "../utils/libft/libft.h"
 
 int		main(int argc, char **argv)
 {
 	if (argc != 2)
 		return (0); // TODO: Call an error
     parsing(argv);
-	// graphic();
+	graphic();
     return 0;
 }
 
