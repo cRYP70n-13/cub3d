@@ -16,7 +16,7 @@
 // #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
 # include <mlx.h>
 
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define PI 3.14159265358979323846
 
 # define UP_ARROW 13
@@ -26,7 +26,7 @@
 # define ESCAPE 53
 
 # define FOV 60 * (PI / 180)
-# define RATIO 1
+# define RATIO 0.3
 
 # define ABS(N) ((N<0)?(-N):(N))
 

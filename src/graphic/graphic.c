@@ -2,20 +2,21 @@
 
 void	graphic(void)
 {
-	// TODO: Create new image 
+	// TODO: Create new image
 	if (!(g_mlx = malloc(sizeof(t_mlx))))
 		ft_error_and_quit(2);
 	g_map->height += 2;
 	g_map->width += 2;
 	g_mlx->mlx_ptr = mlx_init();
-	g_mlx->win = mlx_new_window(g_mlx->mlx_ptr, (g_resolution.width), (g_resolution.height), "cRYP70N");
+	g_mlx->win = mlx_new_window(g_mlx->mlx_ptr, g_resolution.width, g_resolution.height, "cRYP70N");
 	init();
-	render();
 	g_mlx->img.img_ptr = mlx_new_image(g_mlx->mlx_ptr, g_resolution.width, g_resolution.height);
 	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
+	render();
+	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win, g_mlx->img.img_ptr, 0, 0);
+
 	mlx_hook(g_mlx->win, 2, 1L << 0, deal_key, (void*)0);
 	mlx_loop(g_mlx->mlx_ptr);
-	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win, g_mlx->img.img_ptr, 0, 0);
 }
 
 void	render(void)
@@ -46,8 +47,8 @@ void	draw_map(void)
 		j = 0;
 		while (j < g_map->width)
 		{
-			x = i * TILE_SIZE;
-			y = j * TILE_SIZE;
+			x = j * TILE_SIZE;
+			y = i * TILE_SIZE;
 			if (g_map->map_2d[i][j] == '1') {
 				color = 0xFF0000;
 			} else if (g_map->map_2d[i][j] == ' ') {
@@ -55,7 +56,8 @@ void	draw_map(void)
 			} else if (g_map->map_2d[i][j] == '0') {
 				color = 0x0000FF;
 			}
-			ft_square(x, y, color, TILE_SIZE);
+			ft_square(y, x, color, TILE_SIZE);
+			// printf("HORJFO \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			j++;
 		}
 		i++;
