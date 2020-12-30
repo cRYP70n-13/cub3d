@@ -17,7 +17,6 @@ void	field_of_view(void)
 
 void	ft_square(float x, float y, int color, int size)
 {
-	// printf("LKASDJFLKJDLKJSLK\n");
 	int i;
 	int j;
 
@@ -31,17 +30,12 @@ void	ft_square(float x, float y, int color, int size)
 			j++;
 		}
 		i++;
-		// printf("EL FASI\n");
 	}
 }
 
 void	ft_put_image(int x, int y, int color)
 {
-	// color = 0xFFFFFF;
-	// printf("%d ||| %d\n", x, y);
 	if (x < g_resolution.width && x >= 0 && y < g_resolution.height && y >= 0) {
-	// printf("%d\n", g_mlx->img.data[0]);
 		g_mlx->img.data[y * g_resolution.width + x] = color;
-		//printf("%d	%d	%d	\n", x, y,  x * g_resolution.width + y);
 	}
 }

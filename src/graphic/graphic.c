@@ -2,7 +2,6 @@
 
 void	graphic(void)
 {
-	// TODO: Create new image
 	if (!(g_mlx = malloc(sizeof(t_mlx))))
 		ft_error_and_quit(2);
 	g_map->height += 2;
@@ -55,9 +54,11 @@ void	draw_map(void)
 				color = 0x00FF00;
 			} else if (g_map->map_2d[i][j] == '0') {
 				color = 0x0000FF;
+			} else if (g_map->map_2d[i][j] == 'N') {
+				g_player.x = i;
+				g_player.y = j;
 			}
 			ft_square(y, x, color, TILE_SIZE);
-			// printf("HORJFO \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			j++;
 		}
 		i++;
@@ -66,5 +67,5 @@ void	draw_map(void)
 
 void	draw_player(void)
 {
-	// TODO: Implement the draw player function
+	ft_square(g_player.x * TILE_SIZE, g_player.y * TILE_SIZE, 0, 6);
 }
