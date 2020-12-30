@@ -13,7 +13,6 @@ void	graphic(void)
 	g_mlx->img.data = (int *)mlx_get_data_addr(g_mlx->img.img_ptr, &g_mlx->img.bpp, &g_mlx->img.size_l, &g_mlx->img.endian);
 	render();
 	mlx_put_image_to_window(g_mlx->mlx_ptr, g_mlx->win, g_mlx->img.img_ptr, 0, 0);
-
 	mlx_hook(g_mlx->win, 2, 1L << 0, deal_key, (void*)0);
 	mlx_loop(g_mlx->mlx_ptr);
 }
@@ -41,6 +40,7 @@ void	draw_map(void)
 	int y = 0;
 	int color = 0;
 
+	// TODO: update the player position each time map drawed
 	while (i < g_map->height)
 	{
 		j = 0;
@@ -68,4 +68,5 @@ void	draw_map(void)
 void	draw_player(void)
 {
 	ft_square(g_player.x * TILE_SIZE, g_player.y * TILE_SIZE, 0, 6);
+	dda((g_player.x * TILE_SIZE + 3), (g_player.y * TILE_SIZE + 3), (g_player.x * TILE_SIZE + cos(g_player.rotation_angle) * 40), (g_player.y  * TILE_SIZE + sin(g_player.rotation_angle) * 40));
 }

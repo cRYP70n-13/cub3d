@@ -26,7 +26,7 @@
 # define ESCAPE 53
 
 # define FOV 60 * (PI / 180)
-# define RATIO 0.3
+# define RATIO 1
 
 # define ABS(N) ((N<0)?(-N):(N))
 
