@@ -1,23 +1,19 @@
-#include "../../includes/get_next_line.h"
-#include "../../includes/structs.h"
-#include "../utils/Errors/errors.h"
 #include "../../includes/header.h"
-#include "../utils/libft/libft.h"
 
 int		main(int argc, char **argv)
 {
 	if (argc != 2)
 		return (0); // TODO: Call an error
-    parsing(argc, argv);
+    parsing(argv);
 	graphic();
     return 0;
 }
 
-int		parsing(int argc, char **argv)
+int		parsing(char **argv)
 {
 	char					*line;
-	t_floor			s_floor;
-	t_celling		s_celling;
+	t_floor					s_floor;
+	t_celling				s_celling;
 	int						i = 0;
 	int						j;
 	int						player = 0;
@@ -44,8 +40,8 @@ int		parsing(int argc, char **argv)
 				else
 					ft_error_and_quit(1);
 			}
-			g_resolution.height = atoi(splited_line[0]);
-			g_resolution.width = atoi(splited_line[1]);
+			g_resolution.height = ft_atoi(splited_line[0]);
+			g_resolution.width = ft_atoi(splited_line[1]);
 			g_resolution.resolution = line[0];
 
 		}
@@ -111,8 +107,6 @@ int		parsing(int argc, char **argv)
 			if (g_map->map_2d[i][j] == 'W' || g_map->map_2d[i][j] == 'E' || \
 					g_map->map_2d[i][j] == 'S' || g_map->map_2d[i][j] == 'N') {
 				player++;
-				// TODO: Here I should call the draw player function to draw my player in the exact location that he gived me
-				// ft_draw_player(int x, int y);
 			}
 			(wall_conditions(g_map, &i, &j)) ? ft_error_and_quit(4) : 0;
 			j++;

@@ -11,35 +11,34 @@
 # include <math.h>
 # include "structs.h"
 # include "get_next_line.h"
+# include "../src/utils/Errors/errors.h"
+# include "../src/utils/libft/libft.h"
 // #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
 # include <mlx.h>
 
-# define TAIL_SIZE 21
+# define TILE_SIZE 32
 # define PI 3.14159265358979323846
 
-// The keys datastructures
 # define UP_ARROW 13
 # define DOWN_ARROW 1
 # define LEFT_ARROW 0
 # define RIGHT_ARROW 2
 # define ESCAPE 53
 
-// The raycasting data structures
 # define FOV 60 * (PI / 180)
+# define RATIO 1
 
-# define RATIO 0.4
-
-// Just the absolute value to run as fast as possible
 # define ABS(N) ((N<0)?(-N):(N))
 
-void	draw_map();
+void	draw_map(void);
+void	draw_player(void);
 void	dda(float X0, float Y0, float X1, float Y1);
 void	ft_square(float x, float y, int color, int size);
-void	player_init();
-void	deal_key(int keycode, void *);
+void	player_init(void);
+int		deal_key(int keycode, void *);
 int		key_pressed(int keycode);
 int		key_released(int keycode);
-int		loop_key();
+int		loop_key(void);
 void	field_of_view(void);
 int		is_wall(float x, float y, float Xinc, float Yinc);
 void	parse_textures(char *line, int type);
@@ -51,7 +50,10 @@ void	map_manager(t_map *g_map);
 void	ft_put_image(int x, int y, int color);
 void  	ft_dda(float X, float Y, float X1, float Y1);
 void  	ft_3d_walls(float x, float y);
-int		parsing(int argc, char **argv);
+int		parsing(char **argv);
+void	graphic(void);
+void	render(void);
+void	init(void);
 
 /*
  ** Here I built a struct of the MLX image :
@@ -94,9 +96,9 @@ typedef struct s_player
 	float 	renderer_y;
 	int		walk_up;
 	int		turn_right;
-	float	rotation_angle; // the rotation angle is PI / 2;
-	float	move_speed; // by def to 3.0
-	float	rotation_speed; // the rot speed is 3 * (PI / 180);
+	float	rotation_angle;
+	float	move_speed;
+	float	rotation_speed;
 	float	player_angle;
 }			t_player;
 

@@ -26,7 +26,7 @@ void	ft_square(float x, float y, int color, int size)
 		j = x;
 		while (j < x + size)
 		{
-			ft_put_image(i * RATIO, j * RATIO, color);
+			ft_put_image(i, j, color);
 			j++;
 		}
 		i++;
@@ -36,6 +36,6 @@ void	ft_square(float x, float y, int color, int size)
 void	ft_put_image(int x, int y, int color)
 {
 	if (x < g_resolution.width && x >= 0 && y < g_resolution.height && y >= 0) {
-    	g_mlx->img.data[x * g_resolution.width + y] = color;
+		g_mlx->img.data[y * g_resolution.width + x] = color;
 	}
 }

@@ -1,7 +1,4 @@
 #include "../../includes/header.h"
-#include "../utils/Errors/errors.h"
-#include "../../includes/structs.h"
-#include "../utils/libft/libft.h"
 
 void	parse_textures(char *line, int type)
 {
@@ -17,7 +14,7 @@ void	parse_textures(char *line, int type)
 	{
 		if (ft_isalpha(line[i]) || line[i] == '.')
 		{
-			ptr_textures->textures[type] = strdup(line + i);
+			ptr_textures->textures[type] = ft_strdup(line + i);
 			break ;
 		}
 		i++;
