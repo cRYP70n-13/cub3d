@@ -28,7 +28,7 @@ void	init(void)
 	g_player.x = -1;
 	g_player.y = -1;
 	g_player.rotation_angle = PI / 2.0;
-	g_player.move_speed = 4.0;
+	g_player.move_speed = 2.0;
 	g_player.rotation_speed = 0.1;
 }
 
@@ -55,8 +55,11 @@ void	draw_map(void)
 			} else if (g_map->map_2d[i][j] == '0') {
 				color = 0x0000FF;
 			} else if (g_map->map_2d[i][j] == 'N') {
-				g_player.x = i;
-				g_player.y = j;
+				if (g_player.x == -1 && g_player.y == -1)
+				{
+					g_player.x = y;
+					g_player.y = x;
+				}
 			}
 			ft_square(y, x, color, TILE_SIZE);
 			j++;
@@ -67,6 +70,6 @@ void	draw_map(void)
 
 void	draw_player(void)
 {
-	ft_square(g_player.x * TILE_SIZE, g_player.y * TILE_SIZE, 0, 6);
-	dda((g_player.x * TILE_SIZE + 3), (g_player.y * TILE_SIZE + 3), (g_player.x * TILE_SIZE + cos(g_player.rotation_angle) * 40), (g_player.y  * TILE_SIZE + sin(g_player.rotation_angle) * 40));
+	ft_square(g_player.x, g_player.y, 0, 6);
+	dda((g_player.x + 3), (g_player.y + 3), (g_player.x + cos(g_player.rotation_angle) * 40), (g_player.y + sin(g_player.rotation_angle) * 40));
 }

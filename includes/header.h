@@ -23,6 +23,8 @@
 # define DOWN_ARROW 1
 # define LEFT_ARROW 0
 # define RIGHT_ARROW 2
+# define RIGHT 124
+# define LEFT 123
 # define ESCAPE 53
 
 # define FOV 60 * (PI / 180)
@@ -95,6 +97,7 @@ typedef struct s_player
 	float	renderer_x;
 	float 	renderer_y;
 	int		walk_up;
+	int		walk_down;
 	int		turn_right;
 	float	rotation_angle;
 	float	move_speed;
