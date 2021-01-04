@@ -26,7 +26,7 @@ void	ft_square(float x, float y, int color, int size)
 		j = x;
 		while (j < x + size)
 		{
-			ft_put_image(i, j, color);
+			ft_put_image(j, i, color);
 			j++;
 		}
 		i++;

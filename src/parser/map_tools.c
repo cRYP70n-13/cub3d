@@ -30,7 +30,7 @@ void dda(float X0, float Y0, float X1, float Y1)
 		// 	printf("%f || %f", X * RATIO, Y * RATIO);
 		// 	exit(EXIT_FAILURE);
 		// }
-		ft_put_image(Y * RATIO, X * RATIO, 0x004800);
+		ft_put_image(X * RATIO, Y * RATIO, 0x004800);
 		X += (Xinc);													 // increment in x at each step
 		Y += (Yinc);													 // increment in y at each step
 		i++;
