@@ -27,6 +27,8 @@ void	init(void)
 {
 	g_player.x = -1;
 	g_player.y = -1;
+	g_player.new_x = -1;
+	g_player.new_y = -1;
 	g_player.rotation_angle = PI / 2.0;
 	g_player.move_speed = 2.0;
 	g_player.rotation_speed = 0.1;
@@ -57,11 +59,13 @@ void	draw_map(void)
 			} else if (g_map->map_2d[i][j] == 'N') {
 				if (g_player.x == -1 && g_player.y == -1)
 				{
-					g_player.x = y;
-					g_player.y = x;
+					// printf("HEY M HERE\n");
+					g_player.x = x;
+					g_player.y = y;
+					// printf("%f ||| %f\n", g_player.x, g_player.y);
 				}
 			}
-			ft_square(y, x, color, TILE_SIZE);
+			ft_square(x, y, color, TILE_SIZE);
 			j++;
 		}
 		i++;
@@ -70,6 +74,12 @@ void	draw_map(void)
 
 void	draw_player(void)
 {
+	if (!is_wall(g_player.new_x, g_player.new_y))
+	{
+		printf("HERE |||||\n");
+		g_player.x = g_player.new_x;
+		g_player.y = g_player.new_y;
+	}
 	ft_square(g_player.x, g_player.y, 0, 6);
 	dda((g_player.x + 3), (g_player.y + 3), (g_player.x + cos(g_player.rotation_angle) * 40), (g_player.y + sin(g_player.rotation_angle) * 40));
 }

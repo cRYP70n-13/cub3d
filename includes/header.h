@@ -42,7 +42,7 @@ int		key_pressed(int keycode);
 int		key_released(int keycode);
 int		loop_key(void);
 void	field_of_view(void);
-int		is_wall(float x, float y, float Xinc, float Yinc);
+int		is_wall(float x, float y);
 void	parse_textures(char *line, int type);
 int		wall_conditions(t_map *g_map, int *i, int *j);
 void	initial_structs(t_map *g_map);
