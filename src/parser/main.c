@@ -3,7 +3,7 @@
 int		main(int argc, char **argv)
 {
 	if (argc != 2)
-		return (0); // TODO: Call an error
+		ft_error_and_quit(5);
     parsing(argv);
 	graphic();
     return 0;
