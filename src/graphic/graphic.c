@@ -21,6 +21,7 @@ void	render(void)
 {
 	draw_map();
 	draw_player();
+	cast_rays();
 }
 
 void	init(void)

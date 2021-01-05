@@ -28,6 +28,7 @@
 # define ESCAPE 53
 
 # define FOV 60 * (PI / 180)
+# define WALL_STRIP_WIDTH 1
 # define RATIO 1
 
 # define ABS(N) ((N<0)?(-N):(N))
@@ -56,6 +57,7 @@ int		parsing(char **argv);
 void	graphic(void);
 void	render(void);
 void	init(void);
+void	cast_rays();
 
 /*
  ** Here I built a struct of the MLX image :
@@ -105,10 +107,22 @@ typedef struct s_player
 	float	player_angle;
 }			t_player;
 
+typedef struct s_ray
+{
+	float x_intercept;
+	float y_intercept;
+	int		isFacingDown;
+	int		isFacingUp;
+	int		isFacingLeft;
+	int		isFacingRight;
+	float	rayAngle;
+}				t_ray;
+
 t_mlx	*g_mlx;
 t_player g_player;
 t_map *g_map;
 t_resolution g_resolution;
 t_img	g_img;
+t_ray	*g_ray;
 
 #endif
