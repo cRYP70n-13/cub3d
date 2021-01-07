@@ -43,7 +43,6 @@ void	draw_map(void)
 	int y = 0;
 	int color = 0;
 
-	// TODO: update the player position each time map drawed
 	while (i < g_map->height)
 	{
 		j = 0;
@@ -60,10 +59,8 @@ void	draw_map(void)
 			} else if (g_map->map_2d[i][j] == 'N') {
 				if (g_player.x == -1 && g_player.y == -1)
 				{
-					// printf("HEY M HERE\n");
 					g_player.x = x;
 					g_player.y = y;
-					// printf("%f ||| %f\n", g_player.x, g_player.y);
 				}
 			}
 			ft_square(x, y, color, TILE_SIZE);
@@ -77,7 +74,6 @@ void	draw_player(void)
 {
 	if (!is_wall(g_player.new_x, g_player.new_y))
 	{
-		printf("HERE |||||\n");
 		g_player.x = g_player.new_x;
 		g_player.y = g_player.new_y;
 	}

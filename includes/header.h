@@ -58,6 +58,7 @@ void	graphic(void);
 void	render(void);
 void	init(void);
 void	cast_rays();
+void	normalize_angle(int i);
 
 /*
  ** Here I built a struct of the MLX image :
@@ -116,6 +117,10 @@ typedef struct s_ray
 	int		isFacingLeft;
 	int		isFacingRight;
 	float	rayAngle;
+	float	nextHorztY;
+	float	nextHorztX;
+	float	horztWallHitX;
+	float	horztWallHitY;
 }				t_ray;
 
 t_mlx	*g_mlx;
