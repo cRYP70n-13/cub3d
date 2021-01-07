@@ -5,4 +5,4 @@ a.out
 .vscode
 playground
 mlxopengl
-raycasting
+*/**/raycasting
