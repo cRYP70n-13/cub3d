@@ -121,6 +121,10 @@ typedef struct s_ray
 	float	nextHorztX;
 	float	horztWallHitX;
 	float	horztWallHitY;
+	float	vertWallHitX;
+	float	vertWallHitY;
+	float	nextVertTouchX;
+	float	nextVertTouchY;
 }				t_ray;
 
 t_mlx	*g_mlx;
