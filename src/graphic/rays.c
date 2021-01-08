@@ -121,6 +121,13 @@ void	cast_rays()
 		g_ray[i].wallHitY = (horzHitDistance > vertHitDistance) ? g_ray[i].vertWallHitY : g_ray[i].horztWallHitY;
 		g_ray[i].distance = (horzHitDistance > vertHitDistance) ? vertHitDistance : horzHitDistance;
 
+		#ifdef DEBUG
+			printf("IS FACING DOWN = %d\n", g_ray[i].isFacingDown);
+			printf("IS FACING UP = %d\n", g_ray[i].isFacingUp);
+			printf("IS FACING LEFT = %d\n", g_ray[i].isFacingLeft);
+			printf("IS FACING RIGHT = %d\n", g_ray[i].isFacingRight);
+		#endif
+
 		dda(g_player.x + 3, g_player.y + 3, g_ray[i].wallHitX, g_ray[i].wallHitY);
 		// dda(g_player.x + 3, g_player.y + 3, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY);
 		i++;
