@@ -15,7 +15,7 @@ float	distanceBetweenPoints(x1, y1, x2, y2)
 
 void	cast_rays()
 {
-	const int num_rays = (g_map->width * TILE_SIZE) / WALL_STRIP_WIDTH;
+	const float num_rays = (g_map->width * TILE_SIZE) / WALL_STRIP_WIDTH;
 	float xstep = 0;
 	float ystep = 0;
 	int isItWall = 0;
@@ -31,7 +31,7 @@ void	cast_rays()
 	float ray_angle = g_player.rotation_angle - (FOV / 2);
 	int i = 0;
 	normalize_angle(i);
-	while (i <= 1) {
+	while (i <= num_rays) {
 		g_ray[i].rayAngle = ray_angle + (FOV / num_rays) * i;
 		g_ray[i].isFacingDown = (g_ray[i].rayAngle > 0) && (g_ray[i].rayAngle < PI);
 		g_ray[i].isFacingUp = !g_ray[i].isFacingDown;
@@ -129,7 +129,6 @@ void	cast_rays()
 		#endif
 
 		dda(g_player.x + 3, g_player.y + 3, g_ray[i].wallHitX, g_ray[i].wallHitY);
-		// dda(g_player.x + 3, g_player.y + 3, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY);
 		i++;
 	}
 }
