@@ -18,11 +18,13 @@ void	cast_rays()
 	const int num_rays = (g_map->width * TILE_SIZE) / WALL_STRIP_WIDTH;
 	float xstep = 0;
 	float ystep = 0;
+	int isItWall = 0;
+	int foundWall = 0;
 
 	/**
 	 * @brief -> checking for the horizontal intersections
 	 * @param -> {*} the ray
-	 * @return -> {*} none because everything is global
+	 * @return -> {*} none because everything is globaliiii
 	 */
 	if (!(g_ray = malloc(num_rays * sizeof(t_ray))))
 		ft_error_and_quit(2);
@@ -43,7 +45,7 @@ void	cast_rays()
 		g_ray[i].y_intercept = floor(g_player.y / TILE_SIZE) * TILE_SIZE;
 		g_ray[i].y_intercept += g_ray[i].isFacingDown ? TILE_SIZE : 0;
 		g_ray[i].x_intercept = g_player.x + (g_ray[i].y_intercept - g_player.y) / tan(g_ray[i].rayAngle);
-		printf("%f\n", g_ray[i].rayAngle);
+		// printf("%f\n", g_ray[i].rayAngle);
 
 		ystep = TILE_SIZE;
 		ystep *= g_ray[i].isFacingUp ? -1 : 1;
@@ -56,7 +58,7 @@ void	cast_rays()
 		g_ray[i].nextHorztY = g_ray[i].y_intercept;
 
 		while (g_ray[i].nextHorztX >= 0 && g_ray[i].nextHorztX <= (g_map->width * TILE_SIZE) && g_ray[i].nextHorztY >= 0 && g_ray[i].nextHorztY <= (g_map->height * TILE_SIZE)) {
-			int isItWall = is_wall(g_ray[i].nextHorztX, g_ray[i].nextHorztY - (g_ray[i].isFacingUp ? 1 : 0)); 
+			isItWall = is_wall(g_ray[i].nextHorztX, g_ray[i].nextHorztY - (g_ray[i].isFacingUp ? 1 : 0)); 
 
 			if (isItWall) {
 				g_ray[i].horztWallHitX = g_ray[i].nextHorztX;
@@ -95,19 +97,32 @@ void	cast_rays()
 
 		// Increment xstep and ystep until we find a wall
 		while (g_ray[i].nextVertTouchX >= 0 && g_ray[i].nextVertTouchX <= (g_map->width * TILE_SIZE) && g_ray[i].nextVertTouchY >= 0 && g_ray[i].nextVertTouchY <= (g_map->height * TILE_SIZE)) {
-			int foundWall = is_wall(g_ray[i].nextVertTouchX + (g_ray[i].isFacingLeft ? -1 : 0), g_ray[i].nextVertTouchY);
+			foundWall = is_wall(g_ray[i].nextVertTouchX + (g_ray[i].isFacingLeft ? -1 : 0), g_ray[i].nextVertTouchY);
 
-		    if (foundWall != 0) {
-		        g_ray[i].vertWallHitX = g_ray[i].nextVertTouchX;
-		        g_ray[i].vertWallHitY = g_ray[i].nextVertTouchY;
-		        break ;
-		    } else {
-		        g_ray[i].nextVertTouchX += xstep;
-		        g_ray[i].nextVertTouchY += ystep;
-		    }
+			if (foundWall != 0) {
+				g_ray[i].vertWallHitX = g_ray[i].nextVertTouchX;
+				g_ray[i].vertWallHitY = g_ray[i].nextVertTouchY;
+				break ;
+			} else {
+				g_ray[i].nextVertTouchX += xstep;
+				g_ray[i].nextVertTouchY += ystep;
+			}
 		}
 
-		dda(g_player.x + 3, g_player.y + 3, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY);
+		// Calculate both horizontal and vertical distances and choose the smallest value
+		float horzHitDistance = (foundWall)
+			? distanceBetweenPoints(g_player.x, g_player.y, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY)
+			: MAXFLOAT;
+		float vertHitDistance = (isItWall)
+			? distanceBetweenPoints(g_player.x, g_player.y, g_ray[i].vertWallHitX, g_ray[i].vertWallHitY)
+			: MAXFLOAT;
+
+		g_ray[i].wallHitX = (horzHitDistance > vertHitDistance) ? g_ray[i].vertWallHitX : g_ray[i].horztWallHitX;
+		g_ray[i].wallHitY = (horzHitDistance > vertHitDistance) ? g_ray[i].vertWallHitY : g_ray[i].horztWallHitY;
+		g_ray[i].distance = (horzHitDistance > vertHitDistance) ? vertHitDistance : horzHitDistance;
+
+		dda(g_player.x + 3, g_player.y + 3, g_ray[i].wallHitX, g_ray[i].wallHitY);
+		// dda(g_player.x + 3, g_player.y + 3, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY);
 		i++;
 	}
 }

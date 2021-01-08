@@ -125,6 +125,9 @@ typedef struct s_ray
 	float	vertWallHitY;
 	float	nextVertTouchX;
 	float	nextVertTouchY;
+	float	wallHitX;
+	float	wallHitY;
+	float	distance;
 }				t_ray;
 
 t_mlx	*g_mlx;

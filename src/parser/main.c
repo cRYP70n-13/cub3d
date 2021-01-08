@@ -4,9 +4,9 @@ int		main(int argc, char **argv)
 {
 	if (argc != 2)
 		ft_error_and_quit(5);
-    parsing(argv);
+	parsing(argv);
 	graphic();
-    return 0;
+	return 0;
 }
 
 int		parsing(char **argv)
