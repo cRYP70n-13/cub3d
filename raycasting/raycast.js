@@ -290,7 +290,7 @@ function castAllRays() {
     rays = [];
 
     // loop all columns casting the rays
-    for (var col = 0; col < NUM_RAYS; col++) {
+    for (var col = 0; col < 1; col++) {
         var ray = new Ray(rayAngle);
         ray.cast();
         rays.push(ray);

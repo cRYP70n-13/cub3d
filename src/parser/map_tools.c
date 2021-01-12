@@ -6,7 +6,7 @@
  ** Then we check if we have a wall or not, if yes we return else
  ** we keep going
 */
-void dda(float X0, float Y0, float X1, float Y1)
+void dda(double X0, double Y0, double X1, double Y1)
 {
 	int dx = X1 - X0;
 	int dy = Y1 - Y0;
@@ -14,11 +14,11 @@ void dda(float X0, float Y0, float X1, float Y1)
 	int steps;
 
 	steps = ABS(dx) > ABS(dy) ? ABS(dx) : ABS(dy);
-	float Xinc = dx / (float)steps;
-	float Yinc = dy / (float)steps;
+	double Xinc = dx / (double)steps;
+	double Yinc = dy / (double)steps;
 
-	float X = X0;
-	float Y = Y0;
+	double X = X0;
+	double Y = Y0;
 	int i = 0;
 	while (i < steps)
 	{

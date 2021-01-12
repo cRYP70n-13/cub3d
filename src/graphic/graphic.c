@@ -78,5 +78,5 @@ void	draw_player(void)
 		g_player.y = g_player.new_y;
 	}
 	ft_square(g_player.x, g_player.y, 0, 6);
-	dda((g_player.x + 3), (g_player.y + 3), (g_player.x + cos(g_player.rotation_angle) * 40), (g_player.y + sin(g_player.rotation_angle) * 40));
+	// dda((g_player.x + 3), (g_player.y + 3), (g_player.x + cos(g_player.rotation_angle) * 40), (g_player.y + sin(g_player.rotation_angle) * 40));
 }
