@@ -3,8 +3,8 @@
 void	normalize_angle(int i)
 {
 	g_ray[i].rayAngle = fmod(g_ray[i].rayAngle, (2 * PI));
-	if (g_ray[i].rayAngle < 0) {
-		g_ray[i].rayAngle = 2 * PI + g_ray[i].rayAngle;
+	if (g_ray[i].rayAngle <= 0) {
+		g_ray[i].rayAngle = (2 * PI) + g_ray[i].rayAngle;
 	}
 }
 
@@ -29,9 +29,11 @@ void	cast_rays()
 	if (!(g_ray = malloc(num_rays * sizeof(t_ray))))
 		ft_error_and_quit(2);
 	float ray_angle = g_player.rotation_angle - (FOV / 2);
+	ray_angle = fmod(ray_angle, 2 * PI);
 	int i = 0;
 	normalize_angle(i);
-	while (i <= num_rays) {
+
+	while (i < num_rays) {
 		g_ray[i].rayAngle = ray_angle + (FOV / num_rays) * i;
 		g_ray[i].isFacingDown = (g_ray[i].rayAngle > 0) && (g_ray[i].rayAngle < PI);
 		g_ray[i].isFacingUp = !g_ray[i].isFacingDown;
@@ -44,6 +46,7 @@ void	cast_rays()
 
 		g_ray[i].y_intercept = floor(g_player.y / TILE_SIZE) * TILE_SIZE;
 		g_ray[i].y_intercept += g_ray[i].isFacingDown ? TILE_SIZE : 0;
+
 		g_ray[i].x_intercept = g_player.x + (g_ray[i].y_intercept - g_player.y) / tan(g_ray[i].rayAngle);
 		// printf("%f\n", g_ray[i].rayAngle);
 
@@ -58,9 +61,9 @@ void	cast_rays()
 		g_ray[i].nextHorztY = g_ray[i].y_intercept;
 
 		while (g_ray[i].nextHorztX >= 0 && g_ray[i].nextHorztX <= (g_map->width * TILE_SIZE) && g_ray[i].nextHorztY >= 0 && g_ray[i].nextHorztY <= (g_map->height * TILE_SIZE)) {
-			isItWall = is_wall(g_ray[i].nextHorztX, g_ray[i].nextHorztY - (g_ray[i].isFacingUp ? 1 : 0)); 
+			isItWall = is_wall(g_ray[i].nextHorztX, g_ray[i].nextHorztY + (g_ray[i].isFacingUp ? -1 : 0)); 
 
-			if (isItWall) {
+			if (isItWall != 0) {
 				g_ray[i].horztWallHitX = g_ray[i].nextHorztX;
 				g_ray[i].horztWallHitY = g_ray[i].nextHorztY;
 				break ;

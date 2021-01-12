@@ -13,8 +13,8 @@
 # include "get_next_line.h"
 # include "../src/utils/Errors/errors.h"
 # include "../src/utils/libft/libft.h"
-// #include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
-# include <mlx.h>
+# include "../../../../Documents/dev/cub3d_DONE/mlxopengl/mlx.h"
+// # include <mlx.h>
 
 # define TILE_SIZE 32
 # define PI 3.14159265358979323846
