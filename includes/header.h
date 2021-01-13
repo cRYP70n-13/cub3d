@@ -30,7 +30,7 @@
 
 # define FOV 60 * (PI / 180)
 # define WALL_STRIP_WIDTH 1
-# define RATIO 1
+# define RATIO 0.5
 # define HIT_V 1
 # define HIT_H 2
 # define HIT_HV 3

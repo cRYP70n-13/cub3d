@@ -22,7 +22,7 @@ void dda(double X0, double Y0, double X1, double Y1)
 	int i = 0;
 	while (i < steps)
 	{
-		ft_put_image(X * RATIO, Y * RATIO, 0x004800);
+		ft_put_image(X , Y , 0x004800);
 		X += (Xinc);
 		Y += (Yinc);
 		i++;

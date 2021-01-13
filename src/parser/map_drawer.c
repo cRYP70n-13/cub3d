@@ -20,7 +20,11 @@ void	ft_square(double x, double y, int color, int size)
 
 void	ft_put_image(int x, int y, int color)
 {
-	if (x < g_resolution.width && x >= 0 && y < g_resolution.height && y >= 0) {
+	x *= RATIO;
+	y *= RATIO;
+
+	if (x < g_resolution.width && x >= 0 && y < g_resolution.height && y >= 0)
+	{
 		g_mlx->img.data[y * g_resolution.width + x] = color;
 	}
 }
