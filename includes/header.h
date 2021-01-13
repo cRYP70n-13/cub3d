@@ -61,6 +61,9 @@ void	graphic(void);
 void	render(void);
 void	init(void);
 void	cast_rays();
+void renderFloor();
+void renderCeiling();
+void Render3DWall();
 double	normalize_angle(double angle);
 
 /*

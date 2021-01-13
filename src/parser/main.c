@@ -26,7 +26,6 @@ int		parsing(char **argv)
 	initial_structs(g_map);
 	while (1)
 	{
-		// printf("%s\n", line);
 		int ret = get_next_line(fd, &line);
 		if (line[0] == 'R' && line[1] == ' ')
 		{

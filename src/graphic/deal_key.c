@@ -18,7 +18,6 @@ int		deal_key(int keycode, void *param)
 	return (0);
 }
 
-// The graphics Part
 int		is_wall(double x, double y)
 {
 	int map_grid_index_x;

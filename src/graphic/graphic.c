@@ -21,6 +21,7 @@ void	render(void)
 {
 	draw_map();
 	draw_player();
+	Render3DWall();
 	cast_rays();
 }
 
