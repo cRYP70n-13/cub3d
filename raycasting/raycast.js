@@ -297,6 +297,7 @@ function castAllRays() {
         rayAngle += FOV_ANGLE / NUM_RAYS;
     }
 }
+
 function renderCeiling() {
     noStroke();
     fill('#414141');

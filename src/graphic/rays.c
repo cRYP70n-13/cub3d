@@ -32,23 +32,17 @@ int		vertical(int i)
 
 	g_ray[i].x_intercept = floor(g_player.x / TILE_SIZE) * TILE_SIZE;
 	g_ray[i].x_intercept += g_ray[i].isFacingRight ? TILE_SIZE : 0;
-
 	g_ray[i].y_intercept = g_player.y + (g_ray[i].x_intercept - g_player.x) * tan(g_ray[i].rayAngle);
-
 	xstep = TILE_SIZE;
 	xstep *= g_ray[i].isFacingLeft ? -1 : 1;
-
 	ystep = TILE_SIZE * tan(g_ray[i].rayAngle);
 	ystep *= (g_ray[i].isFacingUp && ystep > 0) ? -1 : 1;
 	ystep *= (g_ray[i].isFacingDown && ystep < 0) ? -1 : 1;
-
 	g_ray[i].nextVertTouchX = g_ray[i].x_intercept;
 	g_ray[i].nextVertTouchY = g_ray[i].y_intercept;
 
-	// Increment xstep and ystep until we find a wall
 	while (g_ray[i].nextVertTouchX >= 0 && g_ray[i].nextVertTouchX <= (g_map->width * TILE_SIZE) && g_ray[i].nextVertTouchY >= 0 && g_ray[i].nextVertTouchY <= (g_map->height * TILE_SIZE)) {
 		foundWall = is_wall(g_ray[i].nextVertTouchX + (g_ray[i].isFacingLeft ? -1 : 0), g_ray[i].nextVertTouchY);
-
 		if (foundWall != 0) {
 			g_ray[i].vertWallHitX = g_ray[i].nextVertTouchX;
 			g_ray[i].vertWallHitY = g_ray[i].nextVertTouchY;
@@ -69,15 +63,10 @@ int		horizontal(int i)
 	double xstep = 0;
 	double ystep = 0;
 	int foundWall = 0;
-	// ray_angle = fmod(ray_angle, 2 * PI);
 
-	// g_ray[i].rayAngle = g_player.player_angle;
-	// g_ray[i].isFacingDown = (g_ray[i].rayAngle >= 0) && (g_ray[i].rayAngle <= PI);
 	g_ray[i].isFacingDown = sin(g_ray[i].rayAngle) > 0;
 	g_ray[i].isFacingUp = !(g_ray[i].isFacingDown);
-	//if ((g_ray[i].rayAngle <= 0.5 * PI) || (g_ray[i].rayAngle >= 1.5 * PI)) {
-		g_ray[i].isFacingRight = cos(g_ray[i].rayAngle) > 0;
-	//}
+	g_ray[i].isFacingRight = cos(g_ray[i].rayAngle) > 0;
 	g_ray[i].isFacingLeft = !g_ray[i].isFacingRight;
 	g_ray[i].y_intercept = floor(g_player.y / TILE_SIZE) * TILE_SIZE;
 	g_ray[i].y_intercept += g_ray[i].isFacingDown ? TILE_SIZE : 0;
@@ -103,7 +92,6 @@ int		horizontal(int i)
 		}
 	}
 
-	// Calculate both horizontal and vertical distances and choose the smallest value
 	g_horzHitDistance = (foundWall)
 		? distanceBetweenPoints(g_player.x, g_player.y, g_ray[i].horztWallHitX, g_ray[i].horztWallHitY)
 		: MAXFLOAT;
@@ -122,7 +110,6 @@ void	cast_rays()
 		ft_error_and_quit(2);
 	while (i < g_num_rays) {
 		g_ray[i].rayAngle = g_ray_angle + (FOV / g_num_rays) * i;
-		printf("%lf\n", deg(g_player.player_angle));
 		hit = horizontal(i) | vertical(i);
 		if ((hit == HIT_HV && g_vertHitDistance < g_horzHitDistance) || hit == HIT_V) {
 				g_ray[i].wallHitX = g_ray[i].vertWallHitX;
